@@ -1,5 +1,14 @@
-const Story = ({ params }: { params: { slug: string } }) => {
-  return <h1>The story: {params.slug}</h1>;
-};
+import { getStoryData } from "@/lib/stories";
 
+interface Props {
+  params: { slug: string };
+}
+
+const Story = async ({ params }: Props) => {
+  const storyData = await getStoryData(params.slug);
+
+  return (
+    <div dangerouslySetInnerHTML={{ __html: storyData.contentHtml }}></div>
+  );
+};
 export default Story;
