@@ -1,5 +1,6 @@
 import { client } from "@/lib/sanity/client";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 interface StaticParamValue {
   slug: { current: string };
@@ -28,6 +29,10 @@ const Story = async ({ params: { slug } }: { params: { slug: string } }) => {
       title, excerpt, slug
     }`
   );
+
+  if (story.length === 0) {
+    notFound();
+  }
 
   return (
     <div>
