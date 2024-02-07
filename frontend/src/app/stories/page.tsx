@@ -20,7 +20,7 @@ const Stories = async () => {
           <div key={story._id}>
             <h1>{story.title}</h1>
             <p>{story.excerpt}</p>
-            <Link href={"/stories/" + story.slug.current}>View</Link>
+            <Link href={`/stories/${story.slug.current}`}>View</Link>
           </div>
         );
       })}
