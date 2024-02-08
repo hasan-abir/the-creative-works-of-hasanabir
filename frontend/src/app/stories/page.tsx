@@ -14,7 +14,7 @@ const Stories = async () => {
   }`);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main className="flex min-h-screen flex-col items-center justify-between p-8">
       <div className="max-w-5xl w-full">
         {stories.map((story) => {
           return (

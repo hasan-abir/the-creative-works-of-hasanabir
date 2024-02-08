@@ -2,6 +2,13 @@ import { client } from "@/lib/sanity/client";
 import { PortableText } from "@portabletext/react";
 import { notFound } from "next/navigation";
 
+interface Props {
+  params: {
+    slug: string;
+    page: string;
+  };
+}
+
 interface StaticParamValue {
   story: { slug: { current: string } };
   pageNumber: number;
@@ -20,6 +27,26 @@ export const generateStaticParams = async () => {
     slug: pageContent.story.slug.current,
     page: pageContent.pageNumber.toString(),
   }));
+};
+
+export const generateMetadata = async ({ params }: Props) => {
+  let title = "";
+
+  const pageContent = await client.fetch<
+    { pageNumber: number; story: { title: string } }[]
+  >(
+    `*[_type == "storyPage" && story->slug.current == "${params.slug}" && pageNumber == ${params.page}]{
+      pageNumber, story->{title}
+    }`
+  );
+
+  if (pageContent.length > 0) {
+    title = `Page ${pageContent[0].pageNumber} of ${pageContent[0].story.title}`;
+  }
+
+  return {
+    title,
+  };
 };
 
 const StoryPage = async ({
@@ -42,7 +69,7 @@ const StoryPage = async ({
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main className="flex min-h-screen flex-col items-center justify-between p-8">
       <div className="max-w-5xl w-full">
         <h2 className="font-bold text-lg mb-4">
           Page {page} of {pageCount}
