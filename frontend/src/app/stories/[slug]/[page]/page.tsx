@@ -42,12 +42,14 @@ const StoryPage = async ({
   }
 
   return (
-    <div>
-      <h2>
-        Page {page} of {pageCount}
-      </h2>
-      <PortableText value={pageContent[0].body} />
-    </div>
+    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      <div className="max-w-5xl w-full">
+        <h2 className="font-bold text-lg mb-4">
+          Page {page} of {pageCount}
+        </h2>
+        <PortableText value={pageContent[0].body} />
+      </div>
+    </main>
   );
 };
 
