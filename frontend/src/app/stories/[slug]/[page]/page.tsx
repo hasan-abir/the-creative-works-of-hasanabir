@@ -1,5 +1,5 @@
+import AnimatedRichText from "@/components/AnimatedRichText";
 import { client } from "@/lib/sanity/client";
-import { PortableText } from "@portabletext/react";
 import { notFound } from "next/navigation";
 
 interface Props {
@@ -74,7 +74,7 @@ const StoryPage = async ({
         <h2 className="font-bold text-lg mb-4">
           Page {page} of {pageCount}
         </h2>
-        <PortableText value={pageContent[0].body} />
+        <AnimatedRichText body={pageContent[0].body} />
       </div>
     </main>
   );

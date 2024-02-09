@@ -31,3 +31,7 @@ body {
     text-wrap: balance;
   }
 }
+
+.rich-text-container > p{
+  @apply mb-4 opacity-0 translate-x-[3rem];
+}

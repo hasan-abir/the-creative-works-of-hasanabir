@@ -68,6 +68,7 @@ const Story = async ({ params: { slug } }: { params: { slug: string } }) => {
           Start reading
         </Link>
         <br />
+        <br />
         <Link href="/stories" className="underline">
           Back to stories
         </Link>
