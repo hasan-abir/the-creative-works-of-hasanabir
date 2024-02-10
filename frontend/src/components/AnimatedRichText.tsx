@@ -1,10 +1,9 @@
 "use client";
 
+import { useGSAP } from "@gsap/react";
 import { PortableText, PortableTextComponents } from "@portabletext/react";
 import gsap from "gsap";
-import ScrollToPlugin from "gsap/ScrollToPlugin";
-import { useGSAP } from "@gsap/react";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
 interface Props {
   body: any[];
@@ -12,21 +11,45 @@ interface Props {
 
 const portableTextComponents: PortableTextComponents = {
   block: {
-    normal: ({ children }) => {
+    normal: ({ children, value }) => {
       let lines: string[] = [];
       if (children) {
-        lines = children.toString().match(/\S[^.?!]*[.?!]/g) || [];
+        let text = "";
+
+        let i = 0;
+        while (i < value.children.length) {
+          const childBlock = value.children[i];
+
+          if (childBlock.marks.includes("em")) {
+            text += `°~${childBlock.text}~°`;
+          } else {
+            text += childBlock.text;
+          }
+          i++;
+        }
+
+        lines = text.match(/\S[^.?!]*[.?!]/g) || [];
       }
 
       return (
         <div className="mb-4">
-          {lines.map((word, index) => {
+          {lines.map((line, i) => {
             return (
               <p
-                key={index}
+                key={i}
                 className="line mr-[0.2rem] text-xl opacity-0 translate-x-[3rem]"
               >
-                {word}
+                {(line.includes("°") &&
+                  line.match(/[^°]+/g)?.map((phrase, j) => {
+                    if (phrase.includes("~")) {
+                      let sanitizedPhrase = phrase;
+                      sanitizedPhrase = sanitizedPhrase.replaceAll("~", "");
+
+                      return <em key={j}>{sanitizedPhrase}</em>;
+                    }
+                    return phrase;
+                  })) ||
+                  line}
               </p>
             );
           })}
@@ -41,8 +64,6 @@ const AnimatedRichText = ({ body }: Props) => {
 
   useGSAP(
     (context, contextSafe) => {
-      gsap.registerPlugin(ScrollToPlugin);
-
       let timeline = gsap.timeline({ paused: true });
       let currentIndex = 0;
 
