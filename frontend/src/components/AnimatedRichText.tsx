@@ -37,7 +37,7 @@ const portableTextComponents: PortableTextComponents = {
             return (
               <p
                 key={i}
-                className="line mr-[0.2rem] text-xl opacity-0 translate-x-[3rem] will-change-transform"
+                className="line mr-[0.2rem] text-xl opacity-0 translate-x-[10rem] will-change-transform"
               >
                 {(line.includes("°") &&
                   line.match(/[^°]+/g)?.map((phrase, j) => {
@@ -85,8 +85,8 @@ const AnimatedRichText = ({ body }: Props) => {
         timeline = timeline.add(`el-${i}`).to(targetEl, {
           opacity: 1,
           x: 0,
-          duration: 1,
-          ease: "expo.out",
+          duration: 0.4,
+          ease: "ease.out",
           onComplete: () => {
             timeline.pause();
             targetEl.style.willChange = "auto";
@@ -123,10 +123,10 @@ const AnimatedRichText = ({ body }: Props) => {
               top: targets[i].offsetTop - container.current?.offsetTop,
               behavior: "smooth",
             });
+
+            timeline.play(`el-${i}`);
           },
         });
-
-        timeline.play(`el-${i}`);
       };
 
       goToLine(currentIndex);
@@ -134,6 +134,8 @@ const AnimatedRichText = ({ body }: Props) => {
 
       let onNextLine: (e: MouseEvent | KeyboardEvent) => void = () => {};
       let onExpandText: (e: MouseEvent | KeyboardEvent) => void = () => {};
+
+      let textExpanded = false;
 
       if (contextSafe) {
         onNextLine = contextSafe((e) => {
@@ -159,7 +161,18 @@ const AnimatedRichText = ({ body }: Props) => {
           )
             return null;
 
-          expandPrevLines();
+          if (textExpanded) {
+            goToLine(currentIndex - 1);
+
+            expandBtn.textContent = "Expand";
+
+            textExpanded = false;
+          } else {
+            expandPrevLines();
+
+            textExpanded = true;
+            expandBtn.textContent = "Shrink";
+          }
         });
       }
 
