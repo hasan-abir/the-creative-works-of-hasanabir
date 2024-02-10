@@ -113,7 +113,7 @@ const AnimatedRichText = ({ body }: Props) => {
   return (
     <div className="flex-1 flex flex-col justify-center items-start">
       <div
-        className="rich-text-container overflow-x-hidden h-12"
+        className="rich-text-container overflow-x-hidden h-12 resize-y"
         ref={container}
       >
         <PortableText value={body} components={portableTextComponents} />
