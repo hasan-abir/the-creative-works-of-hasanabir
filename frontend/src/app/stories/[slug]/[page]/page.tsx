@@ -69,12 +69,12 @@ const StoryPage = async ({
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-8">
-      <div className="max-w-5xl w-full">
-        <h2 className="font-bold text-lg mb-4">
+    <main className="flex h-full min-h-screen h-full flex-col items-center justify-between p-8">
+      <div className="max-w-5xl w-full flex-1 flex flex-col">
+        <AnimatedRichText body={pageContent[0].body} />
+        <h2 className="font-bold text-lg mt-4">
           Page {page} of {pageCount}
         </h2>
-        <AnimatedRichText body={pageContent[0].body} />
       </div>
     </main>
   );
