@@ -21,7 +21,7 @@ const portableTextComponents: PortableTextComponents = {
           const childBlock = value.children[i];
 
           if (childBlock.marks.includes("em")) {
-            text += `°~${childBlock.text}~°`;
+            text += `#italic#${childBlock.text}##italic`;
           } else {
             text += childBlock.text;
           }
@@ -32,18 +32,18 @@ const portableTextComponents: PortableTextComponents = {
       }
 
       return (
-        <div className="mb-4">
+        <div>
           {lines.map((line, i) => {
             return (
               <p
                 key={i}
-                className="line mr-[0.2rem] text-xl opacity-0 translate-x-[10rem] will-change-transform"
+                className="line text-xl opacity-0 hidden translate-x-[10rem] will-change-transform"
               >
-                {(line.includes("°") &&
-                  line.match(/[^°]+/g)?.map((phrase, j) => {
-                    if (phrase.includes("~")) {
+                {(line.includes("#italic#") &&
+                  line.split("#italic")?.map((phrase, j) => {
+                    if (phrase.match(/#.*#/i)) {
                       let sanitizedPhrase = phrase;
-                      sanitizedPhrase = sanitizedPhrase.replaceAll("~", "");
+                      sanitizedPhrase = sanitizedPhrase.replaceAll("#", "");
 
                       return <em key={j}>{sanitizedPhrase}</em>;
                     }
@@ -115,6 +115,7 @@ const AnimatedRichText = ({ body }: Props) => {
       };
 
       const goToLine = (i: number) => {
+        targets[i].style.display = "block";
         gsap.to(container.current, {
           height: targets[i].offsetHeight,
           duration: 0.2,
@@ -151,6 +152,11 @@ const AnimatedRichText = ({ body }: Props) => {
             triggerEl.disabled = true;
             document.body.removeEventListener("keyup", onNextLine);
             currentIndex++;
+          }
+
+          if (textExpanded) {
+            expandBtn.textContent = "Expand";
+            textExpanded = false;
           }
         });
 
@@ -194,7 +200,7 @@ const AnimatedRichText = ({ body }: Props) => {
   return (
     <div className="flex-1 flex flex-col justify-center items-start">
       <div
-        className="rich-text-container overflow-x-hidden h-12 resize-y"
+        className="rich-text-container overflow-x-hidden h-12 w-full resize-y"
         ref={container}
       >
         <PortableText value={body} components={portableTextComponents} />

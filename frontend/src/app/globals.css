@@ -31,3 +31,11 @@ body {
     text-wrap: balance;
   }
 }
+
+.rich-text-container > div > p:first-child{
+  @apply mt-4;
+}
+
+.rich-text-container > div:first-child > p:first-child{
+  @apply mt-0;
+}
