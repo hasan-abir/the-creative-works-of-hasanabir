@@ -1,5 +1,6 @@
 import AnimatedRichText from "@/components/AnimatedRichText";
 import { client } from "@/lib/sanity/client";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 interface Props {
@@ -16,6 +17,9 @@ interface StaticParamValue {
 
 interface Data {
   body: any[];
+  story: {
+    title: string;
+  };
 }
 
 export const generateStaticParams = async () => {
@@ -56,7 +60,7 @@ const StoryPage = async ({
 }) => {
   const pageContent = await client.fetch<Data[]>(
     `*[_type == "storyPage" && story->slug.current == "${slug}" && pageNumber == ${page}]{
-      body
+      body, story->{title}
     }`
   );
 
@@ -71,10 +75,26 @@ const StoryPage = async ({
   return (
     <main className="flex h-full min-h-screen h-full flex-col items-center justify-between p-8">
       <div className="max-w-5xl w-full flex-1 flex flex-col">
+        <div className="flex justify-between">
+          <h1 className="text-2xl">{pageContent[0].story.title}</h1>
+          <p>
+            {page} of {pageCount}
+          </p>
+        </div>
+        <hr className="mb-2" />
+        <p className="mb-4">
+          <em>
+            Written by{" "}
+            <Link href="https://hasanabir.netlify.app/" className="underline">
+              Hasan Abir
+            </Link>
+          </em>
+        </p>
+        <Link href="/stories" className="underline mb-4">
+          Back to stories
+        </Link>
+
         <AnimatedRichText body={pageContent[0].body} />
-        <h2 className="font-bold text-lg mt-4">
-          Page {page} of {pageCount}
-        </h2>
       </div>
     </main>
   );

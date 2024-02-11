@@ -198,16 +198,16 @@ const AnimatedRichText = ({ body }: Props) => {
   );
 
   return (
-    <div className="flex-1 flex flex-col justify-center items-start">
+    <div className="flex-1 flex flex-col justify-center items-start  relative">
       <div
-        className="rich-text-container overflow-x-hidden h-12 w-full resize-y"
+        className="rich-text-container overflow-x-hidden h-12 w-full resize-y mb-10"
         ref={container}
       >
         <PortableText value={body} components={portableTextComponents} />
       </div>
-      <div className="flex mt-4">
-        <button className="next-line-btn underline mr-4">Next line</button>
-        <button className="expand-text-btn underline">Expand</button>
+      <div className="w-full flex justify-between absolute bottom-0 mt-4">
+        <button className="expand-text-btn underline flex-1">Expand</button>
+        <button className="next-line-btn underline flex-1">Next line</button>
       </div>
     </div>
   );
