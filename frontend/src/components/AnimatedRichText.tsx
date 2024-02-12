@@ -3,7 +3,7 @@
 import { useGSAP } from "@gsap/react";
 import { PortableText, PortableTextComponents } from "@portabletext/react";
 import gsap from "gsap";
-import { ReactElement, useCallback, useMemo, useRef } from "react";
+import { useCallback, useMemo, useRef } from "react";
 
 interface Props {
   body: any[];
@@ -12,7 +12,7 @@ interface Props {
 const portableTextComponents: PortableTextComponents = {
   block: {
     normal: ({ children, value }) => {
-      let lines: string[] = useMemo(() => [], []);
+      let lines: string[] = [];
       if (children) {
         let text = "";
 
@@ -33,33 +33,32 @@ const portableTextComponents: PortableTextComponents = {
         lines = text.match(/(?<!\S)[^.?!]*(?:[.?!](?!\S)|$)/g) || [];
       }
 
-      const replaceMarkCharsIntoTags = useCallback(
-        (line: string): string | (string | JSX.Element)[] => {
-          const hasItalic = line.includes("#italic");
-          const hasBold = line.includes("#bold");
+      const replaceMarkCharsIntoTags = (
+        line: string
+      ): string | (string | JSX.Element)[] => {
+        const hasItalic = line.includes("#italic");
+        const hasBold = line.includes("#bold");
 
-          if (hasItalic || hasBold) {
-            return line.split(/#(?:italic|bold)/)?.map((phrase, j) => {
-              if (phrase.match(/#em.*#em/i)) {
-                return <em key={j}>{phrase.replaceAll("#em", "")}</em>;
-              }
-              if (phrase.match(/#strong.*#strong/i)) {
-                return (
-                  <strong key={j}>{phrase.replaceAll("#strong", "")}</strong>
-                );
-              }
-              return phrase;
-            });
-          } else {
-            return /[.?!]$/.test(line) === false
-              ? line + " (To be continued)"
-              : /^[A-Z]/.test(line) === false
-              ? "(Continuing) " + line
-              : line;
-          }
-        },
-        []
-      );
+        if (hasItalic || hasBold) {
+          return line.split(/#(?:italic|bold)/)?.map((phrase, j) => {
+            if (phrase.match(/#em.*#em/i)) {
+              return <em key={j}>{phrase.replaceAll("#em", "")}</em>;
+            }
+            if (phrase.match(/#strong.*#strong/i)) {
+              return (
+                <strong key={j}>{phrase.replaceAll("#strong", "")}</strong>
+              );
+            }
+            return phrase;
+          });
+        } else {
+          return /[.?!]$/.test(line) === false
+            ? line + " (To be continued)"
+            : /^[A-Z]/.test(line) === false
+            ? "(Continuing) " + line
+            : line;
+        }
+      };
 
       return (
         <div>
