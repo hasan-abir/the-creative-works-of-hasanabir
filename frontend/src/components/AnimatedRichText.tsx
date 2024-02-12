@@ -3,7 +3,7 @@
 import { useGSAP } from "@gsap/react";
 import { PortableText, PortableTextComponents } from "@portabletext/react";
 import gsap from "gsap";
-import { useRef } from "react";
+import { ReactElement, useCallback, useMemo, useRef } from "react";
 
 interface Props {
   body: any[];
@@ -12,7 +12,7 @@ interface Props {
 const portableTextComponents: PortableTextComponents = {
   block: {
     normal: ({ children, value }) => {
-      let lines: string[] = [];
+      let lines: string[] = useMemo(() => [], []);
       if (children) {
         let text = "";
 
@@ -21,15 +21,45 @@ const portableTextComponents: PortableTextComponents = {
           const childBlock = value.children[i];
 
           if (childBlock.marks.includes("em")) {
-            text += `#italic#${childBlock.text}##italic`;
+            text += `#italic#em${childBlock.text}#em#italic`;
+          } else if (childBlock.marks.includes("strong")) {
+            text += `#bold#strong${childBlock.text}#strong#bold`;
           } else {
             text += childBlock.text;
           }
           i++;
         }
 
-        lines = text.match(/\S[^.?!]*[.?!]/g) || [];
+        lines = text.match(/(?<!\S)[^.?!]*(?:[.?!](?!\S)|$)/g) || [];
       }
+
+      const replaceMarkCharsIntoTags = useCallback(
+        (line: string): string | (string | JSX.Element)[] => {
+          const hasItalic = line.includes("#italic");
+          const hasBold = line.includes("#bold");
+
+          if (hasItalic || hasBold) {
+            return line.split(/#(?:italic|bold)/)?.map((phrase, j) => {
+              if (phrase.match(/#em.*#em/i)) {
+                return <em key={j}>{phrase.replaceAll("#em", "")}</em>;
+              }
+              if (phrase.match(/#strong.*#strong/i)) {
+                return (
+                  <strong key={j}>{phrase.replaceAll("#strong", "")}</strong>
+                );
+              }
+              return phrase;
+            });
+          } else {
+            return /[.?!]$/.test(line) === false
+              ? line + " (To be continued)"
+              : /^[A-Z]/.test(line) === false
+              ? "(Continuing) " + line
+              : line;
+          }
+        },
+        []
+      );
 
       return (
         <div>
@@ -39,17 +69,7 @@ const portableTextComponents: PortableTextComponents = {
                 key={i}
                 className="line text-xl opacity-0 hidden translate-x-[10rem] will-change-transform"
               >
-                {(line.includes("#italic#") &&
-                  line.split("#italic")?.map((phrase, j) => {
-                    if (phrase.match(/#.*#/i)) {
-                      let sanitizedPhrase = phrase;
-                      sanitizedPhrase = sanitizedPhrase.replaceAll("#", "");
-
-                      return <em key={j}>{sanitizedPhrase}</em>;
-                    }
-                    return phrase;
-                  })) ||
-                  line}
+                {replaceMarkCharsIntoTags(line)}
               </p>
             );
           })}
