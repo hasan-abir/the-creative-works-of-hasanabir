@@ -133,6 +133,21 @@ const AnimatedRichText = ({
           i++;
         }
 
+        const firstLine = Array.from(lines.current)[0].textContent;
+        const lastLine = Array.from(lines.current)[lines.current.length - 1]
+          .textContent;
+        const firstLineBeginsCompletely = /^[A-Z—]/.test(firstLine || "");
+        const lastLineEndsCompletely = /[—.!?]$/.test(lastLine || "");
+
+        if (!lastLineEndsCompletely) {
+          Array.from(lines.current)[lines.current.length - 1].textContent =
+            `${lastLine}—` || "";
+        }
+
+        if (!firstLineBeginsCompletely) {
+          Array.from(lines.current)[0].textContent = `—${firstLine}` || "";
+        }
+
         goToLine(currentIndex);
         setCurrentIndex(currentIndex + 1);
       }
