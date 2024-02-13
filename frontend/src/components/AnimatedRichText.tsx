@@ -46,7 +46,8 @@ const portableTextComponents: PortableTextComponents = {
       }
 
       const replaceMarkCharsIntoTags = (
-        line: string
+        line: string,
+        index: number
       ): string | (string | JSX.Element)[] => {
         const hasItalic = line.includes("#italic");
         const hasBold = line.includes("#bold");
@@ -64,11 +65,7 @@ const portableTextComponents: PortableTextComponents = {
             return phrase;
           });
         } else {
-          return /[.?!]$/.test(line) === false
-            ? line + "—"
-            : /^[A-Z]/.test(line) === false
-            ? "—" + line
-            : line;
+          return line;
         }
       };
 
@@ -80,7 +77,7 @@ const portableTextComponents: PortableTextComponents = {
                 key={i}
                 className="line text-xl opacity-0 hidden translate-x-[10rem] will-change-transform"
               >
-                {replaceMarkCharsIntoTags(line)}
+                {replaceMarkCharsIntoTags(line, i)}
               </p>
             );
           })}
@@ -98,142 +95,111 @@ const AnimatedRichText = ({
   lastPage,
 }: Props) => {
   const [pageRead, setPageRead] = useState<boolean>(false);
+  const [textExpanded, setTextExpanded] = useState<boolean>(false);
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   const container = useRef<HTMLDivElement>(null);
+  const lines = useRef<NodeListOf<HTMLParagraphElement> | null>(null);
+  const timeline = useRef<GSAPTimeline | null>(null);
 
-  useGSAP(
-    (context, contextSafe) => {
-      let timeline = gsap.timeline({ paused: true });
-      let currentIndex = 0;
+  const { contextSafe } = useGSAP(
+    () => {
+      timeline.current = gsap.timeline({ paused: true });
 
-      const targets: NodeListOf<HTMLElement> =
-        document.querySelectorAll(".line");
+      lines.current = document.querySelectorAll(".line");
 
-      const triggerEl = document.querySelector(
-        ".next-line-btn"
-      ) as HTMLButtonElement;
-      const expandBtn = document.querySelector(
-        ".expand-text-btn"
-      ) as HTMLButtonElement;
+      if (lines.current) {
+        let i = 0;
 
-      let i = 0;
+        while (i < lines.current.length) {
+          const lineEl = Array.from(lines.current)[i];
 
-      while (i < targets.length) {
-        const targetEl = targets[i];
+          timeline.current = timeline.current.add(`el-${i}`).to(lineEl, {
+            opacity: 1,
+            x: 0,
+            duration: 0.4,
+            ease: "ease.out",
+            onComplete: () => {
+              timeline.current?.pause();
+              lineEl.style.willChange = "auto";
+            },
+          });
 
-        timeline = timeline.add(`el-${i}`).to(targetEl, {
-          opacity: 1,
-          x: 0,
-          duration: 0.4,
-          ease: "ease.out",
-          onComplete: () => {
-            timeline.pause();
-            targetEl.style.willChange = "auto";
-          },
-        });
+          i++;
+        }
 
-        i++;
+        goToLine(currentIndex);
+        setCurrentIndex(currentIndex + 1);
       }
-
-      const expandPrevLines = () => {
-        let prevLine = currentIndex - 3 < 0 ? 0 : currentIndex - 3;
-
-        gsap.to(container.current, {
-          height:
-            targets[prevLine].offsetHeight +
-            targets[prevLine + 1].offsetHeight +
-            targets[prevLine + 2].offsetHeight,
-          duration: 0.2,
-          onComplete: () => {
-            container.current?.scrollTo({
-              top: targets[prevLine].offsetTop - container.current?.offsetTop,
-              behavior: "smooth",
-            });
-          },
-        });
-      };
-
-      const goToLine = (i: number) => {
-        targets[i].style.display = "block";
-        gsap.to(container.current, {
-          height: targets[i].offsetHeight,
-          duration: 0.2,
-          onComplete: () => {
-            container.current?.scrollTo({
-              top: targets[i].offsetTop - container.current?.offsetTop,
-              behavior: "smooth",
-            });
-
-            timeline.play(`el-${i}`);
-          },
-        });
-      };
-
-      goToLine(currentIndex);
-      currentIndex++;
-
-      let onNextLine: (e: MouseEvent | KeyboardEvent) => void = () => {};
-      let onExpandText: (e: MouseEvent | KeyboardEvent) => void = () => {};
-
-      let textExpanded = false;
-
-      if (contextSafe) {
-        onNextLine = contextSafe((e) => {
-          if ((e as KeyboardEvent).key && (e as KeyboardEvent).key !== "Enter")
-            return null;
-
-          goToLine(currentIndex);
-
-          if (currentIndex < targets.length - 1) {
-            currentIndex++;
-          } else {
-            setPageRead(true);
-            document.body.removeEventListener("keyup", onNextLine);
-            currentIndex++;
-          }
-
-          if (textExpanded) {
-            expandBtn.textContent = "Expand";
-            textExpanded = false;
-          }
-        });
-
-        onExpandText = contextSafe((e) => {
-          if (
-            (e as KeyboardEvent).key &&
-            (e as KeyboardEvent).key !== "Backspace"
-          )
-            return null;
-
-          if (textExpanded) {
-            goToLine(currentIndex - 1);
-
-            expandBtn.textContent = "Expand";
-
-            textExpanded = false;
-          } else {
-            expandPrevLines();
-
-            textExpanded = true;
-            expandBtn.textContent = "Shrink";
-          }
-        });
-      }
-
-      triggerEl.addEventListener("click", onNextLine);
-      document.body.addEventListener("keyup", onNextLine);
-      expandBtn.addEventListener("click", onExpandText);
-      document.body.addEventListener("keyup", onExpandText);
-
-      return () => {
-        triggerEl.removeEventListener("click", onNextLine);
-        document.body.removeEventListener("keyup", onNextLine);
-        expandBtn.removeEventListener("click", onExpandText);
-        document.body.removeEventListener("keyup", onExpandText);
-      };
     },
     { scope: container }
   );
+
+  const goToLine = contextSafe((i: number) => {
+    const nextLine = Array.from(lines.current || [])[i];
+
+    if (nextLine) {
+      nextLine.style.display = "block";
+      gsap.to(container.current, {
+        height: nextLine.offsetHeight,
+        duration: 0.2,
+        onComplete: () => {
+          container.current?.scrollTo({
+            top: nextLine.offsetTop - container.current?.offsetTop,
+            behavior: "smooth",
+          });
+
+          timeline.current?.play(`el-${i}`);
+        },
+      });
+    }
+  });
+
+  const onNextLine = contextSafe(() => {
+    if (textExpanded) {
+      setTextExpanded(false);
+    }
+
+    goToLine(currentIndex);
+
+    const totalNoOfLines: number = lines.current?.length || 0;
+
+    setCurrentIndex(currentIndex + 1);
+
+    if (currentIndex > totalNoOfLines - 2) {
+      setPageRead(true);
+    }
+  });
+
+  const onExpandText = contextSafe(() => {
+    if (textExpanded) {
+      goToLine(currentIndex - 1);
+
+      setTextExpanded(false);
+    } else {
+      let prevLineIndex = currentIndex - 3 < 0 ? 0 : currentIndex - 3;
+
+      const scrollToLine = Array.from(lines.current || [])[prevLineIndex];
+      const prevLine = Array.from(lines.current || [])[prevLineIndex + 1];
+      const currentLine = Array.from(lines.current || [])[prevLineIndex + 2];
+
+      gsap.to(container.current, {
+        height:
+          (scrollToLine?.offsetHeight || 0) +
+          (prevLine?.offsetHeight || 0) +
+          (currentLine?.offsetHeight || 0),
+        duration: 0.2,
+        onComplete: () => {
+          container.current?.scrollTo({
+            top: (scrollToLine?.offsetTop || 0) - container.current?.offsetTop,
+            behavior: "smooth",
+          });
+        },
+      });
+
+      setTextExpanded(true);
+    }
+  });
 
   return (
     <div className="flex-1 flex flex-col justify-center items-start  relative">
@@ -244,8 +210,15 @@ const AnimatedRichText = ({
         <PortableText value={body} components={portableTextComponents} />
       </div>
       <div className="w-full absolute bottom-0 mt-4">
-        <button className="expand-text-btn flex justify-center w-full underline flex-1 mb-2">
-          Expand
+        <button
+          className="flex justify-center w-full underline flex-1 mb-2"
+          onClick={() => onExpandText()}
+        >
+          {textExpanded ? (
+            <Minus className="w-10 h-10" />
+          ) : (
+            <Plus className="w-10 h-10" />
+          )}
         </button>
         <div className="flex justify-between items-center">
           {firstPage ? (
@@ -271,7 +244,10 @@ const AnimatedRichText = ({
               </Link>
             )
           ) : (
-            <button className="next-line-btn underline flex-1 flex justify-center">
+            <button
+              className="underline flex-1 flex justify-center"
+              onClick={() => onNextLine()}
+            >
               <FastArrowDown className="w-10 h-10" />
             </button>
           )}
