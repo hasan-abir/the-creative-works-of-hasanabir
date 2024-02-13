@@ -19,6 +19,7 @@ interface Data {
   body: any[];
   story: {
     title: string;
+    slug: { current: string };
   };
 }
 
@@ -60,7 +61,7 @@ const StoryPage = async ({
 }) => {
   const pageContent = await client.fetch<Data[]>(
     `*[_type == "storyPage" && story->slug.current == "${slug}" && pageNumber == ${page}]{
-      body, story->{title}
+      body, story->{title,slug}
     }`
   );
 
@@ -75,13 +76,12 @@ const StoryPage = async ({
   return (
     <main className="flex h-full min-h-screen h-full flex-col items-center justify-between p-8">
       <div className="max-w-5xl w-full flex-1 flex flex-col">
-        <div className="flex justify-between">
+        <div className="flex justify-between mb-2 border-b-2 border-current">
           <h1 className="text-2xl">{pageContent[0].story.title}</h1>
           <p>
             {page} of {pageCount}
           </p>
         </div>
-        <hr className="mb-2" />
         <p className="mb-4">
           <em>
             Written by{" "}
@@ -94,7 +94,17 @@ const StoryPage = async ({
           Back to stories
         </Link>
 
-        <AnimatedRichText body={pageContent[0].body} />
+        <AnimatedRichText
+          body={pageContent[0].body}
+          prevUrl={`/stories/${pageContent[0].story.slug.current}/${
+            parseInt(page) - 1
+          }`}
+          nextUrl={`/stories/${pageContent[0].story.slug.current}/${
+            parseInt(page) + 1
+          }`}
+          firstPage={parseInt(page) === 1}
+          lastPage={parseInt(page) === pageCount}
+        />
       </div>
     </main>
   );

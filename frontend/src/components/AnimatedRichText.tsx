@@ -3,10 +3,22 @@
 import { useGSAP } from "@gsap/react";
 import { PortableText, PortableTextComponents } from "@portabletext/react";
 import gsap from "gsap";
-import { useCallback, useMemo, useRef } from "react";
+import { useState, useRef } from "react";
+import {
+  FastArrowDown,
+  FastArrowRight,
+  FastArrowLeft,
+  Plus,
+  Minus,
+} from "iconoir-react";
+import Link from "next/link";
 
 interface Props {
   body: any[];
+  prevUrl: string;
+  nextUrl: string;
+  firstPage: boolean;
+  lastPage: boolean;
 }
 
 const portableTextComponents: PortableTextComponents = {
@@ -53,9 +65,9 @@ const portableTextComponents: PortableTextComponents = {
           });
         } else {
           return /[.?!]$/.test(line) === false
-            ? line + " (To be continued)"
+            ? line + "—"
             : /^[A-Z]/.test(line) === false
-            ? "(Continuing) " + line
+            ? "—" + line
             : line;
         }
       };
@@ -78,7 +90,15 @@ const portableTextComponents: PortableTextComponents = {
   },
 };
 
-const AnimatedRichText = ({ body }: Props) => {
+const AnimatedRichText = ({
+  body,
+  prevUrl,
+  nextUrl,
+  firstPage,
+  lastPage,
+}: Props) => {
+  const [pageRead, setPageRead] = useState<boolean>(false);
+
   const container = useRef<HTMLDivElement>(null);
 
   useGSAP(
@@ -167,8 +187,7 @@ const AnimatedRichText = ({ body }: Props) => {
           if (currentIndex < targets.length - 1) {
             currentIndex++;
           } else {
-            triggerEl.textContent = "Next page";
-            triggerEl.disabled = true;
+            setPageRead(true);
             document.body.removeEventListener("keyup", onNextLine);
             currentIndex++;
           }
@@ -219,14 +238,44 @@ const AnimatedRichText = ({ body }: Props) => {
   return (
     <div className="flex-1 flex flex-col justify-center items-start  relative">
       <div
-        className="rich-text-container overflow-x-hidden h-12 w-full resize-y mb-10"
+        className="rich-text-container overflow-x-hidden h-12 w-full resize-y mb-24"
         ref={container}
       >
         <PortableText value={body} components={portableTextComponents} />
       </div>
-      <div className="w-full flex justify-between absolute bottom-0 mt-4">
-        <button className="expand-text-btn underline flex-1">Expand</button>
-        <button className="next-line-btn underline flex-1">Next line</button>
+      <div className="w-full absolute bottom-0 mt-4">
+        <button className="expand-text-btn flex justify-center w-full underline flex-1 mb-2">
+          Expand
+        </button>
+        <div className="flex justify-between items-center">
+          {firstPage ? (
+            <p className="text-center flex-1">The Start</p>
+          ) : (
+            <Link
+              href={prevUrl}
+              className="underline flex-1 flex justify-center"
+            >
+              <FastArrowLeft className="w-10 h-10" />
+            </Link>
+          )}
+
+          {pageRead ? (
+            lastPage ? (
+              <p className="text-center flex-1">The End</p>
+            ) : (
+              <Link
+                href={nextUrl}
+                className="underline flex-1 flex justify-center"
+              >
+                <FastArrowRight className="w-10 h-10" />
+              </Link>
+            )
+          ) : (
+            <button className="next-line-btn underline flex-1 flex justify-center">
+              <FastArrowDown className="w-10 h-10" />
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
