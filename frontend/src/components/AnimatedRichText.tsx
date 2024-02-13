@@ -39,6 +39,11 @@ const portableTextComponents: PortableTextComponents = {
           } else {
             text += childBlock.text;
           }
+
+          if (i === value.children.length - 1) {
+            text = text.trimEnd();
+          }
+
           i++;
         }
 
@@ -202,7 +207,19 @@ const AnimatedRichText = ({
   });
 
   return (
-    <div className="flex-1 flex flex-col justify-center items-start  relative">
+    <div
+      className="flex-1 flex flex-col justify-center items-start outline-0 relative"
+      onKeyUp={(e) => {
+        if (e.key === "Enter") {
+          onNextLine();
+        }
+
+        if (e.key === " ") {
+          onExpandText();
+        }
+      }}
+      tabIndex={0}
+    >
       <div
         className="rich-text-container overflow-x-hidden h-12 w-full resize-y mb-24"
         ref={container}
