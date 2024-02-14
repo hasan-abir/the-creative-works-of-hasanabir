@@ -9,6 +9,7 @@ import {
   FastArrowRight,
   Minus,
   Plus,
+  LongArrowUpRight,
 } from "iconoir-react";
 import Link from "next/link";
 import { useRef, useState } from "react";
@@ -178,7 +179,7 @@ const AnimatedRichText = ({
     { scope: container }
   );
 
-  const goToLine = contextSafe((i: number) => {
+  const goToLine = contextSafe((i: number, playLineAnim: boolean = true) => {
     const nextLine = Array.from(lines.current || [])[i];
 
     if (nextLine) {
@@ -192,7 +193,9 @@ const AnimatedRichText = ({
             behavior: "smooth",
           });
 
-          timeline.current?.play(`el-${i}`);
+          if (playLineAnim) {
+            timeline.current?.play(`el-${i}`);
+          }
 
           if (i > 0) {
             localStorage.setItem(currentUrl, i.toString());
@@ -220,7 +223,7 @@ const AnimatedRichText = ({
 
   const onExpandText = contextSafe(() => {
     if (textExpanded) {
-      goToLine(currentIndex - 1);
+      goToLine(currentIndex - 1, false);
 
       setTextExpanded(false);
     } else {
@@ -248,6 +251,25 @@ const AnimatedRichText = ({
     }
   });
 
+  const onToTop = contextSafe(() => {
+    if (textExpanded) {
+      setTextExpanded(false);
+    }
+
+    if (lines.current) {
+      let i = 0;
+      while (i < lines.current?.length) {
+        Array.from(lines.current)[i].style.display = "none";
+
+        i++;
+      }
+    }
+    goToLine(0, false);
+    setCurrentIndex(1);
+    setPageRead(false);
+    localStorage.setItem(currentUrl, "0");
+  });
+
   return (
     <div
       className="flex-1 flex flex-col justify-center items-start outline-0 relative"
@@ -269,16 +291,24 @@ const AnimatedRichText = ({
         <PortableText value={body} components={portableTextComponents} />
       </div>
       <div className="w-full absolute bottom-0 mt-4">
-        <button
-          className="flex justify-center w-full underline flex-1 mb-2"
-          onClick={() => onExpandText()}
-        >
-          {textExpanded ? (
-            <Minus className="w-10 h-10" />
-          ) : (
-            <Plus className="w-10 h-10" />
-          )}
-        </button>
+        <div className="flex justify-between items-center mb-2">
+          <button
+            className="flex justify-center w-full underline flex-1"
+            onClick={() => onToTop()}
+          >
+            <LongArrowUpRight className="w-10 h-10" />
+          </button>
+          <button
+            className="flex justify-center w-full underline flex-1"
+            onClick={() => onExpandText()}
+          >
+            {textExpanded ? (
+              <Minus className="w-10 h-10" />
+            ) : (
+              <Plus className="w-10 h-10" />
+            )}
+          </button>
+        </div>
         <div className="flex justify-between items-center">
           {firstPage ? (
             <p className="text-center flex-1">The Start</p>
