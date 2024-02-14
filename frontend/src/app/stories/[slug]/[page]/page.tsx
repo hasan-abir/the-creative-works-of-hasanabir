@@ -99,6 +99,9 @@ const StoryPage = async ({
           prevUrl={`/stories/${pageContent[0].story.slug.current}/${
             parseInt(page) - 1
           }`}
+          currentUrl={`/stories/${pageContent[0].story.slug.current}/${parseInt(
+            page
+          )}`}
           nextUrl={`/stories/${pageContent[0].story.slug.current}/${
             parseInt(page) + 1
           }`}

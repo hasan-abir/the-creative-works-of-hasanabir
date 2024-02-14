@@ -3,19 +3,20 @@
 import { useGSAP } from "@gsap/react";
 import { PortableText, PortableTextComponents } from "@portabletext/react";
 import gsap from "gsap";
-import { useState, useRef } from "react";
 import {
   FastArrowDown,
-  FastArrowRight,
   FastArrowLeft,
-  Plus,
+  FastArrowRight,
   Minus,
+  Plus,
 } from "iconoir-react";
 import Link from "next/link";
+import { useRef, useState } from "react";
 
 interface Props {
   body: any[];
   prevUrl: string;
+  currentUrl: string;
   nextUrl: string;
   firstPage: boolean;
   lastPage: boolean;
@@ -95,6 +96,7 @@ const portableTextComponents: PortableTextComponents = {
 const AnimatedRichText = ({
   body,
   prevUrl,
+  currentUrl,
   nextUrl,
   firstPage,
   lastPage,
@@ -148,8 +150,29 @@ const AnimatedRichText = ({
           Array.from(lines.current)[0].textContent = `—${firstLine}` || "";
         }
 
-        goToLine(currentIndex);
-        setCurrentIndex(currentIndex + 1);
+        let initialIndex = currentIndex;
+
+        const indexFromStorage = localStorage.getItem(currentUrl);
+
+        initialIndex =
+          indexFromStorage && parseInt(indexFromStorage) >= 0
+            ? parseInt(indexFromStorage)
+            : 0;
+
+        goToLine(initialIndex);
+        if (initialIndex > 0 && initialIndex < lines.current.length) {
+          let j = 0;
+
+          while (j < initialIndex) {
+            Array.from(lines.current)[j].style.display = "block";
+
+            j++;
+          }
+        }
+        setCurrentIndex(initialIndex + 1);
+        if (initialIndex > lines.current.length - 2) {
+          setPageRead(true);
+        }
       }
     },
     { scope: container }
@@ -170,6 +193,10 @@ const AnimatedRichText = ({
           });
 
           timeline.current?.play(`el-${i}`);
+
+          if (i > 0) {
+            localStorage.setItem(currentUrl, i.toString());
+          }
         },
       });
     }
