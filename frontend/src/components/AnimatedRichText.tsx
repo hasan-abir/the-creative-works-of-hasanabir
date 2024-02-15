@@ -17,11 +17,14 @@ import { useRef, useState } from "react";
 interface Props {
   body: any[];
   prevUrl: string;
-  currentUrl: string;
+  slug: string;
+  page: number;
   nextUrl: string;
   firstPage: boolean;
   lastPage: boolean;
 }
+
+type LineInMemory = Record<number, number>;
 
 const portableTextComponents: PortableTextComponents = {
   block: {
@@ -97,7 +100,8 @@ const portableTextComponents: PortableTextComponents = {
 const AnimatedRichText = ({
   body,
   prevUrl,
-  currentUrl,
+  page,
+  slug,
   nextUrl,
   firstPage,
   lastPage,
@@ -107,6 +111,7 @@ const AnimatedRichText = ({
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   const container = useRef<HTMLDivElement>(null);
+  const memoryOfLine = useRef<LineInMemory | null>(null);
   const lines = useRef<NodeListOf<HTMLParagraphElement> | null>(null);
   const timeline = useRef<GSAPTimeline | null>(null);
 
@@ -153,12 +158,14 @@ const AnimatedRichText = ({
 
         let initialIndex = currentIndex;
 
-        const indexFromStorage = localStorage.getItem(currentUrl);
+        const objStored: LineInMemory = JSON.parse(
+          localStorage.getItem(slug) || "{}"
+        );
+        memoryOfLine.current = objStored;
+        const indexFromStorage = objStored && objStored[page];
 
         initialIndex =
-          indexFromStorage && parseInt(indexFromStorage) >= 0
-            ? parseInt(indexFromStorage)
-            : 0;
+          indexFromStorage && indexFromStorage >= 0 ? indexFromStorage : 0;
 
         goToLine(initialIndex);
         if (initialIndex > 0 && initialIndex < lines.current.length) {
@@ -198,7 +205,13 @@ const AnimatedRichText = ({
           }
 
           if (i > 0) {
-            localStorage.setItem(currentUrl, i.toString());
+            localStorage.setItem(
+              slug,
+              JSON.stringify({
+                ...memoryOfLine.current,
+                [page]: i,
+              })
+            );
           }
         },
       });
@@ -267,7 +280,13 @@ const AnimatedRichText = ({
     goToLine(0, false);
     setCurrentIndex(1);
     setPageRead(false);
-    localStorage.setItem(currentUrl, "0");
+    localStorage.setItem(
+      slug,
+      JSON.stringify({
+        ...memoryOfLine.current,
+        [page]: 0,
+      })
+    );
   });
 
   return (
