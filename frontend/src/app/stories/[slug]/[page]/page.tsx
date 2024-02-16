@@ -1,4 +1,4 @@
-import AnimatedRichText from "@/components/AnimatedRichText";
+import Lines from "@/components/LinesList";
 import { client } from "@/lib/sanity/client";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -94,16 +94,9 @@ const StoryPage = async ({
           Back to stories
         </Link>
 
-        <AnimatedRichText
+        <Lines
           body={pageContent[0].body}
-          prevUrl={`/stories/${pageContent[0].story.slug.current}/${
-            parseInt(page) - 1
-          }`}
-          slug={`/stories/${pageContent[0].story.slug.current}`}
-          page={parseInt(page)}
-          nextUrl={`/stories/${pageContent[0].story.slug.current}/${
-            parseInt(page) + 1
-          }`}
+          basePath="/stories"
           firstPage={parseInt(page) === 1}
           lastPage={parseInt(page) === pageCount}
         />
