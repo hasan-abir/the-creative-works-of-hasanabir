@@ -4,9 +4,8 @@ import LineAndPageNav from "@/components/LineAndPageNav";
 import { useGSAP } from "@gsap/react";
 import { PortableText, PortableTextComponents } from "@portabletext/react";
 import gsap from "gsap";
-import { useCallback, useRef, useState } from "react";
-import ProgressBar from "@/components/ProgressBar";
 import { useParams } from "next/navigation";
+import { useCallback, useRef, useState } from "react";
 
 interface Props {
   body: any[];
@@ -217,9 +216,8 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
       className="flex-1 flex flex-col justify-center items-start outline-0 relative"
       tabIndex={0}
     >
-      <ProgressBar progress={currentIndex / (lines.current?.length || 1)} />
       <div
-        className="rich-text-container overflow-x-hidden h-12 w-full resize-y mb-24"
+        className="rich-text-container overflow-x-hidden h-12 w-full resize-y mb-32"
         ref={container}
       >
         <PortableText value={body} components={portableTextComponents} />

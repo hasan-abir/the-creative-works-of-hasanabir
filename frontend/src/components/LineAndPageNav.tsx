@@ -13,6 +13,7 @@ import { LineInMemory } from "./LinesList";
 import { useParams } from "next/navigation";
 import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import Link from "next/link";
+import ProgressBar from "./ProgressBar";
 
 interface Props {
   lines: HTMLParagraphElement[];
@@ -140,56 +141,59 @@ const LineAndPageNav = ({
   }, [currentIndex, textExpanded]);
 
   return (
-    <div className="w-full absolute bottom-0 mt-4">
-      <div className="flex justify-between items-center mb-2">
-        <button
-          className="flex justify-center w-full underline flex-1"
-          onClick={() => onToTop()}
-        >
-          <LongArrowUpRight className="w-10 h-10" />
-        </button>
-        <button
-          className="flex justify-center w-full underline flex-1"
-          onClick={() => onExpandText()}
-        >
-          {textExpanded ? (
-            <Minus className="w-10 h-10" />
-          ) : (
-            <Plus className="w-10 h-10" />
-          )}
-        </button>
-      </div>
-      <div className="flex justify-between items-center">
-        {firstPage ? (
-          <p className="text-center flex-1">The Start</p>
-        ) : (
-          <Link
-            href={`${basePath}/${params.slug}/${parseInt(params.page) - 1}`}
-            className="underline flex-1 flex justify-center"
+    <div>
+      <div className="w-full absolute bottom-0 mt-4">
+        <div className="flex justify-between items-center mb-2">
+          <button
+            className="flex justify-center w-full underline flex-1"
+            onClick={() => onToTop()}
           >
-            <FastArrowLeft className="w-10 h-10" />
-          </Link>
-        )}
-
-        {pageRead ? (
-          lastPage ? (
-            <p className="text-center flex-1">The End</p>
+            <LongArrowUpRight className="w-10 h-10" />
+          </button>
+          <button
+            className="flex justify-center w-full underline flex-1"
+            onClick={() => onExpandText()}
+          >
+            {textExpanded ? (
+              <Minus className="w-10 h-10" />
+            ) : (
+              <Plus className="w-10 h-10" />
+            )}
+          </button>
+        </div>
+        <div className="flex justify-between items-center">
+          {firstPage ? (
+            <p className="text-center flex-1">The Start</p>
           ) : (
             <Link
-              href={`${basePath}/${params.slug}/${parseInt(params.page) + 1}`}
+              href={`${basePath}/${params.slug}/${parseInt(params.page) - 1}`}
               className="underline flex-1 flex justify-center"
             >
-              <FastArrowRight className="w-10 h-10" />
+              <FastArrowLeft className="w-10 h-10" />
             </Link>
-          )
-        ) : (
-          <button
-            className="underline flex-1 flex justify-center"
-            onClick={() => onNextLine()}
-          >
-            <FastArrowDown className="w-10 h-10" />
-          </button>
-        )}
+          )}
+
+          {pageRead ? (
+            lastPage ? (
+              <p className="text-center flex-1">The End</p>
+            ) : (
+              <Link
+                href={`${basePath}/${params.slug}/${parseInt(params.page) + 1}`}
+                className="underline flex-1 flex justify-center"
+              >
+                <FastArrowRight className="w-10 h-10" />
+              </Link>
+            )
+          ) : (
+            <button
+              className="underline flex-1 flex justify-center"
+              onClick={() => onNextLine()}
+            >
+              <FastArrowDown className="w-10 h-10" />
+            </button>
+          )}
+        </div>
+        <ProgressBar progress={currentIndex / lines.length} />
       </div>
     </div>
   );
