@@ -1,0 +1,47 @@
+import splitBlockIntoLines from "@/utils/splitBlockIntoLines";
+
+describe("splitBlockIntoLines: ", () => {
+  let block = "";
+  beforeEach(() => {
+    block =
+      "Lorem ipsum dolor. Etiam quis ullamcorper nunc! Nullam eleifend sollicitudin tortor? Sed sed mollis mi.";
+  });
+
+  it("separates by .?!", () => {
+    const lines = splitBlockIntoLines(block);
+
+    expect(lines.length).toBe(4);
+    expect(lines[0]).toBe("Lorem ipsum dolor.");
+    expect(lines[1]).toBe("Etiam quis ullamcorper nunc!");
+    expect(lines[2]).toBe("Nullam eleifend sollicitudin tortor?");
+    expect(lines[3]).toBe("Sed sed mollis mi.");
+  });
+
+  it("separates by .?! including the last line that doesn't end with a punctuation", () => {
+    block = `${block} Sed sed mollis mi`;
+
+    const lines = splitBlockIntoLines(block);
+
+    expect(lines.length).toBe(5);
+    expect(lines[0]).toBe("Lorem ipsum dolor.");
+    expect(lines[1]).toBe("Etiam quis ullamcorper nunc!");
+    expect(lines[2]).toBe("Nullam eleifend sollicitudin tortor?");
+    expect(lines[3]).toBe("Sed sed mollis mi.");
+    expect(lines[4]).toBe("Sed sed mollis mi");
+  });
+
+  it("separates by .?! excluding abbreviations", () => {
+    block = `${block} Mr. Smith is flavorful. Mrs. Smith is more.`;
+
+    const lines = splitBlockIntoLines(block);
+    console.log(lines);
+
+    expect(lines.length).toBe(6);
+    expect(lines[0]).toBe("Lorem ipsum dolor.");
+    expect(lines[1]).toBe("Etiam quis ullamcorper nunc!");
+    expect(lines[2]).toBe("Nullam eleifend sollicitudin tortor?");
+    expect(lines[3]).toBe("Sed sed mollis mi.");
+    expect(lines[4]).toBe("Mr. Smith is flavorful.");
+    expect(lines[5]).toBe("Mrs. Smith is more.");
+  });
+});

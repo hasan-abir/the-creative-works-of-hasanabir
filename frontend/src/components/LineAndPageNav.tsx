@@ -9,11 +9,11 @@ import {
   Plus,
   LongArrowUpRight,
 } from "iconoir-react";
-import { LineInMemory } from "./LinesList";
+import { LineInMemory } from "@/components/LinesList";
 import { useParams } from "next/navigation";
 import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import Link from "next/link";
-import ProgressBar from "./ProgressBar";
+import ProgressBar from "@/components/ProgressBar";
 
 interface Props {
   lines: HTMLParagraphElement[];

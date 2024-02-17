@@ -1,6 +1,7 @@
 "use client";
 
 import LineAndPageNav from "@/components/LineAndPageNav";
+import splitBlockIntoLines from "@/utils/splitBlockIntoLines";
 import { useGSAP } from "@gsap/react";
 import { PortableText, PortableTextComponents } from "@portabletext/react";
 import gsap from "gsap";
@@ -42,7 +43,7 @@ const portableTextComponents: PortableTextComponents = {
           i++;
         }
 
-        lines = text.match(/(?<!\S)[^.?!]*(?:[.?!](?!\S)|$)/g) || [];
+        lines = splitBlockIntoLines(text);
       }
 
       const replaceMarkCharsIntoTags = (
