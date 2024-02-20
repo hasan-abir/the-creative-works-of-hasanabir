@@ -146,18 +146,23 @@ const LineAndPageNav = ({
         <div className="flex justify-between items-center mb-2">
           <button
             className="flex justify-center w-full underline flex-1"
+            data-testid="to-top-btn"
             onClick={() => onToTop()}
           >
             <LongArrowUpRight className="w-10 h-10" />
           </button>
           <button
             className="flex justify-center w-full underline flex-1"
+            data-testid="expand-text-btn"
             onClick={() => onExpandText()}
           >
             {textExpanded ? (
-              <Minus className="w-10 h-10" />
+              <Minus className="w-10 h-10" data-testid="text-expanded-icon" />
             ) : (
-              <Plus className="w-10 h-10" />
+              <Plus
+                className="w-10 h-10"
+                data-testid="text-not-expanded-icon"
+              />
             )}
           </button>
         </div>
@@ -166,6 +171,7 @@ const LineAndPageNav = ({
             <p className="text-center flex-1">The Start</p>
           ) : (
             <Link
+              data-testid="prev-page-link"
               href={`${basePath}/${params.slug}/${parseInt(params.page) - 1}`}
               className="underline flex-1 flex justify-center"
             >
@@ -178,6 +184,7 @@ const LineAndPageNav = ({
               <p className="text-center flex-1">The End</p>
             ) : (
               <Link
+                data-testid="next-page-link"
                 href={`${basePath}/${params.slug}/${parseInt(params.page) + 1}`}
                 className="underline flex-1 flex justify-center"
               >
@@ -186,6 +193,7 @@ const LineAndPageNav = ({
             )
           ) : (
             <button
+              data-testid="next-line-btn"
               className="underline flex-1 flex justify-center"
               onClick={() => onNextLine()}
             >
