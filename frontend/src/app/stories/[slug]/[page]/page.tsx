@@ -1,4 +1,4 @@
-import Lines from "@/components/LinesList";
+import LinesList from "@/components/LinesList";
 import StoryPageHeader from "@/components/headers/StoryPageHeader";
 import { client } from "@/lib/sanity/client";
 import { notFound } from "next/navigation";
@@ -84,8 +84,8 @@ const StoryPage = async ({
           pageCount={pageCount}
         />
 
-        <Lines
-          body={pageContent[0].body}
+        <LinesList
+          body={(pageContent[0] && pageContent[0].body) || []}
           basePath="/stories"
           firstPage={parseInt(page) === 1}
           lastPage={parseInt(page) === pageCount}

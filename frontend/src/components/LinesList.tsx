@@ -213,10 +213,7 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
   });
 
   return (
-    <div
-      className="flex-1 flex flex-col justify-center items-start outline-0 relative"
-      tabIndex={0}
-    >
+    <div className="flex-1 flex flex-col justify-center items-start outline-0 relative">
       <div
         className="rich-text-container overflow-x-hidden h-12 w-full resize-y mb-32"
         ref={container}
