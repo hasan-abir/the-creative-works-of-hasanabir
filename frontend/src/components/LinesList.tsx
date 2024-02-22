@@ -6,7 +6,7 @@ import { useGSAP } from "@gsap/react";
 import { PortableText, PortableTextComponents } from "@portabletext/react";
 import gsap from "gsap";
 import { useParams } from "next/navigation";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 
 interface Props {
   body: any[];
@@ -213,12 +213,14 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
   });
 
   return (
-    <div className="flex-1 flex flex-col justify-center items-start outline-0 relative">
-      <div
-        className="rich-text-container overflow-x-hidden h-12 w-full resize-y mb-32"
-        ref={container}
-      >
-        <PortableText value={body} components={portableTextComponents} />
+    <div className="flex-1  flex flex-col justify-between">
+      <div className="flex-1 flex items-center py-4">
+        <div
+          className="rich-text-container overflow-x-hidden h-12 max-h-[380px] shortphones:max-h-[310px]"
+          ref={container}
+        >
+          <PortableText value={body} components={portableTextComponents} />
+        </div>
       </div>
       <LineAndPageNav
         lines={Array.from(lines.current || [])}

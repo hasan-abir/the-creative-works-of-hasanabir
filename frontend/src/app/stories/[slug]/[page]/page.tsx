@@ -74,8 +74,8 @@ const StoryPage = async ({
   }
 
   return (
-    <main className="flex h-full min-h-screen h-full flex-col items-center justify-between p-8">
-      <div className="max-w-5xl w-full flex-1 flex flex-col">
+    <main className="h-screen p-8">
+      <div className="max-w-5xl w-full h-full flex flex-col justify-between">
         <StoryPageHeader
           title={
             pageContent[0] && pageContent[0].story && pageContent[0].story.title

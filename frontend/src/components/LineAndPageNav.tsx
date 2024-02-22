@@ -71,24 +71,8 @@ const LineAndPageNav = ({
 
       setTextExpanded(false);
     } else {
-      let prevLineIndex = currentIndex - 3 < 0 ? 0 : currentIndex - 3;
-
-      const scrollToLine = Array.from(lines)[prevLineIndex];
-      const prevLine = Array.from(lines)[prevLineIndex + 1];
-      const currentLine = Array.from(lines)[prevLineIndex + 2];
-
       gsap.to(container, {
-        height:
-          (scrollToLine?.offsetHeight || 0) +
-          (prevLine?.offsetHeight || 0) +
-          (currentLine?.offsetHeight || 0),
-        duration: 0.2,
-        onComplete: () => {
-          container?.scrollTo({
-            top: (scrollToLine?.offsetTop || 0) - container?.offsetTop,
-            behavior: "smooth",
-          });
-        },
+        height: "auto",
       });
 
       setTextExpanded(true);
@@ -103,10 +87,12 @@ const LineAndPageNav = ({
     let i = 0;
     while (i < lines.length) {
       lines[i].style.display = "none";
+      lines[i].style.transform = "translateX(10rem)";
+      lines[i].style.opacity = "0";
 
       i++;
     }
-    goToLine(0, false);
+    goToLine(0);
     setCurrentIndex(1);
     setPageRead(false);
     localStorage.setItem(
@@ -141,68 +127,63 @@ const LineAndPageNav = ({
   }, [currentIndex, textExpanded]);
 
   return (
-    <div>
-      <div className="w-full absolute bottom-0 mt-4">
-        <div className="flex justify-between items-center mb-2">
-          <button
-            className="flex justify-center w-full underline flex-1"
-            data-testid="to-top-btn"
-            onClick={() => onToTop()}
+    <div className="w-full">
+      <div className="flex justify-between items-center mb-2">
+        <button
+          className="underline"
+          data-testid="to-top-btn"
+          onClick={() => onToTop()}
+        >
+          <LongArrowUpRight className="w-8 h-8" />
+        </button>
+        <button
+          className="underline"
+          data-testid="expand-text-btn"
+          onClick={() => onExpandText()}
+        >
+          {textExpanded ? (
+            <Minus className="w-8 h-8" data-testid="text-expanded-icon" />
+          ) : (
+            <Plus className="w-8 h-8" data-testid="text-not-expanded-icon" />
+          )}
+        </button>
+      </div>
+      <div className="flex justify-between items-center">
+        {firstPage ? (
+          <p className="text-center flex-1">The Start</p>
+        ) : (
+          <Link
+            data-testid="prev-page-link"
+            href={`${basePath}/${params.slug}/${parseInt(params.page) - 1}`}
+            className="underline flex-1 flex justify-center"
           >
-            <LongArrowUpRight className="w-10 h-10" />
-          </button>
-          <button
-            className="flex justify-center w-full underline flex-1"
-            data-testid="expand-text-btn"
-            onClick={() => onExpandText()}
-          >
-            {textExpanded ? (
-              <Minus className="w-10 h-10" data-testid="text-expanded-icon" />
-            ) : (
-              <Plus
-                className="w-10 h-10"
-                data-testid="text-not-expanded-icon"
-              />
-            )}
-          </button>
-        </div>
-        <div className="flex justify-between items-center">
-          {firstPage ? (
-            <p className="text-center flex-1">The Start</p>
+            <FastArrowLeft className="w-10 h-10" />
+          </Link>
+        )}
+
+        {pageRead ? (
+          lastPage ? (
+            <p className="text-center flex-1">The End</p>
           ) : (
             <Link
-              data-testid="prev-page-link"
-              href={`${basePath}/${params.slug}/${parseInt(params.page) - 1}`}
+              data-testid="next-page-link"
+              href={`${basePath}/${params.slug}/${parseInt(params.page) + 1}`}
               className="underline flex-1 flex justify-center"
             >
-              <FastArrowLeft className="w-10 h-10" />
+              <FastArrowRight className="w-10 h-10" />
             </Link>
-          )}
-
-          {pageRead ? (
-            lastPage ? (
-              <p className="text-center flex-1">The End</p>
-            ) : (
-              <Link
-                data-testid="next-page-link"
-                href={`${basePath}/${params.slug}/${parseInt(params.page) + 1}`}
-                className="underline flex-1 flex justify-center"
-              >
-                <FastArrowRight className="w-10 h-10" />
-              </Link>
-            )
-          ) : (
-            <button
-              data-testid="next-line-btn"
-              className="underline flex-1 flex justify-center"
-              onClick={() => onNextLine()}
-            >
-              <FastArrowDown className="w-10 h-10" />
-            </button>
-          )}
-        </div>
-        <ProgressBar progress={currentIndex / lines.length} />
+          )
+        ) : (
+          <button
+            data-testid="next-line-btn"
+            className="underline flex-1 flex justify-center"
+            onClick={() => onNextLine()}
+          >
+            <FastArrowDown className="w-10 h-10" />
+          </button>
+        )}
       </div>
+      <ProgressBar progress={currentIndex / lines.length} />
     </div>
   );
 };

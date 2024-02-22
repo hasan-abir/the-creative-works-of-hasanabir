@@ -26,6 +26,28 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+/* Scrollbar styles */
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  @apply bg-transparent; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  @apply dark:bg-neutral-700 bg-neutral-300
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  @apply dark:bg-neutral-600 bg-neutral-400
+}
+/* Scrollbar styles */
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
