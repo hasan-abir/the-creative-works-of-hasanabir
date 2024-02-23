@@ -154,7 +154,7 @@ describe("LineAndPageNav", () => {
     fireEvent.click(screen.getByTestId("to-top-btn"));
 
     expect(setTextExpanded).not.toHaveBeenCalled();
-    expect(goToLine).toHaveBeenCalledWith(0, false);
+    expect(goToLine).toHaveBeenCalledWith(0);
     expect(setCurrentIndex).toHaveBeenCalledWith(1);
     expect(setPageRead).toHaveBeenCalledWith(false);
   });

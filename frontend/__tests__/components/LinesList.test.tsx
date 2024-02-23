@@ -1,6 +1,6 @@
-import "@testing-library/jest-dom";
-import { fireEvent, render, screen } from "@testing-library/react";
 import LinesList from "@/components/LinesList";
+import "@testing-library/jest-dom";
+import { render } from "@testing-library/react";
 
 const slug = "abc";
 const page = "1";
