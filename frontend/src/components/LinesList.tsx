@@ -76,7 +76,7 @@ const portableTextComponents: PortableTextComponents = {
             return (
               <p
                 key={i}
-                className="line text-xl opacity-0 hidden translate-x-[10rem] will-change-transform"
+                className="line mb-[1px] text-xl md:text-2xl opacity-0 hidden translate-x-[10rem] skew-x-[-60deg] will-change-transform"
               >
                 {replaceMarkCharsIntoTags(line, i)}
               </p>
@@ -137,8 +137,9 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
           timeline.current = timeline.current.add(`el-${i}`).to(lineEl, {
             opacity: 1,
             x: 0,
-            duration: 0.4,
-            ease: "ease.out",
+            skewX: 0,
+            duration: 1,
+            ease: "expo.out",
             onComplete: () => {
               timeline.current?.pause();
               lineEl.style.willChange = "auto";
@@ -180,47 +181,65 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
     { scope: container }
   );
 
-  const goToLine = contextSafe((i: number, playLineAnim: boolean = true) => {
-    const nextLine = Array.from(lines.current || [])[i];
+  const goToLine = contextSafe(
+    (
+      i: number,
+      smoothScroll: boolean = false,
+      playLineAnim: boolean = true
+    ) => {
+      const nextLine = Array.from(lines.current || [])[i];
 
-    if (nextLine) {
-      nextLine.style.display = "block";
-      gsap.to(container.current, {
-        height: nextLine.offsetHeight,
-        duration: 0.2,
-        onComplete: () => {
-          container.current?.scrollTo({
-            top: nextLine.offsetTop - container.current?.offsetTop,
-            behavior: "smooth",
-          });
+      if (nextLine) {
+        nextLine.style.display = "block";
+        gsap.to(container.current, {
+          height: nextLine.offsetHeight,
+          duration: 0.2,
+          onComplete: () => {
+            container.current?.scrollTo({
+              top: nextLine.offsetTop - container.current?.offsetTop,
+              behavior: smoothScroll ? "smooth" : "instant",
+            });
 
-          if (playLineAnim) {
-            timeline.current?.play(`el-${i}`);
-          }
+            if (playLineAnim) {
+              timeline.current?.play(`el-${i}`);
+            }
 
-          if (i > 0) {
-            localStorage.setItem(
-              `${basePath}/${params.slug}`,
-              JSON.stringify({
-                ...memoryOfLine.current,
-                [params.page]: i,
-              })
-            );
-          }
-        },
-      });
+            if (i > 0) {
+              localStorage.setItem(
+                `${basePath}/${params.slug}`,
+                JSON.stringify({
+                  ...memoryOfLine.current,
+                  [params.page]: i,
+                })
+              );
+            }
+          },
+        });
+      }
     }
-  });
+  );
 
   return (
     <div className="flex-1  flex flex-col justify-between">
-      <div className="flex-1 flex items-center py-4">
+      <div className="flex-1 flex flex-col justify-center py-4">
         <div
-          className="rich-text-container overflow-x-hidden h-12 max-h-[380px] shortphones:max-h-[310px]"
+          className={`mb-2 h-[5px] w-full dark:bg-neutral-900 bg-neutral-300 transition-transform duration-700 origin-left ${
+            textExpanded ? "scale-x-100" : "scale-x-0"
+          }`}
+        ></div>
+        <div
+          className={`overflow-x-hidden h-12 max-h-[45vh] ${
+            textExpanded ? "overflow-y-auto" : "overflow-y-hidden"
+          }`}
           ref={container}
         >
           <PortableText value={body} components={portableTextComponents} />
         </div>
+        <div
+          className={`mt-2 h-[5px] w-full dark:bg-neutral-900 bg-neutral-300 transition-transform duration-700 origin-right ${
+            textExpanded ? "scale-x-100" : "scale-x-0"
+          }`}
+        ></div>
       </div>
       <LineAndPageNav
         lines={Array.from(lines.current || [])}

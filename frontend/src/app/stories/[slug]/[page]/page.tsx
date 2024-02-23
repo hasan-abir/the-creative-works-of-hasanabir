@@ -74,7 +74,7 @@ const StoryPage = async ({
   }
 
   return (
-    <main className="h-screen p-8">
+    <main className="h-screen h-dvh pt-8 px-8 flex justify-center">
       <div className="max-w-5xl w-full h-full flex flex-col justify-between">
         <StoryPageHeader
           title={

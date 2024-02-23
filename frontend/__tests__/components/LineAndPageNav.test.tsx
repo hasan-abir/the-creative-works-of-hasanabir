@@ -204,7 +204,7 @@ describe("LineAndPageNav", () => {
     );
     fireEvent.click(screen.getByTestId("expand-text-btn"));
 
-    expect(goToLine).toHaveBeenCalledWith(currentIndex - 1, false);
+    expect(goToLine).toHaveBeenCalledWith(currentIndex - 1, true, false);
     expect(setTextExpanded).toHaveBeenCalledWith(false);
   });
   it("next line button goes to next line", () => {

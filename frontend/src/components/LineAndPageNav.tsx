@@ -28,7 +28,7 @@ interface Props {
   setTextExpanded: Dispatch<SetStateAction<boolean>>;
   setCurrentIndex: Dispatch<SetStateAction<number>>;
   setPageRead: Dispatch<SetStateAction<boolean>>;
-  goToLine: (i: number, playLineAnim?: boolean) => void;
+  goToLine: (i: number, smoothScroll?: boolean, playLineAnim?: boolean) => void;
 }
 
 const LineAndPageNav = ({
@@ -67,7 +67,7 @@ const LineAndPageNav = ({
 
   const onExpandText = contextSafe(() => {
     if (textExpanded) {
-      goToLine(currentIndex - 1, false);
+      goToLine(currentIndex - 1, true, false);
 
       setTextExpanded(false);
     } else {
@@ -127,7 +127,7 @@ const LineAndPageNav = ({
   }, [currentIndex, textExpanded]);
 
   return (
-    <div className="w-full">
+    <div className="w-full pb-8">
       <div className="flex justify-between items-center mb-2">
         <button
           className="underline"
