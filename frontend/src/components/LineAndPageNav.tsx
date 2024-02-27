@@ -124,7 +124,14 @@ const LineAndPageNav = ({
     return () => {
       document.body.removeEventListener("keyup", onKeyUp);
     };
-  }, [currentIndex, textExpanded]);
+  }, [
+    basePath,
+    params.slug,
+    onExpandText,
+    onNextLine,
+    currentIndex,
+    textExpanded,
+  ]);
 
   return (
     <div className="w-full pb-8">

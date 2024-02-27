@@ -35,7 +35,7 @@ const ContinueReading = ({ basePath, classList }: Props) => {
     }
 
     setPageNumber(highestPageNumber);
-  }, []);
+  }, [basePath, params.slug]);
   return (
     <Link
       className={classList}

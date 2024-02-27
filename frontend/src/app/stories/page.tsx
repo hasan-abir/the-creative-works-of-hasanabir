@@ -1,7 +1,7 @@
-import { client } from "@/lib/sanity/client";
+import { fetchData } from "@/lib/sanity/client";
 import Link from "next/link";
 
-interface Data {
+export interface StoryInAList {
   _id: string;
   title: string;
   slug: { current: string };
@@ -9,7 +9,7 @@ interface Data {
 }
 
 const Stories = async () => {
-  const stories = await client.fetch<Data[]>(`*[_type == "story"]{
+  const stories = await fetchData<StoryInAList[]>(`*[_type == "story"]{
     _id, title, excerpt, slug
   }`);
 

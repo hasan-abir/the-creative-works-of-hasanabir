@@ -1,5 +1,5 @@
 import ContinueReading from "@/components/ContinueReading";
-import { client } from "@/lib/sanity/client";
+import { fetchData } from "@/lib/sanity/client";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -11,16 +11,14 @@ interface StaticParamValue {
   slug: { current: string };
 }
 
-interface Data {
+export interface Story {
   title: string;
   excerpt: string;
   slug: { current: string };
 }
 
 export const generateStaticParams = async () => {
-  const stories = await client.fetch<
-    StaticParamValue[]
-  >(`*[_type == "story"]{ slug
+  const stories = await fetchData<StaticParamValue[]>(`*[_type == "story"]{ slug
   }`);
 
   return stories.map((story) => ({
@@ -31,10 +29,11 @@ export const generateStaticParams = async () => {
 export const generateMetadata = async ({ params }: Props) => {
   let title = "";
 
-  const story = await client.fetch<{ title: string }[]>(
+  const story = await fetchData<{ title: string }[]>(
     `*[_type == "story" && slug.current == "${params.slug}"]{
       title
-    }`
+    }`,
+    params
   );
 
   if (story.length > 0) {
@@ -47,10 +46,11 @@ export const generateMetadata = async ({ params }: Props) => {
 };
 
 const Story = async ({ params: { slug } }: { params: { slug: string } }) => {
-  const story = await client.fetch<Data[]>(
+  const story = await fetchData<Story[]>(
     `*[_type == "story" && slug.current == "${slug}"]{
       title, excerpt, slug
-    }`
+    }`,
+    { slug }
   );
 
   if (story.length === 0) {
