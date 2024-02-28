@@ -1,6 +1,6 @@
 import LinesList from "@/components/LinesList";
 import StoryPageHeader from "@/components/headers/StoryPageHeader";
-import { client } from "@/lib/sanity/client";
+import { fetchData } from "@/lib/sanity/client";
 import { notFound } from "next/navigation";
 
 interface Props {
@@ -24,7 +24,7 @@ interface Data {
 }
 
 export const generateStaticParams = async () => {
-  const pages = await client.fetch<StaticParamValue[]>(`*[_type == "storyPage"]{
+  const pages = await fetchData<StaticParamValue[]>(`*[_type == "storyPage"]{
     pageNumber, story->{slug}
   }`);
 
@@ -37,12 +37,13 @@ export const generateStaticParams = async () => {
 export const generateMetadata = async ({ params }: Props) => {
   let title = "";
 
-  const pageContent = await client.fetch<
+  const pageContent = await fetchData<
     { pageNumber: number; story: { title: string } }[]
   >(
     `*[_type == "storyPage" && story->slug.current == "${params.slug}" && pageNumber == ${params.page}]{
       pageNumber, story->{title}
-    }`
+    }`,
+    params
   );
 
   if (pageContent.length > 0) {
@@ -59,14 +60,16 @@ const StoryPage = async ({
 }: {
   params: { slug: string; page: string };
 }) => {
-  const pageContent = await client.fetch<Data[]>(
+  const pageContent = await fetchData<Data[]>(
     `*[_type == "storyPage" && story->slug.current == "${slug}" && pageNumber == ${page}]{
       body, story->{title,slug}
-    }`
+    }`,
+    { slug, page }
   );
 
-  const pageCount = await client.fetch<number>(
-    `count(*[_type == "storyPage" && story->slug.current == "${slug}"])`
+  const pageCount = await fetchData<number>(
+    `count(*[_type == "storyPage" && story->slug.current == "${slug}"])`,
+    { slug }
   );
 
   if (pageContent.length === 0) {

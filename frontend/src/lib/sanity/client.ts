@@ -1,5 +1,6 @@
 import { createClient } from "next-sanity";
 import stories from "@/utils/fixtures/stories.json";
+import storyPages from "@/utils/fixtures/story_pages.json";
 
 export const client = createClient({
   projectId: "n4zh8b7w",
@@ -10,7 +11,7 @@ export const client = createClient({
 
 export const fetchData = async <T>(
   query: string,
-  params?: { slug?: string }
+  params?: { slug?: string; page?: string }
 ): Promise<T> => {
   if (process.env.E2ET) {
     if (query.includes(`[_type == "story"]`)) {
@@ -22,6 +23,28 @@ export const fetchData = async <T>(
       return stories.list.filter(
         (item) => item.slug.current === params.slug
       ) as T;
+    } else if (params && query.includes(`[_type == "storyPage"]`)) {
+      return storyPages.list as T;
+    } else if (
+      params &&
+      query.includes(
+        `[_type == "storyPage" && story->slug.current == "${params.slug}" && pageNumber == ${params.page}]`
+      )
+    ) {
+      return storyPages.list.filter(
+        (item) =>
+          item.story.slug.current === params.slug &&
+          item.pageNumber === parseInt(params.page || "0")
+      ) as T;
+    } else if (
+      params &&
+      query.includes(
+        `count(*[_type == "storyPage" && story->slug.current == "${params.slug}"])`
+      )
+    ) {
+      return storyPages.list.filter(
+        (item) => item.story.slug.current === params.slug
+      ).length as T;
     }
 
     return [] as T;
