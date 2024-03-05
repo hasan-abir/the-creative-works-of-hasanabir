@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { NavArrowLeft } from "iconoir-react";
 
 interface Props {
   title: string;
@@ -9,23 +10,29 @@ interface Props {
 const StoryPageHeader = ({ title, page, pageCount }: Props) => {
   return (
     <section>
-      <div className="flex justify-between mb-2 border-b-2 border-current">
-        <h1 className="text-2xl">{title}</h1>
+      <div className="flex justify-between mb-3">
+        <h1 className="font-bold text-xl sm:text-2xl max-w-[180px] sm:max-w-full">
+          {title}
+        </h1>
         <p>
           {page} of {pageCount}
         </p>
       </div>
-      <p className="mb-4">
-        <em>
-          Written by{" "}
-          <Link href="https://hasanabir.netlify.app/" className="underline">
+      <div className="flex justify-between items-center">
+        <Link href="/stories" className="text-xs sm:text-sm flex items-center">
+          <NavArrowLeft />
+          <span>All Stories</span>
+        </Link>
+        <p className="text-xs sm:text-sm">
+          by
+          <Link
+            href="https://hasanabir.netlify.app/"
+            className="ml-1 hover:underline"
+          >
             Hasan Abir
           </Link>
-        </em>
-      </p>
-      <Link href="/stories" className="underline mb-4">
-        Back to stories
-      </Link>
+        </p>
+      </div>
     </section>
   );
 };

@@ -4,10 +4,10 @@ interface Props {
 
 const ProgressBar = ({ progress }: Props) => {
   return (
-    <div className="w-full mt-4 bg-neutral-300 dark:bg-neutral-500 rounded-full overflow-x-hidden opacity-25">
+    <div className="w-full bg-neutral-200 dark:bg-neutral-800 rounded-full overflow-x-hidden">
       <div
         data-testid="progress-bar"
-        className="w-full h-2 bg-neutral-500 dark:bg-neutral-300 transition-transform origin-left"
+        className="w-full h-1 bg-blue-500 transition-transform origin-left scale-0"
         style={{
           transform: `scaleX(${progress}`,
         }}
