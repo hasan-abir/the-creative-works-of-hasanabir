@@ -62,3 +62,9 @@ body {
 .rich-text-container > div:first-child > p:first-child{
   @apply mt-0;
 }
+
+@supports (height: 100dvh) {
+  .h-screen {
+    height: 100dvh
+  }
+}

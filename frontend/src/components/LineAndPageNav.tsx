@@ -67,9 +67,9 @@ const LineAndPageNav = ({
 
   const onExpandText = contextSafe(() => {
     if (textExpanded) {
-      goToLine(currentIndex - 1, true, false);
-
       setTextExpanded(false);
+
+      goToLine(currentIndex - 1, false);
     } else {
       gsap.to(container, {
         height: "auto",
@@ -87,11 +87,11 @@ const LineAndPageNav = ({
     let i = 0;
     while (i < lines.length) {
       lines[i].style.display = "none";
-      lines[i].style.transform = "translateX(10rem)";
-      lines[i].style.opacity = "0";
 
       i++;
     }
+    lines[0].style.transform = "translateX(10rem)";
+    lines[0].style.opacity = "0";
     goToLine(0);
     setCurrentIndex(1);
     setPageRead(false);

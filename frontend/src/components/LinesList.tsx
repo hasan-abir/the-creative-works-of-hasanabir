@@ -76,7 +76,7 @@ const portableTextComponents: PortableTextComponents = {
             return (
               <p
                 key={i}
-                className="line mb-[1px] text-xl md:text-2xl opacity-0 hidden translate-x-[10rem] skew-x-[-60deg] will-change-transform"
+                className="line mb-[1px] text-xl md:text-2xl opacity-0 hidden origin-[100%_0%] translate-x-[10rem] skew-x-[60deg] will-change-transform"
               >
                 {replaceMarkCharsIntoTags(line, i)}
               </p>
@@ -181,43 +181,36 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
     { scope: container }
   );
 
-  const goToLine = contextSafe(
-    (
-      i: number,
-      smoothScroll: boolean = false,
-      playLineAnim: boolean = true
-    ) => {
-      const nextLine = Array.from(lines.current || [])[i];
+  const goToLine = contextSafe((i: number, playLineAnim: boolean = true) => {
+    const nextLine = Array.from(lines.current || [])[i];
 
-      if (nextLine) {
-        nextLine.style.display = "block";
-        gsap.to(container.current, {
-          height: nextLine.offsetHeight,
-          duration: 0.2,
-          onComplete: () => {
-            container.current?.scrollTo({
-              top: nextLine.offsetTop - container.current?.offsetTop,
-              behavior: smoothScroll ? "smooth" : "instant",
-            });
+    if (nextLine && container.current) {
+      nextLine.style.display = "block";
+      gsap.to(container.current, {
+        height: nextLine.offsetHeight,
+        duration: 0.2,
+        onComplete: () => {
+          container.current?.scrollTo({
+            top: nextLine.offsetTop - container.current.offsetTop,
+          });
 
-            if (playLineAnim) {
-              timeline.current?.play(`el-${i}`);
-            }
+          if (playLineAnim) {
+            timeline.current?.play(`el-${i}`);
+          }
 
-            if (i > 0) {
-              localStorage.setItem(
-                `${basePath}/${params.slug}`,
-                JSON.stringify({
-                  ...memoryOfLine.current,
-                  [params.page]: i,
-                })
-              );
-            }
-          },
-        });
-      }
+          if (i > 0) {
+            localStorage.setItem(
+              `${basePath}/${params.slug}`,
+              JSON.stringify({
+                ...memoryOfLine.current,
+                [params.page]: i,
+              })
+            );
+          }
+        },
+      });
     }
-  );
+  });
 
   return (
     <div className="flex-1  flex flex-col justify-between">
@@ -228,9 +221,7 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
           }`}
         ></div>
         <div
-          className={`overflow-x-hidden h-12 max-h-[45vh] ${
-            textExpanded ? "overflow-y-auto" : "overflow-y-hidden"
-          }`}
+          className={`hover:overflow-y-auto overflow-hidden h-12 max-h-[60vh]`}
           ref={container}
         >
           <PortableText value={body} components={portableTextComponents} />
