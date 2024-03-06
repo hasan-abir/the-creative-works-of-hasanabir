@@ -134,17 +134,24 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
         while (i < lines.current.length) {
           const lineEl = Array.from(lines.current)[i];
 
-          timeline.current = timeline.current.add(`el-${i}`).to(lineEl, {
-            opacity: 1,
-            x: 0,
-            skewX: 0,
-            duration: 1,
-            ease: "expo.out",
-            onComplete: () => {
-              timeline.current?.pause();
-              lineEl.style.willChange = "auto";
-            },
-          });
+          timeline.current = timeline.current
+            .add(`el-${i}`)
+            .to(lineEl, {
+              opacity: 1,
+              x: 0,
+              skewX: 0,
+              duration: 0.6,
+              ease: "expo.out",
+              onComplete: () => {
+                timeline.current?.pause();
+                lineEl.style.willChange = "auto";
+              },
+            })
+            .to(lineEl, {
+              fontSize: 12,
+              lineHeight: 1.5,
+              opacity: 0.7,
+            });
 
           i++;
         }
@@ -162,7 +169,6 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
         initialIndex =
           indexFromStorage && indexFromStorage >= 0 ? indexFromStorage : 0;
 
-        goToLine(initialIndex);
         if (initialIndex > 0 && initialIndex < lines.current.length) {
           let j = 0;
 
@@ -172,6 +178,7 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
             j++;
           }
         }
+        goToLine(initialIndex);
         setCurrentIndex(initialIndex + 1);
         if (initialIndex > lines.current.length - 2) {
           setPageRead(true);
@@ -182,12 +189,24 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
   );
 
   const goToLine = contextSafe((i: number, playLineAnim: boolean = true) => {
+    const prevLine = Array.from(lines.current || [])[i - 1];
     const nextLine = Array.from(lines.current || [])[i];
 
     if (nextLine && container.current) {
+      if (playLineAnim) {
+        nextLine.removeAttribute("style");
+      }
       nextLine.style.display = "block";
+
+      let heightOfTheBox = nextLine.offsetHeight;
+
+      if (prevLine) {
+        prevLine.style.fontSize = "12px";
+        prevLine.style.lineHeight = "1.5";
+        heightOfTheBox = heightOfTheBox + prevLine.offsetHeight;
+      }
       gsap.to(container.current, {
-        height: nextLine.offsetHeight,
+        height: heightOfTheBox,
         duration: 0.2,
         onComplete: () => {
           container.current?.scrollTo({
@@ -216,21 +235,11 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
     <div className="flex-1  flex flex-col justify-between">
       <div className="flex-1 flex flex-col justify-center py-4">
         <div
-          className={`mb-2 h-[5px] w-full dark:bg-neutral-900 bg-neutral-300 transition-transform duration-700 origin-left ${
-            textExpanded ? "scale-x-100" : "scale-x-0"
-          }`}
-        ></div>
-        <div
           className={`hover:overflow-y-auto overflow-hidden h-12 max-h-[60vh]`}
           ref={container}
         >
           <PortableText value={body} components={portableTextComponents} />
         </div>
-        <div
-          className={`mt-2 h-[5px] w-full dark:bg-neutral-900 bg-neutral-300 transition-transform duration-700 origin-right ${
-            textExpanded ? "scale-x-100" : "scale-x-0"
-          }`}
-        ></div>
       </div>
       <LineAndPageNav
         lines={Array.from(lines.current || [])}

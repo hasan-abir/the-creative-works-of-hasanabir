@@ -26,20 +26,24 @@ describe("Story Page", () => {
     cy.get(".line").eq(0).contains("The beginning");
     cy.get(`[data-testid="next-line-btn"]`).trigger("click");
     cy.wait(1000);
+    cy.get(".line").eq(0).should("be.visible");
     cy.get(".line").eq(1).should("be.visible");
     cy.get(".line")
       .eq(1)
       .contains("I’d like to honor an event REALLY, if God allows me to.");
     cy.get(`[data-testid="next-line-btn"]`).trigger("click");
     cy.wait(1000);
+    cy.get(".line").eq(1).should("be.visible");
     cy.get(".line").eq(2).should("be.visible");
     cy.get(".line").eq(2).contains("His boss will be mad at the meeting.");
     cy.get(`[data-testid="next-line-btn"]`).trigger("click");
     cy.wait(1000);
+    cy.get(".line").eq(2).should("be.visible");
     cy.get(".line").eq(3).should("be.visible");
     cy.get(".line").eq(3).contains("You don't need 20 captains.");
     cy.get(`[data-testid="next-line-btn"]`).trigger("click");
     cy.wait(1000);
+    cy.get(".line").eq(3).should("be.visible");
     cy.get(".line").eq(4).should("be.visible");
     cy.get(".line").eq(4).contains("Every child likes an ice cream.");
     cy.get(`[data-testid="next-page-link"]`).should("be.visible");
@@ -52,6 +56,7 @@ describe("Story Page", () => {
     cy.get(`[data-testid="prev-page-link"]`).trigger("click");
     cy.url().should("include", `/stories/${firstStory.slug.current}/1`);
     cy.wait(1000);
+    cy.get(".line").eq(3).should("be.visible");
     cy.get(".line").eq(4).should("be.visible");
     cy.get(`[data-testid="to-top-btn"]`).trigger("click");
     cy.wait(1000);
@@ -68,6 +73,21 @@ describe("Story Page", () => {
     cy.get(`[data-testid="next-line-btn"]`).trigger("click");
     cy.get(`[data-testid="next-line-btn"]`).trigger("click");
     cy.get("p").eq(7).contains("The End");
+  });
+  it("should collapse and expand correctly", () => {
+    const firstStory: Story = stories.list[0];
+    cy.visit(`http://localhost:3000/stories/${firstStory.slug.current}/1`);
+    cy.wait(1000);
+    cy.get(`[data-testid="next-line-btn"]`).trigger("click");
+    cy.get(`[data-testid="next-line-btn"]`).trigger("click");
+    cy.get(`[data-testid="expand-text-btn"]`).trigger("click");
+    cy.wait(1000);
+    cy.get(".line").eq(0).should("be.visible");
+    cy.get(".line").eq(1).should("be.visible");
+    cy.get(".line").eq(2).should("be.visible");
+    cy.get(`[data-testid="expand-text-btn"]`).trigger("click");
+    cy.wait(1000);
+    cy.get(".line").eq(0).should("not.be.visible");
   });
   it("should display not found", () => {
     cy.visit("http://localhost:3000/stories/story1/4", {
