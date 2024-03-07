@@ -90,8 +90,7 @@ const LineAndPageNav = ({
 
       i++;
     }
-    lines[0].style.transform = "translateX(10rem)";
-    lines[0].style.opacity = "0";
+    lines[0].removeAttribute("style");
     goToLine(0);
     setCurrentIndex(1);
     setPageRead(false);
