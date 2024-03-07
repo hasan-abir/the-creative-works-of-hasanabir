@@ -204,6 +204,8 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
         prevLine.style.fontSize = "12px";
         prevLine.style.lineHeight = "1.5";
         heightOfTheBox = heightOfTheBox + prevLine.offsetHeight;
+        prevLine.style.removeProperty("fontSize");
+        prevLine.style.removeProperty("lineHeight");
       }
       gsap.to(container.current, {
         height: heightOfTheBox,

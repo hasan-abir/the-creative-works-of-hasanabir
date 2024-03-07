@@ -84,15 +84,14 @@ const LineAndPageNav = ({
       setTextExpanded(false);
     }
 
-    let i = 0;
+    goToLine(0);
+    setCurrentIndex(1);
+    let i = 1;
     while (i < lines.length) {
-      lines[i].style.display = "none";
+      lines[i].removeAttribute("style");
 
       i++;
     }
-    lines[0].removeAttribute("style");
-    goToLine(0);
-    setCurrentIndex(1);
     setPageRead(false);
     localStorage.setItem(
       `${basePath}/${params.slug}`,
