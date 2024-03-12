@@ -24,13 +24,11 @@ const renderLineAndNav = (
 ): {
   basePath: string;
   currentIndex: number;
-  setTextExpanded: jest.Mock;
-  setCurrentIndex: jest.Mock;
   setPageRead: jest.Mock;
   goToLine: jest.Mock;
+  onExpandText: jest.Mock;
 } => {
   const basePath = "/test";
-  const divEl = render(<div>Container</div>);
   const paraEls = render(
     <div>
       <p>A line</p>
@@ -39,10 +37,9 @@ const renderLineAndNav = (
     </div>
   );
   const lines = Array.from(paraEls.container.getElementsByTagName("p"));
-  const setTextExpanded = jest.fn();
-  const setCurrentIndex = jest.fn();
   const setPageRead = jest.fn();
   const goToLine = jest.fn();
+  const onExpandText = jest.fn();
 
   render(
     <LineAndPageNav
@@ -52,11 +49,8 @@ const renderLineAndNav = (
       lastPage={lastPage}
       pageRead={pageRead}
       textExpanded={textExpanded}
-      container={divEl.container as HTMLDivElement}
+      onExpandText={onExpandText}
       lines={lines}
-      contextSafe={jest.fn().mockImplementation((cb) => cb)}
-      setTextExpanded={setTextExpanded}
-      setCurrentIndex={setCurrentIndex}
       setPageRead={setPageRead}
       goToLine={goToLine}
     />
@@ -64,9 +58,8 @@ const renderLineAndNav = (
   return {
     basePath,
     currentIndex,
-    setTextExpanded,
-    setCurrentIndex,
     setPageRead,
+    onExpandText,
     goToLine,
   };
 };
@@ -109,7 +102,7 @@ describe("LineAndPageNav", () => {
     expect(screen.queryByText("The End")).toBeInTheDocument();
   });
 
-  it("renders the next line btn", () => {
+  it("renders the next page link", () => {
     const firstPage = true;
     const lastPage = false;
     const pageRead = true;
@@ -149,13 +142,15 @@ describe("LineAndPageNav", () => {
     const pageRead = true;
     const textExpanded = false;
 
-    const { setTextExpanded, goToLine, setCurrentIndex, setPageRead } =
-      renderLineAndNav(firstPage, lastPage, pageRead, textExpanded);
+    const { goToLine, setPageRead } = renderLineAndNav(
+      firstPage,
+      lastPage,
+      pageRead,
+      textExpanded
+    );
     fireEvent.click(screen.getByTestId("to-top-btn"));
 
-    expect(setTextExpanded).not.toHaveBeenCalled();
     expect(goToLine).toHaveBeenCalledWith(0);
-    expect(setCurrentIndex).toHaveBeenCalledWith(1);
     expect(setPageRead).toHaveBeenCalledWith(false);
   });
   it("to top button goes to top and closes the expanded text", () => {
@@ -164,7 +159,7 @@ describe("LineAndPageNav", () => {
     const pageRead = true;
     const textExpanded = true;
 
-    const { setTextExpanded } = renderLineAndNav(
+    const { setPageRead, goToLine } = renderLineAndNav(
       firstPage,
       lastPage,
       pageRead,
@@ -172,7 +167,8 @@ describe("LineAndPageNav", () => {
     );
     fireEvent.click(screen.getByTestId("to-top-btn"));
 
-    expect(setTextExpanded).toHaveBeenCalledWith(false);
+    expect(setPageRead).toHaveBeenCalledWith(false);
+    expect(goToLine).toHaveBeenCalledWith(0);
   });
   it("expand text button expands text", () => {
     const firstPage = true;
@@ -180,7 +176,7 @@ describe("LineAndPageNav", () => {
     const pageRead = true;
     const textExpanded = false;
 
-    const { setTextExpanded } = renderLineAndNav(
+    const { onExpandText, currentIndex } = renderLineAndNav(
       firstPage,
       lastPage,
       pageRead,
@@ -188,24 +184,7 @@ describe("LineAndPageNav", () => {
     );
     fireEvent.click(screen.getByTestId("expand-text-btn"));
 
-    expect(setTextExpanded).toHaveBeenCalledWith(true);
-  });
-  it("expand text button collapses text", () => {
-    const firstPage = true;
-    const lastPage = true;
-    const pageRead = true;
-    const textExpanded = true;
-
-    const { currentIndex, setTextExpanded, goToLine } = renderLineAndNav(
-      firstPage,
-      lastPage,
-      pageRead,
-      textExpanded
-    );
-    fireEvent.click(screen.getByTestId("expand-text-btn"));
-
-    expect(goToLine).toHaveBeenCalledWith(currentIndex - 1, false);
-    expect(setTextExpanded).toHaveBeenCalledWith(false);
+    expect(onExpandText).toHaveBeenCalledWith(currentIndex);
   });
   it("next line button goes to next line", () => {
     const firstPage = false;
@@ -213,38 +192,14 @@ describe("LineAndPageNav", () => {
     const pageRead = false;
     const textExpanded = false;
 
-    const {
-      currentIndex,
-      setCurrentIndex,
-      goToLine,
-      setTextExpanded,
-      setPageRead,
-    } = renderLineAndNav(firstPage, lastPage, pageRead, textExpanded);
+    const { goToLine, currentIndex } = renderLineAndNav(
+      firstPage,
+      lastPage,
+      pageRead,
+      textExpanded
+    );
     fireEvent.click(screen.getByTestId("next-line-btn"));
 
-    expect(setTextExpanded).not.toHaveBeenCalled();
-    expect(setPageRead).not.toHaveBeenCalled();
-    expect(goToLine).toHaveBeenCalledWith(currentIndex);
-    expect(setCurrentIndex).toHaveBeenCalledWith(currentIndex + 1);
-  });
-  it("next line button goes to next line and collapses expanded text along with setting page read value", () => {
-    const firstPage = false;
-    const lastPage = false;
-    const pageRead = false;
-    const textExpanded = true;
-
-    const {
-      currentIndex,
-      setCurrentIndex,
-      goToLine,
-      setTextExpanded,
-      setPageRead,
-    } = renderLineAndNav(firstPage, lastPage, pageRead, textExpanded, 2);
-    fireEvent.click(screen.getByTestId("next-line-btn"));
-
-    expect(setTextExpanded).toHaveBeenCalledWith(false);
-    expect(setPageRead).toHaveBeenCalledWith(true);
-    expect(goToLine).toHaveBeenCalledWith(currentIndex);
-    expect(setCurrentIndex).toHaveBeenCalledWith(currentIndex + 1);
+    expect(goToLine).toHaveBeenCalledWith(currentIndex + 1);
   });
 });

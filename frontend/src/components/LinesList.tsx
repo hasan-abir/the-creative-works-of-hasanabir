@@ -1,12 +1,11 @@
 "use client";
-
-import LineAndPageNav from "@/components/LineAndPageNav";
+import NewLineAndPageNav from "@/components/LineAndPageNav";
 import splitBlockIntoLines from "@/utils/splitBlockIntoLines";
 import { useGSAP } from "@gsap/react";
 import { PortableText, PortableTextComponents } from "@portabletext/react";
 import gsap from "gsap";
 import { useParams } from "next/navigation";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 
 interface Props {
   body: any[];
@@ -76,7 +75,7 @@ const portableTextComponents: PortableTextComponents = {
             return (
               <p
                 key={i}
-                className="line mb-[1px] text-xl md:text-2xl opacity-0 hidden origin-[100%_0%] translate-x-[10rem] skew-x-[60deg] will-change-transform"
+                className="line overflow-y-hidden mb-[1px] text-xl md:text-2xl opacity-0 hidden h-0 origin-[100%_0%] translate-x-[10rem] skew-x-[60deg] transition-[font-size] transition-[line-height] max-h-fit"
               >
                 {replaceMarkCharsIntoTags(line, i)}
               </p>
@@ -94,72 +93,112 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
     page: string;
   }>();
 
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [pageRead, setPageRead] = useState<boolean>(false);
   const [textExpanded, setTextExpanded] = useState<boolean>(false);
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
-
+  const defaultDuration = useRef<number>(0.4);
   const container = useRef<HTMLDivElement>(null);
-  const lines = useRef<NodeListOf<HTMLParagraphElement> | null>(null);
-  const timeline = useRef<GSAPTimeline | null>(null);
   const memoryOfLine = useRef<LineInMemory | null>(null);
+  const tlRef = useRef<GSAPTimeline | null>(null);
+  const elsOfLinesRef = useRef<NodeListOf<HTMLParagraphElement> | null>(null);
 
   const appendAndPrependToIncompleteLines = useCallback(() => {
-    if (lines.current) {
-      const firstLine = Array.from(lines.current)[0].textContent;
-      const lastLine = Array.from(lines.current)[lines.current.length - 1]
-        .textContent;
+    if (elsOfLinesRef.current) {
+      const firstLine = Array.from(elsOfLinesRef.current)[0].textContent;
+      const lastLine = Array.from(elsOfLinesRef.current)[
+        elsOfLinesRef.current.length - 1
+      ].textContent;
       const firstLineBeginsCompletely = /^[A-Z—]/.test(firstLine || "");
       const lastLineEndsCompletely = /[—.!?]$/.test(lastLine || "");
 
       if (!lastLineEndsCompletely) {
-        Array.from(lines.current)[lines.current.length - 1].textContent =
-          `${lastLine}—` || "";
+        Array.from(elsOfLinesRef.current)[
+          elsOfLinesRef.current.length - 1
+        ].textContent = `${lastLine}—` || "";
       }
 
       if (!firstLineBeginsCompletely) {
-        Array.from(lines.current)[0].textContent = `—${firstLine}` || "";
+        Array.from(elsOfLinesRef.current)[0].textContent =
+          `—${firstLine}` || "";
       }
     }
   }, []);
 
   const { contextSafe } = useGSAP(
     () => {
-      timeline.current = gsap.timeline({ paused: true });
+      let timeline = gsap.timeline({
+        paused: true,
+        defaults: { duration: defaultDuration.current },
+      });
+      const elsOfLines: NodeListOf<HTMLParagraphElement> =
+        document.querySelectorAll(".line");
 
-      lines.current = document.querySelectorAll(".line");
+      let i = 0;
+      while (i < elsOfLines.length) {
+        const lineEl = elsOfLines[i];
+        const prevEl = elsOfLines[i - 1];
 
-      if (lines.current) {
-        let i = 0;
-
-        while (i < lines.current.length) {
-          const lineEl = Array.from(lines.current)[i];
-
-          timeline.current = timeline.current
-            .add(`el-${i}`)
-            .to(lineEl, {
-              opacity: 1,
-              x: 0,
-              skewX: 0,
-              duration: 0.6,
-              ease: "expo.out",
-              onComplete: () => {
-                timeline.current?.pause();
-                lineEl.style.willChange = "auto";
-              },
-            })
-            .to(lineEl, {
-              fontSize: 12,
-              lineHeight: 1.5,
-              opacity: 0.7,
-            });
-
-          i++;
+        if (i < 1) {
+          timeline.add(`el-${i}`);
         }
 
-        appendAndPrependToIncompleteLines();
+        timeline
+          .to(
+            lineEl,
+            {
+              display: "block",
+            },
+            "<"
+          )
+          .to(
+            lineEl,
+            {
+              height: "auto",
+              delay: 0.1,
+            },
+            "<"
+          )
+          .to(lineEl, {
+            x: 0,
+            skewX: 0,
+            opacity: 1,
+            onComplete: () => {
+              timeline.pause();
+            },
+          })
+          .add(`el-${i + 1}`);
 
-        let initialIndex = currentIndex;
+        if (prevEl) {
+          timeline.to(prevEl, {
+            height: 0,
+            onComplete: () => {
+              prevEl.style.display = "none";
+            },
+          });
+        }
 
+        timeline.to(
+          lineEl,
+          {
+            opacity: 0.6,
+            fontSize: "1rem",
+            lineHeight: "1.5rem",
+            duration: 0.2,
+          },
+          prevEl ? "<" : ">"
+        );
+
+        i++;
+      }
+
+      tlRef.current = timeline;
+      elsOfLinesRef.current = elsOfLines;
+
+      appendAndPrependToIncompleteLines();
+
+      let initialIndex = 0;
+
+      try {
         const objStored: LineInMemory = JSON.parse(
           localStorage.getItem(`${basePath}/${params.slug}`) || "{}"
         );
@@ -168,84 +207,86 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
 
         initialIndex =
           indexFromStorage && indexFromStorage >= 0 ? indexFromStorage : 0;
-
-        if (initialIndex > 0 && initialIndex < lines.current.length) {
-          let j = 0;
-
-          while (j < initialIndex) {
-            Array.from(lines.current)[j].style.display = "block";
-
-            j++;
-          }
-        }
-        goToLine(initialIndex);
-        setCurrentIndex(initialIndex + 1);
-        if (initialIndex > lines.current.length - 2) {
-          setPageRead(true);
-        }
+      } catch (error) {
+        localStorage.removeItem(`${basePath}/${params.slug}`);
       }
+
+      goToLine(initialIndex);
     },
     { scope: container }
   );
 
-  const goToLine = contextSafe((i: number, playLineAnim: boolean = true) => {
-    const prevLine = Array.from(lines.current || [])[i - 1];
-    const nextLine = Array.from(lines.current || [])[i];
+  const onExpandText = contextSafe(
+    useCallback(
+      (index: number) => {
+        if (elsOfLinesRef.current) {
+          const numberOfEls = index - 1 < 0 ? 0 : index - 1;
 
-    if (nextLine && container.current) {
-      if (playLineAnim) {
-        nextLine.removeAttribute("style");
-      }
-      nextLine.style.display = "block";
+          const elsToAnimate = Array.from(elsOfLinesRef.current).slice(
+            0,
+            numberOfEls
+          );
 
-      let heightOfTheBox = nextLine.offsetHeight;
-
-      if (prevLine) {
-        prevLine.style.fontSize = "12px";
-        prevLine.style.lineHeight = "1.5";
-        heightOfTheBox = heightOfTheBox + prevLine.offsetHeight;
-        prevLine.style.removeProperty("fontSize");
-        prevLine.style.removeProperty("lineHeight");
-      }
-      gsap.to(container.current, {
-        height: heightOfTheBox,
-        duration: 0.2,
-        onComplete: () => {
-          container.current?.scrollTo({
-            top: nextLine.offsetTop - container.current.offsetTop,
-          });
-
-          if (playLineAnim) {
-            timeline.current?.play(`el-${i}`);
+          if (elsToAnimate.length > 0) {
+            if (textExpanded) {
+              gsap.to(elsToAnimate, {
+                height: 0,
+                duration: defaultDuration.current,
+              });
+              gsap.to(elsToAnimate, { display: "none" });
+            } else {
+              gsap.to(elsToAnimate, { display: "block" });
+              gsap.to(elsToAnimate, {
+                height: "auto",
+                duration: defaultDuration.current,
+              });
+            }
           }
 
-          if (i > 0) {
-            localStorage.setItem(
-              `${basePath}/${params.slug}`,
-              JSON.stringify({
-                ...memoryOfLine.current,
-                [params.page]: i,
-              })
-            );
-          }
-        },
-      });
-    }
-  });
+          setTextExpanded(!textExpanded);
+        }
+      },
+      [textExpanded]
+    )
+  );
+
+  const goToLine = contextSafe(
+    useCallback(
+      (index: number) => {
+        if (textExpanded) {
+          onExpandText(index);
+        }
+
+        if (
+          elsOfLinesRef.current &&
+          index >= elsOfLinesRef.current.length - 1
+        ) {
+          setPageRead(true);
+        }
+
+        tlRef.current && tlRef.current.play(`el-${index}`);
+        localStorage.setItem(
+          `${basePath}/${params.slug}`,
+          JSON.stringify({
+            ...memoryOfLine.current,
+            [params.page]: index,
+          })
+        );
+        setCurrentIndex(index);
+      },
+      [textExpanded, basePath, onExpandText, params.page, params.slug]
+    )
+  );
 
   return (
-    <div className="flex-1  flex flex-col justify-between">
-      <div className="flex-1 flex flex-col justify-center py-4">
-        <div
-          className={`hover:overflow-y-auto overflow-hidden h-12 max-h-[60vh]`}
-          ref={container}
-        >
+    <div className="flex-1 flex flex-col justify-between">
+      <div className="flex-1 flex flex-col justify-center py-4 ">
+        <div ref={container} className="max-h-[60vh] overflow-x-hidden">
           <PortableText value={body} components={portableTextComponents} />
         </div>
       </div>
-      <LineAndPageNav
-        lines={Array.from(lines.current || [])}
-        container={container.current}
+      <NewLineAndPageNav
+        lines={Array.from(elsOfLinesRef.current || [])}
         textExpanded={textExpanded}
         currentIndex={currentIndex}
         basePath={basePath}
@@ -253,9 +294,7 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
         lastPage={lastPage}
         pageRead={pageRead}
         goToLine={goToLine}
-        contextSafe={contextSafe}
-        setTextExpanded={setTextExpanded}
-        setCurrentIndex={setCurrentIndex}
+        onExpandText={onExpandText}
         setPageRead={setPageRead}
       />
     </div>
