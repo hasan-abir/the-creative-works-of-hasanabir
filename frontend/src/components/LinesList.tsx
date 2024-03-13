@@ -1,8 +1,7 @@
 "use client";
+import CustomRichTextBody from "@/components/CustomRichTextBody";
 import NewLineAndPageNav from "@/components/LineAndPageNav";
-import splitBlockIntoLines from "@/utils/splitBlockIntoLines";
 import { useGSAP } from "@gsap/react";
-import { PortableText, PortableTextComponents } from "@portabletext/react";
 import gsap from "gsap";
 import { useParams } from "next/navigation";
 import { useCallback, useRef, useState } from "react";
@@ -15,77 +14,6 @@ interface Props {
 }
 
 export type LineInMemory = Record<number, number>;
-
-const portableTextComponents: PortableTextComponents = {
-  block: {
-    normal: ({ children, value }) => {
-      let lines: string[] = [];
-      if (children) {
-        let text = "";
-
-        let i = 0;
-        while (i < value.children.length) {
-          const childBlock = value.children[i];
-
-          if (childBlock.marks.includes("em")) {
-            text += `#italic#em${childBlock.text}#em#italic`;
-          } else if (childBlock.marks.includes("strong")) {
-            text += `#bold#strong${childBlock.text}#strong#bold`;
-          } else {
-            text += childBlock.text;
-          }
-
-          if (i === value.children.length - 1) {
-            text = text.trimEnd();
-          }
-
-          i++;
-        }
-
-        lines = splitBlockIntoLines(text);
-      }
-
-      const replaceMarkCharsIntoTags = (
-        line: string,
-        index: number
-      ): string | (string | JSX.Element)[] => {
-        const hasItalic = line.includes("#italic");
-        const hasBold = line.includes("#bold");
-
-        if (hasItalic || hasBold) {
-          return line.split(/#(?:italic|bold)/)?.map((phrase, j) => {
-            if (phrase.match(/#em.*#em/i)) {
-              return <em key={j}>{phrase.replaceAll("#em", "")}</em>;
-            }
-            if (phrase.match(/#strong.*#strong/i)) {
-              return (
-                <strong key={j}>{phrase.replaceAll("#strong", "")}</strong>
-              );
-            }
-            return phrase;
-          });
-        } else {
-          return line;
-        }
-      };
-
-      return (
-        <div>
-          {lines.map((line, i) => {
-            return (
-              <p
-                key={i}
-                className="line overflow-y-hidden mb-[1px] text-xl md:text-2xl opacity-0 hidden h-0 origin-[100%_0%] translate-x-[10rem] skew-x-[60deg] transition-[font-size] transition-[line-height] max-h-fit"
-              >
-                {replaceMarkCharsIntoTags(line, i)}
-              </p>
-            );
-          })}
-        </div>
-      );
-    },
-  },
-};
 
 const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
   const params = useParams<{
@@ -282,7 +210,10 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
     <div className="flex-1 flex flex-col justify-between">
       <div className="flex-1 flex flex-col justify-center py-4 ">
         <div ref={container} className="max-h-[60vh] overflow-x-hidden">
-          <PortableText value={body} components={portableTextComponents} />
+          <CustomRichTextBody
+            body={body}
+            classList="line overflow-y-hidden mb-[1px] text-xl md:text-2xl opacity-0 hidden h-0 origin-[100%_0%] translate-x-[10rem] skew-x-[60deg] transition-[font-size] transition-[line-height] max-h-fit"
+          />
         </div>
       </div>
       <NewLineAndPageNav
