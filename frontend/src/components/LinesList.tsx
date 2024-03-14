@@ -1,6 +1,7 @@
 "use client";
 import CustomRichTextBody from "@/components/CustomRichTextBody";
 import NewLineAndPageNav from "@/components/LineAndPageNav";
+import lineInMemory, { LineInMemory } from "@/utils/lineInMemory";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useParams } from "next/navigation";
@@ -12,8 +13,6 @@ interface Props {
   firstPage: boolean;
   lastPage: boolean;
 }
-
-export type LineInMemory = Record<number, number>;
 
 const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
   const params = useParams<{
@@ -126,17 +125,14 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
 
       let initialIndex = 0;
 
-      try {
-        const objStored: LineInMemory = JSON.parse(
-          localStorage.getItem(`${basePath}/${params.slug}`) || "{}"
-        );
+      const objStored = lineInMemory.get(basePath, params.slug);
+
+      if (objStored) {
         memoryOfLine.current = objStored;
         const indexFromStorage = objStored && objStored[parseInt(params.page)];
 
         initialIndex =
           indexFromStorage && indexFromStorage >= 0 ? indexFromStorage : 0;
-      } catch (error) {
-        localStorage.removeItem(`${basePath}/${params.slug}`);
       }
 
       goToLine(initialIndex);
@@ -193,12 +189,12 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
         }
 
         tlRef.current && tlRef.current.play(`el-${index}`);
-        localStorage.setItem(
-          `${basePath}/${params.slug}`,
-          JSON.stringify({
-            ...memoryOfLine.current,
-            [params.page]: index,
-          })
+        lineInMemory.set(
+          basePath,
+          params.slug,
+          params.page,
+          index,
+          memoryOfLine.current
         );
         setCurrentIndex(index);
       },

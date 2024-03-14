@@ -1,9 +1,9 @@
 "use client";
 
+import lineInMemory from "@/utils/lineInMemory";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
-import { LineInMemory } from "@/components/LinesList";
+import { useEffect, useState } from "react";
 
 interface Props {
   basePath: string;
@@ -16,22 +16,21 @@ const ContinueReading = ({ basePath, classList }: Props) => {
   const params = useParams<{ slug: string }>();
 
   useEffect(() => {
-    const memoryOfPagesRead: LineInMemory = JSON.parse(
-      localStorage.getItem(`${basePath}/${params.slug}`) || "{}"
-    );
+    const memoryOfPagesRead = lineInMemory.get(basePath, params.slug);
 
     let highestPageNumber = 1;
+    if (memoryOfPagesRead) {
+      let i = 0;
 
-    let i = 0;
+      while (i < Object.keys(memoryOfPagesRead).length) {
+        const currentKey = parseInt(Object.keys(memoryOfPagesRead)[i]);
 
-    while (i < Object.keys(memoryOfPagesRead).length) {
-      const currentKey = parseInt(Object.keys(memoryOfPagesRead)[i]);
+        if (currentKey > highestPageNumber) {
+          highestPageNumber = currentKey;
+        }
 
-      if (currentKey > highestPageNumber) {
-        highestPageNumber = currentKey;
+        i++;
       }
-
-      i++;
     }
 
     setPageNumber(highestPageNumber);
