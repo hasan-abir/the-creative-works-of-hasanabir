@@ -35,8 +35,8 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
       const lastLine = Array.from(elsOfLinesRef.current)[
         elsOfLinesRef.current.length - 1
       ].textContent;
-      const firstLineBeginsCompletely = /^[A-Z—]/.test(firstLine || "");
-      const lastLineEndsCompletely = /[—.!?]$/.test(lastLine || "");
+      const firstLineBeginsCompletely = /^[A-Z—[]/.test(firstLine || "");
+      const lastLineEndsCompletely = /[—\].!?]$/.test(lastLine || "");
 
       if (!lastLineEndsCompletely) {
         Array.from(elsOfLinesRef.current)[
@@ -98,6 +98,7 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
         if (prevEl) {
           timeline.to(prevEl, {
             height: 0,
+            marginBottom: 0,
             onComplete: () => {
               prevEl.style.display = "none";
             },
@@ -155,6 +156,7 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
             if (textExpanded) {
               gsap.to(elsToAnimate, {
                 height: 0,
+                marginBottom: 0,
                 duration: defaultDuration.current,
               });
               gsap.to(elsToAnimate, { display: "none" });
@@ -162,6 +164,7 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
               gsap.to(elsToAnimate, { display: "block" });
               gsap.to(elsToAnimate, {
                 height: "auto",
+                marginBottom: "0.5rem",
                 duration: defaultDuration.current,
               });
             }
@@ -208,7 +211,7 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
         <div ref={container} className="max-h-[60vh] overflow-x-hidden">
           <CustomRichTextBody
             body={body}
-            classList="line overflow-y-hidden mb-[1px] text-xl md:text-2xl opacity-0 hidden h-0 origin-[100%_0%] translate-x-[10rem] skew-x-[60deg] transition-[font-size] transition-[line-height] max-h-fit"
+            classList="line overflow-y-hidden text-xl md:text-2xl mb-2 opacity-0 hidden h-0 origin-[100%_0%] translate-x-[10rem] skew-x-[60deg] transition-[line-height] max-h-fit"
           />
         </div>
       </div>

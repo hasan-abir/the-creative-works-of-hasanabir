@@ -15,70 +15,71 @@ const CustomRichTextBody = ({ body, classList }: Props) => {
     () => ({
       block: {
         normal: ({ children, value }) => {
-          let lines: string[] = [];
+          let newBlocks: any[] = [];
           if (children) {
-            let text = "";
             let i = 0;
             while (i < value.children.length) {
               const childBlock = value.children[i];
-              if (
-                childBlock.marks.length > 0 &&
-                ["em", "strong"].includes(childBlock.marks[0])
-              ) {
-                text += `#${childBlock.marks[0] + childBlock.text}#${
-                  childBlock.marks[0]
-                }`;
-              } else {
-                text += childBlock.text;
+
+              const splittedLines = splitBlockIntoLines(childBlock.text);
+              let j = 0;
+              while (j < splittedLines.length) {
+                const currentLine = splittedLines[j];
+                const lastBlockAdded = newBlocks[newBlocks.length - 1];
+                const lastChildAddedToLastBlock =
+                  lastBlockAdded &&
+                  lastBlockAdded.children[lastBlockAdded.children.length - 1];
+                const punctuationRegex = /[.!?]$/;
+                const closingBracketsRegex = /^\s*\]\s*$/;
+                const newBlock = {
+                  text: splittedLines[j],
+                  marks: childBlock.marks,
+                };
+
+                if (
+                  lastBlockAdded &&
+                  (!punctuationRegex.test(lastChildAddedToLastBlock.text) ||
+                    closingBracketsRegex.test(currentLine))
+                ) {
+                  newBlocks[newBlocks.length - 1].children.push(newBlock);
+                } else {
+                  newBlocks.push({ children: [newBlock] });
+                }
+
+                j++;
               }
 
-              if (i >= value.children.length - 1) {
-                text = text.trimEnd();
-              }
               i++;
             }
-            lines = splitBlockIntoLines(text);
           }
 
-          const renderedLines = lines.map((line, i) => {
-            let spans: any[] = [];
-
-            if (line.includes("#em") || line.includes("#strong")) {
-              spans = line.split(/(#em.*?#em|#strong.*?#strong)/g);
-              spans = spans.map((span, j) => {
-                if (span.includes("#em")) {
-                  span = span.replaceAll("#em", "");
-                  return (
-                    <em key={j} data-testid="italic">
-                      {span}
-                    </em>
-                  );
-                }
-                if (span.includes("#strong")) {
-                  span = span.replaceAll("#strong", "");
-                  return (
-                    <strong key={j} data-testid="bold">
-                      {span}
-                    </strong>
-                  );
-                }
-                return span;
-              });
-            } else {
-              spans.push(line);
-            }
-
+          return newBlocks.map((line: any, i: number) => {
             return (
               <p
                 key={i}
-                className={classList ? classList : undefined}
                 data-testid="paragraph"
+                className={classList ? classList : undefined}
               >
-                {spans}
+                {line.children.map((child: any, j: number) => {
+                  if (child.marks.includes("em")) {
+                    return (
+                      <em key={j} data-testid="italic">
+                        {child.text}
+                      </em>
+                    );
+                  } else if (child.marks.includes("strong")) {
+                    return (
+                      <strong key={j} data-testid="bold">
+                        {child.text}
+                      </strong>
+                    );
+                  } else {
+                    return child.text;
+                  }
+                })}
               </p>
             );
           });
-          return renderedLines;
         },
       },
     }),
