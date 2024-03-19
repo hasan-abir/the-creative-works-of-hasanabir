@@ -20,68 +20,220 @@ jest.doMock("../../src/components/LineAndPageNav", () => (
 
 const richTextBody = [
   {
-    style: "normal",
-    _key: "2e18020b7564",
     markDefs: [],
     children: [
+      {
+        _type: "span",
+        marks: [],
+        text: "[",
+        _key: "a1e84e10c31e0",
+      },
       {
         marks: ["strong"],
-        text: "I",
-        _key: "763c5b727a4d",
+        text: "Absently,",
+        _key: "a1e84e10c31e1",
+        _type: "span",
+      },
+      {
+        _type: "span",
+        marks: [],
+        text: " MAZHAR",
+        _key: "a1e84e10c31e2",
+      },
+      {
+        _key: "a1e84e10c31e3",
+        _type: "span",
+        marks: ["em"],
+        text: " carried his fumbling legs from the bed to the bathroom. Upon entering, on the floor, a few loose strands of long, wavy hair came to his attention, floating on puddles of water, slowly being drained out.",
+      },
+      {
+        _type: "span",
+        marks: [],
+        text: "]",
+        _key: "a1e84e10c31e4",
+      },
+    ],
+    _type: "block",
+    style: "normal",
+    _key: "54feb5eee7e1",
+  },
+  {
+    children: [
+      {
+        _type: "span",
+        marks: [],
+        text: "MAZHAR [",
+        _key: "c7950e1fa2080",
+      },
+      {
+        _type: "span",
+        marks: ["em"],
+        text: "to himself",
+        _key: "c7950e1fa2081",
+      },
+      {
+        _type: "span",
+        marks: [],
+        text: "]: Odd. She never wakes up this early on a weekend, let alone take a shower. Well, whatever. Try not to bother her with that.",
+        _key: "c7950e1fa2082",
+      },
+    ],
+    _type: "block",
+    style: "normal",
+    _key: "78f3ce438178",
+    markDefs: [],
+  },
+  {
+    children: [
+      {
+        _type: "span",
+        marks: [],
+        text: "[",
+        _key: "cdcdd6e3cd3b0",
+      },
+      {
+        _key: "cdcdd6e3cd3b1",
+        _type: "span",
+        marks: ["em"],
+        text: "Carrying on, he brushed his teeth. But the brush in his mouth stayed still in one place indefinitely as a series of circling thoughts clouded his mind. Falling back to a previously proven practice, he adjusted the circulation in his head to bring in a tune, freshly heard, that would help drown out those thoughts. And the magic worked once again; the song then refused to leave. Then, the faucet caught the drips of his wet, heavy head as he lifted his face towards the mirror. A long stare, eye to eye, shifted the world around him, which was brought to place quick and jarringly as soon as his under-eye depressions came to view, faltering his self-perception. Also in the mirror, with the bathroom door open, his wife appeared, ",
+      },
+      {
+        _type: "span",
+        marks: [],
+        text: "TISHA ONWAYEE, ",
+        _key: "cdcdd6e3cd3b2",
+      },
+      {
+        _key: "cdcdd6e3cd3b3",
+        _type: "span",
+        marks: ["em"],
+        text: "dressed in an archaic, adventurous black tunic. A sturdy leather belt with a symbol of a tree embedded in the center girdled her small waist. To fit with the rest, olive gray leggings are what she made to be the best. She entered the room with an evident rush and flew across the frame of ",
+      },
+      {
+        text: "MAZHAR",
+        _key: "cdcdd6e3cd3b4",
+        _type: "span",
+        marks: [],
+      },
+      {
+        text: "’s mirror to stand in front of her own one. The fluorescent light above brightened her light-honey-toned face, shadowing her jaws under her cheekbones while she put on her mascara. Not long after, their eyes exchanged looks through the mirrors, sprouting gleeful smiles on each of their faces. First, he grabbed a towel and dried himself. Second, he threw it on the bed. Third, moving closer to her and wrapping his arms around her waist from the back, he brought his mouth close to her ears.",
+        _key: "cdcdd6e3cd3b5",
+        _type: "span",
+        marks: ["em"],
+      },
+      {
+        marks: [],
+        text: "]",
+        _key: "cdcdd6e3cd3b6",
         _type: "span",
       },
     ],
     _type: "block",
+    style: "normal",
+    _key: "b50b10bed380",
+    markDefs: [],
   },
   {
-    _type: "block",
-    style: "normal",
-    _key: "beaab87d050a",
     markDefs: [],
     children: [
       {
         _type: "span",
         marks: [],
-        text: "Sometime in a lap, the coming of a cold winter midnight brought about an impulse to unravel within a scrupulous heart. That of which belonged to Mazhar Haque, a man, brown-tanned, coarse-haired, slightly stout-cheeked, plump-mouthed, wide-nosed, eyes seldom closed, who believed his ears were in salvation by the power of music. A cobalt blue bike that he rode came with a broken bell, a yellow basket stuffed with music sheets, a down tube spray-painted with the word ",
-        _key: "5cafbd45ed100",
+        text: "MAZHAR [",
+        _key: "b899933585640",
       },
       {
         _type: "span",
         marks: ["em"],
-        text: "ZERO",
-        _key: "5cafbd45ed101",
+        text: "in the poorest accent, whispering",
+        _key: "b899933585641",
       },
       {
-        marks: [],
-        text: ", a neon green flashlight attached to it as headlights, bearings freshly greased, and seats for two. He pedaled into the fog of the weather stirred in with the gas of the manholes, condensing on his skin as he left the haze. A tune that amazed him, a long-time favorite of his, went by the name ",
-        _key: "5cafbd45ed102",
         _type: "span",
+        marks: [],
+        text: "]: Buongiorno principessa! [",
+        _key: "b899933585642",
       },
       {
+        text: "He finished with a peck on one of her cheeks.",
+        _key: "b899933585643",
         _type: "span",
         marks: ["em"],
-        text: "Where or When",
-        _key: "5cafbd45ed103",
       },
       {
-        _type: "span",
         marks: [],
-        text: " by ",
-        _key: "5cafbd45ed104",
-      },
-      {
+        text: "]",
+        _key: "b899933585644",
         _type: "span",
-        marks: ["em"],
-        text: "Johnny Smith",
-        _key: "5cafbd45ed105",
-      },
-      {
-        text: ". Uncalled, it played in his head. There wasn’t a reason to not be swaying. His rhythmically precise swinging of the bike to the instrumental kept him amused and undistracted. In his city, New York, he was content. A crowd walked in, and a crowd faded out, but never in one color. On wheels or on feet, a crumbling move was never made in a land that equated the need for climbing higher stories with the need for writing higher stories. Both men, one from the street and one sipping coffee from the 20th floor, knew what it took to swap their places. From every corner, there was only a way forward. With the minds wrapped in the present, time ceased to matter for the past. Just the right place, for him, at last. Across the grid, he and his bike journeyed through streets that were dark, abandoned, and lifeless, turning at every crossroad and running on loops every now and then. Several beliefs were lost with time, along with the belief that he was lost. Locked and empty were the offices, shops, and restaurants, and so were the",
-        _key: "5cafbd45ed106",
-        _type: "span",
-        marks: [],
       },
     ],
+    _type: "block",
+    style: "normal",
+    _key: "76831e96a811",
+  },
+  {
+    _key: "17177f42a2e4",
+    markDefs: [],
+    children: [
+      {
+        _type: "span",
+        marks: [],
+        text: "[",
+        _key: "8d840b0c247b0",
+      },
+      {
+        text: "And she returned double the kisses.",
+        _key: "8d840b0c247b1",
+        _type: "span",
+        marks: ["em"],
+      },
+      {
+        marks: [],
+        text: "]",
+        _key: "8d840b0c247b2",
+        _type: "span",
+      },
+    ],
+    _type: "block",
+    style: "normal",
+  },
+  {
+    children: [
+      {
+        _type: "span",
+        marks: [],
+        text: "TISHA: Thank you for the big words, kind sir, but I’m naturally overwhelmed. [",
+        _key: "6edea975badd0",
+      },
+      {
+        _type: "span",
+        marks: ["em"],
+        text: "She chuckled.",
+        _key: "6edea975badd1",
+      },
+      {
+        text: "] Now let me finish this mascara quickly. [",
+        _key: "6edea975badd2",
+        _type: "span",
+        marks: [],
+      },
+      {
+        _type: "span",
+        marks: ["em"],
+        text: "Tenderly, she freed herself from his embrace.",
+        _key: "6edea975badd3",
+      },
+      {
+        _type: "span",
+        marks: [],
+        text: "]",
+        _key: "6edea975badd4",
+      },
+    ],
+    _type: "block",
+    style: "normal",
+    _key: "faa6c71d31a9",
+    markDefs: [],
   },
 ];
 
@@ -116,9 +268,8 @@ describe("LinesList", () => {
       firstPage,
       lastPage
     );
-
-    expect(noOfLines).toBe(19);
-    expect(noOfItalics).toBe(3);
+    expect(noOfLines).toBe(28);
+    expect(noOfItalics).toBe(25);
     expect(noOfBolds).toBe(1);
   });
 });

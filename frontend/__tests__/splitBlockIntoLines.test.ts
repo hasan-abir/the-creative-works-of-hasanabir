@@ -9,7 +9,6 @@ describe("splitBlockIntoLines: ", () => {
 
   it("separates by .?!", () => {
     const lines = splitBlockIntoLines(block);
-
     expect(lines.length).toBe(4);
     expect(lines[0]).toBe("Lorem ipsum dolor.");
     expect(lines[1]).toBe("Etiam quis ullamcorper nunc!");

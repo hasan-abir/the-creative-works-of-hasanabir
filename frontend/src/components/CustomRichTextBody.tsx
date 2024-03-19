@@ -29,7 +29,7 @@ const CustomRichTextBody = ({ body, classList }: Props) => {
                 const lastChildAddedToLastBlock =
                   lastBlockAdded &&
                   lastBlockAdded.children[lastBlockAdded.children.length - 1];
-                const punctuationRegex = /[.!?]$/;
+                const punctuationRegex = /[.!?")\]]$/;
                 const closingBracketsRegex = /^\s*\]\s*$/;
                 const newBlock = {
                   text: splittedLines[j],
