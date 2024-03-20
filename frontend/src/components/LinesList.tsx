@@ -31,22 +31,26 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
 
   const appendAndPrependToIncompleteLines = useCallback(() => {
     if (elsOfLinesRef.current) {
-      const firstLine = Array.from(elsOfLinesRef.current)[0].textContent;
+      const firstLine = Array.from(elsOfLinesRef.current)[0];
       const lastLine = Array.from(elsOfLinesRef.current)[
         elsOfLinesRef.current.length - 1
-      ].textContent;
-      const firstLineBeginsCompletely = /^[A-Z—[]/.test(firstLine || "");
-      const lastLineEndsCompletely = /[—\].!?]$/.test(lastLine || "");
+      ];
+      const firstLineBeginsCompletely = firstLine.textContent
+        ? /^[A-Z—[]/.test(firstLine.textContent || "")
+        : true;
+      const lastLineEndsCompletely = lastLine.textContent
+        ? /[—:\].!?…]$/.test(lastLine.textContent || "")
+        : true;
 
       if (!lastLineEndsCompletely) {
         Array.from(elsOfLinesRef.current)[
           elsOfLinesRef.current.length - 1
-        ].textContent = `${lastLine}—` || "";
+        ].innerHTML = `${lastLine.innerHTML}—` || "";
       }
 
       if (!firstLineBeginsCompletely) {
-        Array.from(elsOfLinesRef.current)[0].textContent =
-          `—${firstLine}` || "";
+        Array.from(elsOfLinesRef.current)[0].innerHTML =
+          `—${firstLine.innerHTML}` || "";
       }
     }
   }, []);
