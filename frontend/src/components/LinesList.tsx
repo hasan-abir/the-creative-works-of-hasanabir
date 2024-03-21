@@ -39,7 +39,7 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
         ? /^[A-Z—[]/.test(firstLine.textContent || "")
         : true;
       const lastLineEndsCompletely = lastLine.textContent
-        ? /[—:\].!?…]$/.test(lastLine.textContent || "")
+        ? /[-—:\].!?…]$/.test(lastLine.textContent || "")
         : true;
 
       if (!lastLineEndsCompletely) {

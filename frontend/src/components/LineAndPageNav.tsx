@@ -48,6 +48,8 @@ const LineAndPageNav = ({
         ) : (
           <Link
             data-testid="prev-page-link"
+            aria-label="Go to previous page"
+            title="Go to previous page"
             href={`${basePath}/${params.slug}/${parseInt(params.page) - 1}`}
             className="underline flex justify-center"
           >
@@ -58,6 +60,8 @@ const LineAndPageNav = ({
         <button
           className="underline"
           data-testid="to-top-btn"
+          aria-label="Start from the top"
+          title="Start from the top"
           onClick={() => {
             setPageRead(false);
             goToLine(0);
@@ -68,6 +72,8 @@ const LineAndPageNav = ({
         <button
           className="underline"
           data-testid="expand-text-btn"
+          aria-label="Expand previous lines"
+          title="Expand previous lines"
           onClick={() => onExpandText(currentIndex)}
         >
           {textExpanded ? (
@@ -89,6 +95,8 @@ const LineAndPageNav = ({
           ) : (
             <Link
               data-testid="next-page-link"
+              aria-label="Go to next page"
+              title="Go to next page"
               href={`${basePath}/${params.slug}/${parseInt(params.page) + 1}`}
               className="underline flex justify-center"
             >
@@ -99,6 +107,8 @@ const LineAndPageNav = ({
           <button
             data-testid="next-line-btn"
             className="underline flex justify-center"
+            aria-label="Go to next line"
+            title="Go to next line"
             onClick={() => {
               goToLine(currentIndex + 1);
             }}

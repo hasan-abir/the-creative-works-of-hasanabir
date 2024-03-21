@@ -65,6 +65,15 @@ const Story = async ({ params: { slug } }: { params: { slug: string } }) => {
         <ContinueReading basePath="/stories" classList="underline" />
         <br />
         <br />
+        <Link
+          href={`/${story[0].slug.current}.pdf`}
+          className="underline"
+          target="_blank"
+        >
+          Read the original PDF
+        </Link>
+        <br />
+        <br />
         <Link href="/stories" className="underline">
           Back to stories
         </Link>
