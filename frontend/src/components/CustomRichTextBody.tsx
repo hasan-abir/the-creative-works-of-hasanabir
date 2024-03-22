@@ -53,33 +53,37 @@ const CustomRichTextBody = ({ body, classList }: Props) => {
             }
           }
 
-          return newBlocks.map((line: any, i: number) => {
-            return (
-              <p
-                key={i}
-                data-testid="paragraph"
-                className={classList ? classList : undefined}
-              >
-                {line.children.map((child: any, j: number) => {
-                  if (child.marks.includes("em")) {
-                    return (
-                      <em key={j} data-testid="italic">
-                        {child.text}
-                      </em>
-                    );
-                  } else if (child.marks.includes("strong")) {
-                    return (
-                      <strong key={j} data-testid="bold">
-                        {child.text}
-                      </strong>
-                    );
-                  } else {
-                    return child.text;
-                  }
-                })}
-              </p>
-            );
-          });
+          return (
+            <div>
+              {newBlocks.map((line: any, i: number) => {
+                return (
+                  <p
+                    key={i}
+                    data-testid="paragraph"
+                    className={classList ? classList : undefined}
+                  >
+                    {line.children.map((child: any, j: number) => {
+                      if (child.marks.includes("em")) {
+                        return (
+                          <em key={j} data-testid="italic">
+                            {child.text}
+                          </em>
+                        );
+                      } else if (child.marks.includes("strong")) {
+                        return (
+                          <strong key={j} data-testid="bold">
+                            {child.text}
+                          </strong>
+                        );
+                      } else {
+                        return child.text;
+                      }
+                    })}
+                  </p>
+                );
+              })}
+            </div>
+          );
         },
       },
     }),

@@ -78,13 +78,14 @@ describe("Story Page", () => {
     const firstStory: Story = stories.list[0];
     cy.visit(`http://localhost:3000/stories/${firstStory.slug.current}/1`);
     cy.wait(1000);
+    cy.get(".line").eq(0).should("be.visible");
     cy.get(`[data-testid="next-line-btn"]`).trigger("click");
+    cy.get(".line").eq(1).should("be.visible");
     cy.get(`[data-testid="next-line-btn"]`).trigger("click");
+    cy.get(".line").eq(2).should("be.visible");
     cy.get(`[data-testid="expand-text-btn"]`).trigger("click");
     cy.wait(1000);
     cy.get(".line").eq(0).should("be.visible");
-    cy.get(".line").eq(1).should("be.visible");
-    cy.get(".line").eq(2).should("be.visible");
     cy.get(`[data-testid="expand-text-btn"]`).trigger("click");
     cy.wait(1000);
     cy.get(".line").eq(0).should("not.be.visible");

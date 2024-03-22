@@ -23,7 +23,7 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [pageRead, setPageRead] = useState<boolean>(false);
   const [textExpanded, setTextExpanded] = useState<boolean>(false);
-  const defaultDuration = useRef<number>(0.4);
+  const defaultDuration = useRef<number>(0.3);
   const container = useRef<HTMLDivElement>(null);
   const memoryOfLine = useRef<LineInMemory | null>(null);
   const tlRef = useRef<GSAPTimeline | null>(null);
@@ -59,7 +59,7 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
     () => {
       let timeline = gsap.timeline({
         paused: true,
-        defaults: { duration: defaultDuration.current },
+        defaults: { duration: defaultDuration.current, ease: "expo.out" },
       });
       const elsOfLines: NodeListOf<HTMLParagraphElement> =
         document.querySelectorAll(".line");
@@ -93,6 +93,7 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
             x: 0,
             skewX: 0,
             opacity: 1,
+            marginTop: "0.5rem",
             onComplete: () => {
               timeline.pause();
             },
@@ -102,7 +103,6 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
         if (prevEl) {
           timeline.to(prevEl, {
             height: 0,
-            marginBottom: 0,
             onComplete: () => {
               prevEl.style.display = "none";
             },
@@ -113,9 +113,10 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
           lineEl,
           {
             opacity: 0.6,
+            marginTop: 0,
             fontSize: "1rem",
             lineHeight: "1.5rem",
-            duration: 0.2,
+            duration: defaultDuration.current / 4,
           },
           prevEl ? "<" : ">"
         );
@@ -157,20 +158,40 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
           );
 
           if (elsToAnimate.length > 0) {
-            if (textExpanded) {
-              gsap.to(elsToAnimate, {
-                height: 0,
-                marginBottom: 0,
-                duration: defaultDuration.current,
-              });
-              gsap.to(elsToAnimate, { display: "none" });
-            } else {
-              gsap.to(elsToAnimate, { display: "block" });
-              gsap.to(elsToAnimate, {
-                height: "auto",
-                marginBottom: "0.5rem",
-                duration: defaultDuration.current,
-              });
+            let i = 0;
+            while (i < elsToAnimate.length) {
+              if (textExpanded) {
+                gsap
+                  .timeline({
+                    defaults: { duration: defaultDuration.current / 1.5 },
+                  })
+                  .to(elsToAnimate[i], {
+                    height: 0,
+                    delay: 0 + 0.03 * i,
+                  })
+                  .to(elsToAnimate[i].parentElement, { marginBottom: 0 }, "<")
+                  .to(elsToAnimate[i], { display: "none" });
+              } else {
+                gsap
+                  .timeline({
+                    defaults: { duration: defaultDuration.current / 1.5 },
+                  })
+                  .to(elsToAnimate[i], { display: "block", duration: 0 })
+                  .to(
+                    elsToAnimate[i],
+                    {
+                      height: "auto",
+                      delay: 0 + 0.03 * i,
+                    },
+                    "<"
+                  )
+                  .to(
+                    elsToAnimate[i].parentElement,
+                    { marginBottom: "2rem" },
+                    "<"
+                  );
+              }
+              i++;
             }
           }
 
@@ -215,7 +236,7 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
         <div ref={container} className="max-h-[60vh] overflow-x-hidden">
           <CustomRichTextBody
             body={body}
-            classList="line overflow-y-hidden text-xl md:text-2xl mb-2 opacity-0 hidden h-0 origin-[100%_0%] translate-x-[10rem] skew-x-[60deg] transition-[line-height] max-h-fit"
+            classList="line overflow-y-hidden text-xl md:text-2xl opacity-0 hidden h-0 origin-[100%_0%] translate-x-[10rem] skew-x-[60deg] transition-[font-size] transition-[line-height] max-h-fit"
           />
         </div>
       </div>
