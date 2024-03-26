@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, act } from "@testing-library/react";
 import LineAndPageNav from "@/components/LineAndPageNav";
 
 const slug = "abc";
@@ -50,7 +50,8 @@ const renderLineAndNav = (
       pageRead={pageRead}
       textExpanded={textExpanded}
       onExpandText={onExpandText}
-      lines={lines}
+      linesLength={lines.length}
+      currentText={lines[0].textContent || ""}
       setPageRead={setPageRead}
       goToLine={goToLine}
     />
@@ -201,5 +202,37 @@ describe("LineAndPageNav", () => {
     fireEvent.click(screen.getByTestId("next-line-btn"));
 
     expect(goToLine).toHaveBeenCalledWith(currentIndex + 1);
+  });
+  it("autoplay triggers and renders as expected", () => {
+    const firstPage = false;
+    const lastPage = false;
+    const pageRead = false;
+    const textExpanded = false;
+
+    const { goToLine, currentIndex } = renderLineAndNav(
+      firstPage,
+      lastPage,
+      pageRead,
+      textExpanded
+    );
+
+    expect(screen.queryByTestId("autoplay-icon")).toBeInTheDocument();
+
+    act(() => {
+      fireEvent.click(screen.getByTestId("autoplay-btn"));
+    });
+
+    const msToWait = 600;
+
+    expect(screen.queryByTestId("autoplay-pause-icon")).toBeInTheDocument();
+    setTimeout(() => {
+      expect(goToLine).toHaveBeenCalledWith(currentIndex + 1);
+    }, msToWait);
+
+    act(() => {
+      fireEvent.click(screen.getByTestId("autoplay-btn"));
+    });
+
+    expect(screen.queryByTestId("autoplay-icon")).toBeInTheDocument();
   });
 });

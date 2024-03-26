@@ -169,10 +169,10 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
                     height: 0,
                     delay: 0 + 0.03 * i,
                   })
-                  .to(elsToAnimate[i].parentElement, { marginBottom: 0 }, "<")
+                  .to(elsToAnimate[i].parentElement, { marginTop: 0 }, "<")
                   .to(elsToAnimate[i], { display: "none" });
               } else {
-                gsap
+                const timeline = gsap
                   .timeline({
                     defaults: { duration: defaultDuration.current / 1.5 },
                   })
@@ -184,12 +184,20 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
                       delay: 0 + 0.03 * i,
                     },
                     "<"
-                  )
-                  .to(
+                  );
+
+                if (
+                  i > 1 &&
+                  elsToAnimate[i - 1] &&
+                  elsToAnimate[i - 1].parentElement !==
+                    elsToAnimate[i].parentElement
+                ) {
+                  timeline.to(
                     elsToAnimate[i].parentElement,
-                    { marginBottom: "2rem" },
+                    { marginTop: "2rem" },
                     "<"
                   );
+                }
               }
               i++;
             }
@@ -241,9 +249,15 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
         </div>
       </div>
       <NewLineAndPageNav
-        lines={Array.from(elsOfLinesRef.current || [])}
+        linesLength={Array.from(elsOfLinesRef.current || []).length}
         textExpanded={textExpanded}
         currentIndex={currentIndex}
+        currentText={
+          (Array.from(elsOfLinesRef.current || [])[currentIndex] &&
+            Array.from(elsOfLinesRef.current || [])[currentIndex]
+              .textContent) ||
+          ""
+        }
         basePath={basePath}
         firstPage={firstPage}
         lastPage={lastPage}

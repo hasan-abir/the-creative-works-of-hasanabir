@@ -90,6 +90,50 @@ describe("Story Page", () => {
     cy.wait(1000);
     cy.get(".line").eq(0).should("not.be.visible");
   });
+  it("should autoplay as expected", () => {
+    const firstStory: Story = stories.list[0];
+    cy.visit(`http://localhost:3000/stories/${firstStory.slug.current}/1`);
+    cy.wait(1000);
+    cy.get(".line").eq(0).should("be.visible");
+    cy.get(`[data-testid="autoplay-btn"]`).trigger("click");
+    cy.wait(2000);
+    cy.get(".line").eq(1).should("be.visible");
+    cy.get(`[data-testid="autoplay-btn"]`).trigger("click");
+    cy.wait(2000);
+    cy.get(".line").eq(2).should("not.be.visible");
+    cy.reload();
+    cy.wait(1000);
+    cy.get(".line").eq(1).should("be.visible");
+    cy.get(`[data-testid="autoplay-btn"]`).trigger("click");
+    cy.wait(2000);
+    cy.get(".line").eq(2).should("be.visible");
+    cy.wait(2000);
+    cy.get(".line").eq(3).should("be.visible");
+    cy.wait(2000);
+    cy.get(".line").eq(4).should("be.visible");
+    cy.get(`[data-testid="autoplay-icon"]`).should("be.visible");
+    cy.get(`[data-testid="autoplay-pause-icon"]`).should("not.exist");
+  });
+  it.only("should pause autoplay when other buttons are clicked", () => {
+    const firstStory: Story = stories.list[0];
+    cy.visit(`http://localhost:3000/stories/${firstStory.slug.current}/1`);
+    cy.wait(1000);
+    cy.get(".line").eq(0).should("be.visible");
+    cy.get(`[data-testid="autoplay-btn"]`).trigger("click");
+    cy.get(`[data-testid="autoplay-pause-icon"]`).should("be.visible");
+    cy.wait(2000);
+    cy.get(".line").eq(1).should("be.visible");
+    cy.get(`[data-testid="next-line-btn"]`).trigger("click");
+    cy.get(`[data-testid="autoplay-pause-icon"]`).should("not.exist");
+    cy.get(`[data-testid="autoplay-btn"]`).trigger("click");
+    cy.get(`[data-testid="autoplay-pause-icon"]`).should("be.visible");
+    cy.get(`[data-testid="to-top-btn"]`).trigger("click");
+    cy.get(`[data-testid="autoplay-pause-icon"]`).should("not.exist");
+    cy.get(`[data-testid="autoplay-btn"]`).trigger("click");
+    cy.get(`[data-testid="autoplay-pause-icon"]`).should("be.visible");
+    cy.get(`[data-testid="expand-text-btn"]`).trigger("click");
+    cy.get(`[data-testid="autoplay-pause-icon"]`).should("not.exist");
+  });
   it("should display not found", () => {
     cy.visit("http://localhost:3000/stories/story1/4", {
       failOnStatusCode: false,
