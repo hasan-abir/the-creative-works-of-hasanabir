@@ -114,7 +114,7 @@ describe("Story Page", () => {
     cy.get(`[data-testid="autoplay-icon"]`).should("be.visible");
     cy.get(`[data-testid="autoplay-pause-icon"]`).should("not.exist");
   });
-  it.only("should pause autoplay when other buttons are clicked", () => {
+  it("should pause autoplay when other buttons are clicked", () => {
     const firstStory: Story = stories.list[0];
     cy.visit(`http://localhost:3000/stories/${firstStory.slug.current}/1`);
     cy.wait(1000);

@@ -65,7 +65,9 @@ const LineAndPageNav = ({
       currentIndex < (linesLength - 1 < 0 ? 1 : linesLength - 1)
     ) {
       const words = currentText.split(" ");
-      const msToWait = (words.length / 200) * 60000;
+      let msToWait = (words.length / 150) * 60000;
+      msToWait = msToWait < 2000 ? 2000 : msToWait;
+
       const autoPlaytimeOut = setTimeout(() => {
         goToLine(currentIndex + 1);
       }, msToWait);

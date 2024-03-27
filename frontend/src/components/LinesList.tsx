@@ -59,7 +59,7 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
     () => {
       let timeline = gsap.timeline({
         paused: true,
-        defaults: { duration: defaultDuration.current, ease: "expo.out" },
+        defaults: { duration: defaultDuration.current, ease: "circ.out" },
       });
       const elsOfLines: NodeListOf<HTMLParagraphElement> =
         document.querySelectorAll(".line");
@@ -78,6 +78,7 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
             lineEl,
             {
               display: "block",
+              willChange: "transform",
             },
             "<"
           )
@@ -85,7 +86,11 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
             lineEl,
             {
               height: "auto",
+              marginTop: "0.5rem",
               delay: 0.1,
+              onStart: () => {
+                lineEl.style.maxHeight = `${lineEl.scrollHeight}px`;
+              },
             },
             "<"
           )
@@ -93,7 +98,9 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
             x: 0,
             skewX: 0,
             opacity: 1,
-            marginTop: "0.5rem",
+          })
+          .to(lineEl, {
+            willChange: "auto",
             onComplete: () => {
               timeline.pause();
             },
@@ -244,7 +251,7 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
         <div ref={container} className="max-h-[60vh] overflow-x-hidden">
           <CustomRichTextBody
             body={body}
-            classList="line overflow-y-hidden text-xl md:text-2xl opacity-0 hidden h-0 origin-[100%_0%] translate-x-[10rem] skew-x-[60deg] transition-[font-size] transition-[line-height] max-h-fit"
+            classList="line overflow-y-hidden text-xl md:text-2xl opacity-0 hidden h-0 origin-[100%_0%] translate-x-[10rem] skew-x-[60deg] transition-[font-size] transition-[line-height]"
           />
         </div>
       </div>
