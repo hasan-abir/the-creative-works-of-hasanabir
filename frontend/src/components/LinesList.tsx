@@ -74,7 +74,7 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
         }
 
         timeline
-          .to(
+          .set(
             lineEl,
             {
               display: "block",
@@ -86,13 +86,12 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
             lineEl,
             {
               height: "auto",
-              marginTop: "0.5rem",
-              delay: 0.1,
+              marginTop: i < 1 ? 0 : "0.5rem",
               onStart: () => {
                 lineEl.style.maxHeight = `${lineEl.scrollHeight}px`;
               },
             },
-            "<"
+            "<+0.1"
           )
           .to(lineEl, {
             x: 0,
@@ -108,12 +107,15 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
           .add(`el-${i + 1}`);
 
         if (prevEl) {
-          timeline.to(prevEl, {
-            height: 0,
-            onComplete: () => {
-              prevEl.style.display = "none";
-            },
-          });
+          timeline
+            .to(prevEl, {
+              ease: "linear",
+              height: 0,
+              duration: defaultDuration.current / 4,
+            })
+            .set(prevEl, {
+              display: "none",
+            });
         }
 
         timeline.to(
@@ -121,9 +123,8 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
           {
             opacity: 0.6,
             marginTop: 0,
-            fontSize: "1rem",
-            lineHeight: "1.5rem",
-            duration: defaultDuration.current / 4,
+            fontSize: "1.25rem",
+            duration: defaultDuration.current / 2,
           },
           prevEl ? "<" : ">"
         );
@@ -251,7 +252,11 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
         <div ref={container} className="max-h-[60vh] overflow-x-hidden">
           <CustomRichTextBody
             body={body}
-            classList="line overflow-y-hidden text-xl md:text-2xl opacity-0 hidden h-0 origin-[100%_0%] translate-x-[10rem] skew-x-[60deg] transition-[font-size] transition-[line-height]"
+            classList={
+              "line overflow-y-hidden text-2xl leading-normal md:leading-normal md:text-4xl opacity-0 hidden h-0 origin-[100%_0%] translate-x-[10rem] skew-x-[60deg] transition-[font-size] transition-[line-height]" +
+              " duration-" +
+              defaultDuration.current * 1000
+            }
           />
         </div>
       </div>
