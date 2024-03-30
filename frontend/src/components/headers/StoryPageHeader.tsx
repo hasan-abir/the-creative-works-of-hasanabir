@@ -11,7 +11,7 @@ const StoryPageHeader = ({ title, page, pageCount }: Props) => {
   return (
     <section>
       <div className="flex justify-between mb-3">
-        <h1 className="font-bold text-xl sm:text-2xl max-w-[180px] sm:max-w-full">
+        <h1 className="font-bold text-xl sm:text-3xl max-w-[180px] sm:max-w-full">
           {title}
         </h1>
         <p>

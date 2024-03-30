@@ -253,7 +253,7 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
           <CustomRichTextBody
             body={body}
             classList={
-              "line overflow-y-hidden text-2xl leading-normal md:leading-normal md:text-4xl opacity-0 hidden h-0 origin-[100%_0%] translate-x-[10rem] skew-x-[60deg] transition-[font-size] transition-[line-height]" +
+              "line overflow-y-hidden text-2xl leading-normal sm:leading-normal sm:text-4xl opacity-0 hidden h-0 origin-[100%_0%] translate-x-[10rem] skew-x-[60deg] transition-[font-size] transition-[line-height]" +
               " duration-" +
               defaultDuration.current * 1000
             }
