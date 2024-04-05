@@ -16,7 +16,7 @@ const NewLinesList = ({ body }: Props) => {
   const [animOnMobile, setAnimOnMobile] = useState<boolean>(false);
   const container = useRef<HTMLDivElement>(null);
   const lineEls = useRef<HTMLParagraphElement[]>([]);
-  const baseDuration = useRef<number>(0.4);
+  const baseDuration = useRef<number>(0.3);
 
   const fullTWConfig = useMemo(() => {
     return resolveConfig(tailwindConfig);
@@ -57,64 +57,79 @@ const NewLinesList = ({ body }: Props) => {
       const prevPrevLineEl = lineEls.current[index - 2];
       const nextLineEl = lineEls.current[index + 1];
 
-      const tl = gsap.timeline();
+      const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
 
       if (goForward && prevPrevLineEl) {
         tl.to(prevPrevLineEl, {
           height: 0,
           marginTop: 0,
+          duration: baseDuration.current / 2,
         }).set(prevPrevLineEl, {
-          opacity: 0,
           display: "none",
-          x: "8rem",
-          skewX: 60,
         });
       }
 
       if (prevLineEl) {
-        tl.set(prevLineEl, {
-          display: "block",
-          x: 0,
-          skewX: 0,
-        }).to(prevLineEl, {
-          height: "auto",
-          opacity: 0.5,
-          fontSize: animOnMobile
-            ? fullTWConfig.theme.fontSize["xl"][0]
-            : fullTWConfig.theme.fontSize["2xl"][0],
-          marginTop: 0,
-        });
+        if (!prevLineEl.checkVisibility()) {
+          tl.set(prevLineEl, {
+            display: "block",
+          }).to(
+            prevLineEl,
+            {
+              height: "auto",
+              opacity: 0.5,
+              fontSize: animOnMobile
+                ? fullTWConfig.theme.fontSize["xl"][0]
+                : fullTWConfig.theme.fontSize["2xl"][0],
+              duration: baseDuration.current / 2,
+            },
+            "<+0.1"
+          );
+        } else {
+          tl.to(prevLineEl, {
+            opacity: 0.5,
+            fontSize: animOnMobile
+              ? fullTWConfig.theme.fontSize["xl"][0]
+              : fullTWConfig.theme.fontSize["2xl"][0],
+            duration: baseDuration.current / 2,
+          });
+        }
       }
 
       if (goBackward && nextLineEl)
         tl.to(nextLineEl, {
           height: 0,
-        }).set(nextLineEl, {
-          x: "8rem",
-          opacity: 0,
-          skewX: 60,
-          display: "none",
           marginTop: 0,
+          duration: baseDuration.current / 2,
+        }).set(nextLineEl, {
+          display: "none",
         });
 
-      if (currentLineEl)
-        tl.set(currentLineEl, {
-          display: "block",
-          willChange: "transform",
-        })
-          .to(currentLineEl, {
+      if (currentLineEl) {
+        if (!currentLineEl.checkVisibility()) {
+          tl.set(currentLineEl, {
+            display: "block",
             fontSize: animOnMobile
               ? fullTWConfig.theme.fontSize["2xl"][0]
               : fullTWConfig.theme.fontSize["4xl"][0],
-            height: goBackward ? undefined : "auto",
+          }).to(
+            currentLineEl,
+            {
+              height: "auto",
+              marginTop: index > 0 ? "0.5rem" : 0,
+            },
+            "<+0.1"
+          );
+        } else {
+          tl.to(currentLineEl, {
             marginTop: index > 0 ? "0.5rem" : 0,
-          })
-          .to(currentLineEl, {
-            x: 0,
             opacity: 1,
-            skewX: 0,
-          })
-          .set(currentLineEl, { willChange: "auto" });
+            fontSize: animOnMobile
+              ? fullTWConfig.theme.fontSize["2xl"][0]
+              : fullTWConfig.theme.fontSize["4xl"][0],
+          });
+        }
+      }
 
       if (index !== lineIndex) setLineIndex(index);
     }),
@@ -128,9 +143,9 @@ const NewLinesList = ({ body }: Props) => {
           <CustomRichTextBody
             body={body}
             classList={
-              "line overflow-y-hidden leading-normal sm:leading-normal opacity-0 hidden h-0 translate-x-[8rem] skew-x-[60deg] transition-[font-size] transition-[line-height]" +
+              "line overflow-y-hidden leading-normal sm:leading-normal h-0 hidden transition-[font-size]" +
               " duration-" +
-              baseDuration.current * 1000
+              (baseDuration.current / 2) * 1000
             }
           />
         </div>
