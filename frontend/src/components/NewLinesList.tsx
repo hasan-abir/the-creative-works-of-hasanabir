@@ -5,21 +5,51 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useCallback, useRef, useState, useMemo } from "react";
 import resolveConfig from "tailwindcss/resolveConfig";
+import NewLineAndPageNav from "@/components/NewLineAndPageNav";
 import tailwindConfig from "../../tailwind.config";
+import lineInMemory from "@/utils/lineInMemory";
+import { useParams } from "next/navigation";
 
 interface Props {
+  basePath: string;
+  firstPage: boolean;
+  lastPage: boolean;
   body: any[];
 }
 
-const NewLinesList = ({ body }: Props) => {
+const NewLinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
   const [lineIndex, setLineIndex] = useState<number>(0);
   const [animOnMobile, setAnimOnMobile] = useState<boolean>(false);
   const container = useRef<HTMLDivElement>(null);
   const lineEls = useRef<HTMLParagraphElement[]>([]);
   const baseDuration = useRef<number>(0.3);
 
+  const params = useParams<{
+    slug: string;
+    page: string;
+  }>();
   const fullTWConfig = useMemo(() => {
     return resolveConfig(tailwindConfig);
+  }, []);
+
+  const appendAndPrependToIncompleteLines = useCallback(() => {
+    const firstLine = lineEls.current[0];
+    const lastLine = lineEls.current[lineEls.current.length - 1];
+    const firstLineBeginsCompletely = firstLine.textContent
+      ? /^[A-Z—[]/.test(firstLine.textContent || "")
+      : true;
+    const lastLineEndsCompletely = lastLine.textContent
+      ? /[-—:\].!?…]$/.test(lastLine.textContent || "")
+      : true;
+
+    if (!lastLineEndsCompletely) {
+      lineEls.current[lineEls.current.length - 1].innerHTML =
+        `${lastLine.innerHTML}—` || "";
+    }
+
+    if (!firstLineBeginsCompletely) {
+      lineEls.current[0].innerHTML = `—${firstLine.innerHTML}` || "";
+    }
   }, []);
 
   const { contextSafe } = useGSAP(
@@ -36,16 +66,30 @@ const NewLinesList = ({ body }: Props) => {
         }
       );
 
-      goToLine();
+      appendAndPrependToIncompleteLines();
+
+      const objStored = lineInMemory.get(basePath, params.slug);
+
+      let initialIndex = 0;
+
+      if (objStored) {
+        const indexFromStorage = objStored && objStored[parseInt(params.page)];
+
+        indexFromStorage && indexFromStorage >= 0
+          ? (initialIndex = indexFromStorage)
+          : 0;
+      }
+
+      goToLine(false, false, initialIndex);
     },
     { scope: container, dependencies: [animOnMobile] }
   );
 
   const goToLine = useCallback(
-    contextSafe((next?: boolean, prev?: boolean) => {
+    contextSafe((next?: boolean, prev?: boolean, storedIndex?: number) => {
       const goForward = next && !prev;
       const goBackward = !next && prev;
-      let index = lineIndex;
+      let index = storedIndex || lineIndex;
       if (goForward) {
         index++;
       } else if (goBackward) {
@@ -79,7 +123,7 @@ const NewLinesList = ({ body }: Props) => {
               height: "auto",
               opacity: 0.5,
               fontSize: animOnMobile
-                ? fullTWConfig.theme.fontSize["xl"][0]
+                ? fullTWConfig.theme.fontSize["lg"][0]
                 : fullTWConfig.theme.fontSize["2xl"][0],
               duration: baseDuration.current / 2,
             },
@@ -89,7 +133,7 @@ const NewLinesList = ({ body }: Props) => {
           tl.to(prevLineEl, {
             opacity: 0.5,
             fontSize: animOnMobile
-              ? fullTWConfig.theme.fontSize["xl"][0]
+              ? fullTWConfig.theme.fontSize["lg"][0]
               : fullTWConfig.theme.fontSize["2xl"][0],
             duration: baseDuration.current / 2,
           });
@@ -131,7 +175,12 @@ const NewLinesList = ({ body }: Props) => {
         }
       }
 
-      if (index !== lineIndex) setLineIndex(index);
+      if (index !== lineIndex) {
+        const objStored = lineInMemory.get(basePath, params.slug);
+
+        lineInMemory.set(basePath, params.slug, params.page, index, objStored);
+        setLineIndex(index);
+      }
     }),
     [lineIndex, animOnMobile]
   );
@@ -143,27 +192,25 @@ const NewLinesList = ({ body }: Props) => {
           <CustomRichTextBody
             body={body}
             classList={
-              "line overflow-y-hidden leading-normal sm:leading-normal h-0 hidden transition-[font-size]" +
-              " duration-" +
-              (baseDuration.current / 2) * 1000
+              "line overflow-y-hidden leading-normal sm:leading-normal h-0 hidden"
             }
           />
         </div>
       </div>
-      <button
-        onClick={() => {
-          goToLine(false, true);
-        }}
-      >
-        Go to previous line
-      </button>
-      <button
-        onClick={() => {
-          goToLine(true);
-        }}
-      >
-        Go to next line
-      </button>
+      <NewLineAndPageNav
+        linesLength={lineEls.current.length}
+        textExpanded={false}
+        currentIndex={lineIndex}
+        currentText={
+          (lineEls.current[lineIndex] &&
+            lineEls.current[lineIndex].textContent) ||
+          ""
+        }
+        basePath={basePath}
+        firstPage={firstPage}
+        lastPage={lastPage}
+        goToLine={goToLine}
+      />
     </section>
   );
 };

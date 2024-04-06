@@ -88,7 +88,12 @@ const StoryPage = async ({
           page={parseInt(page)}
           pageCount={pageCount}
         />
-        <NewLinesList body={pageContent[0].body} />
+        <NewLinesList
+          body={pageContent[0].body}
+          basePath="/stories"
+          firstPage={parseInt(page) === 1}
+          lastPage={parseInt(page) === pageCount}
+        />
         {/* <BackgroundAnimations /> */}
         {/* <LinesList
           body={(pageContent[0] && pageContent[0].body) || []}

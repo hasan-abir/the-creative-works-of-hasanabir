@@ -1,6 +1,6 @@
 "use client";
 import CustomRichTextBody from "@/components/CustomRichTextBody";
-import NewLineAndPageNav from "@/components/LineAndPageNav";
+import LineAndPageNav from "@/components/LineAndPageNav";
 import lineInMemory, { LineInMemory } from "@/utils/lineInMemory";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
@@ -260,7 +260,7 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
           />
         </div>
       </div>
-      <NewLineAndPageNav
+      <LineAndPageNav
         linesLength={Array.from(elsOfLinesRef.current || []).length}
         textExpanded={textExpanded}
         currentIndex={currentIndex}
