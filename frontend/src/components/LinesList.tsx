@@ -1,284 +1,224 @@
 "use client";
+
 import CustomRichTextBody from "@/components/CustomRichTextBody";
-import LineAndPageNav from "@/components/LineAndPageNav";
-import lineInMemory, { LineInMemory } from "@/utils/lineInMemory";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { useCallback, useRef, useState, useMemo } from "react";
+import resolveConfig from "tailwindcss/resolveConfig";
+import LineAndPageNav from "@/components/LineAndPageNav";
+import tailwindConfig from "../../tailwind.config";
+import lineInMemory from "@/utils/lineInMemory";
 import { useParams } from "next/navigation";
-import { useCallback, useRef, useState } from "react";
 
 interface Props {
-  body: any[];
   basePath: string;
   firstPage: boolean;
   lastPage: boolean;
+  body: any[];
 }
 
 const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
+  const [lineIndex, setLineIndex] = useState<number>(0);
+  const [animOnMobile, setAnimOnMobile] = useState<boolean>(false);
+  const container = useRef<HTMLDivElement>(null);
+  const lineEls = useRef<HTMLParagraphElement[]>([]);
+  const baseDuration = useRef<number>(0.3);
+
   const params = useParams<{
     slug: string;
     page: string;
   }>();
-
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [pageRead, setPageRead] = useState<boolean>(false);
-  const [textExpanded, setTextExpanded] = useState<boolean>(false);
-  const defaultDuration = useRef<number>(0.3);
-  const container = useRef<HTMLDivElement>(null);
-  const memoryOfLine = useRef<LineInMemory | null>(null);
-  const tlRef = useRef<GSAPTimeline | null>(null);
-  const elsOfLinesRef = useRef<NodeListOf<HTMLParagraphElement> | null>(null);
+  const fullTWConfig = useMemo(() => {
+    return resolveConfig(tailwindConfig);
+  }, []);
 
   const appendAndPrependToIncompleteLines = useCallback(() => {
-    if (elsOfLinesRef.current) {
-      const firstLine = Array.from(elsOfLinesRef.current)[0];
-      const lastLine = Array.from(elsOfLinesRef.current)[
-        elsOfLinesRef.current.length - 1
-      ];
-      const firstLineBeginsCompletely = firstLine.textContent
-        ? /^[A-Z—[]/.test(firstLine.textContent || "")
-        : true;
-      const lastLineEndsCompletely = lastLine.textContent
-        ? /[-—:\].!?…]$/.test(lastLine.textContent || "")
-        : true;
+    const firstLine = lineEls.current[0];
+    const lastLine = lineEls.current[lineEls.current.length - 1];
+    const firstLineBeginsCompletely = firstLine.textContent
+      ? /^[A-Z—[]/.test(firstLine.textContent || "")
+      : true;
+    const lastLineEndsCompletely = lastLine.textContent
+      ? /[-—:\].!?…]$/.test(lastLine.textContent || "")
+      : true;
 
-      if (!lastLineEndsCompletely) {
-        Array.from(elsOfLinesRef.current)[
-          elsOfLinesRef.current.length - 1
-        ].innerHTML = `${lastLine.innerHTML}—` || "";
-      }
+    if (!lastLineEndsCompletely) {
+      lineEls.current[lineEls.current.length - 1].innerHTML =
+        `${lastLine.innerHTML}—` || "";
+    }
 
-      if (!firstLineBeginsCompletely) {
-        Array.from(elsOfLinesRef.current)[0].innerHTML =
-          `—${firstLine.innerHTML}` || "";
-      }
+    if (!firstLineBeginsCompletely) {
+      lineEls.current[0].innerHTML = `—${firstLine.innerHTML}` || "";
     }
   }, []);
 
   const { contextSafe } = useGSAP(
     () => {
-      let timeline = gsap.timeline({
-        paused: true,
-        defaults: { duration: defaultDuration.current, ease: "circ.out" },
-      });
-      const elsOfLines: NodeListOf<HTMLParagraphElement> =
-        document.querySelectorAll(".line");
+      lineEls.current = Array.from(document.querySelectorAll(".line"));
 
-      let i = 0;
-      while (i < elsOfLines.length) {
-        const lineEl = elsOfLines[i];
-        const prevEl = elsOfLines[i - 1];
+      const mm = gsap.matchMedia();
 
-        if (i < 1) {
-          timeline.add(`el-${i}`);
+      mm.add(
+        { isMobile: "(max-width: 639px)", isDesktop: "(min-width: 640px)" },
+        (ctx) => {
+          const { isMobile } = ctx.conditions as { isMobile: boolean };
+          setAnimOnMobile(isMobile);
         }
-
-        timeline
-          .set(
-            lineEl,
-            {
-              display: "block",
-              willChange: "transform",
-            },
-            "<"
-          )
-          .to(
-            lineEl,
-            {
-              height: "auto",
-              marginTop: i < 1 ? 0 : "0.5rem",
-              onStart: () => {
-                lineEl.style.maxHeight = `${lineEl.scrollHeight}px`;
-              },
-            },
-            "<+0.1"
-          )
-          .to(lineEl, {
-            x: 0,
-            skewX: 0,
-            opacity: 1,
-          })
-          .to(lineEl, {
-            willChange: "auto",
-            onComplete: () => {
-              timeline.pause();
-            },
-          })
-          .add(`el-${i + 1}`);
-
-        if (prevEl) {
-          timeline
-            .to(prevEl, {
-              ease: "linear",
-              height: 0,
-              duration: defaultDuration.current / 4,
-            })
-            .set(prevEl, {
-              display: "none",
-            });
-        }
-
-        timeline.to(
-          lineEl,
-          {
-            opacity: 0.6,
-            marginTop: 0,
-            fontSize: "1.25rem",
-            duration: defaultDuration.current / 2,
-          },
-          prevEl ? "<" : ">"
-        );
-
-        i++;
-      }
-
-      tlRef.current = timeline;
-      elsOfLinesRef.current = elsOfLines;
+      );
 
       appendAndPrependToIncompleteLines();
 
-      let initialIndex = 0;
-
       const objStored = lineInMemory.get(basePath, params.slug);
 
+      let initialIndex = 0;
+
       if (objStored) {
-        memoryOfLine.current = objStored;
         const indexFromStorage = objStored && objStored[parseInt(params.page)];
 
-        initialIndex =
-          indexFromStorage && indexFromStorage >= 0 ? indexFromStorage : 0;
+        indexFromStorage && indexFromStorage >= 0
+          ? (initialIndex = indexFromStorage)
+          : 0;
       }
 
-      goToLine(initialIndex);
+      goToLine(false, false, initialIndex);
     },
-    { scope: container }
-  );
-
-  const onExpandText = contextSafe(
-    useCallback(
-      (index: number) => {
-        if (elsOfLinesRef.current) {
-          const numberOfEls = index - 1 < 0 ? 0 : index - 1;
-
-          const elsToAnimate = Array.from(elsOfLinesRef.current).slice(
-            0,
-            numberOfEls
-          );
-
-          if (elsToAnimate.length > 0) {
-            let i = 0;
-            while (i < elsToAnimate.length) {
-              if (textExpanded) {
-                gsap
-                  .timeline({
-                    defaults: { duration: defaultDuration.current / 1.5 },
-                  })
-                  .to(elsToAnimate[i], {
-                    height: 0,
-                    delay: 0 + 0.03 * i,
-                  })
-                  .to(elsToAnimate[i].parentElement, { marginTop: 0 }, "<")
-                  .to(elsToAnimate[i], { display: "none" });
-              } else {
-                const timeline = gsap
-                  .timeline({
-                    defaults: { duration: defaultDuration.current / 1.5 },
-                  })
-                  .to(elsToAnimate[i], { display: "block", duration: 0 })
-                  .to(
-                    elsToAnimate[i],
-                    {
-                      height: "auto",
-                      delay: 0 + 0.03 * i,
-                    },
-                    "<"
-                  );
-
-                if (
-                  i > 1 &&
-                  elsToAnimate[i - 1] &&
-                  elsToAnimate[i - 1].parentElement !==
-                    elsToAnimate[i].parentElement
-                ) {
-                  timeline.to(
-                    elsToAnimate[i].parentElement,
-                    { marginTop: "2rem" },
-                    "<"
-                  );
-                }
-              }
-              i++;
-            }
-          }
-
-          setTextExpanded(!textExpanded);
-        }
-      },
-      [textExpanded]
-    )
+    { scope: container, dependencies: [animOnMobile] }
   );
 
   const goToLine = contextSafe(
     useCallback(
-      (index: number) => {
-        if (textExpanded) {
-          onExpandText(index);
+      (next?: boolean, prev?: boolean, storedIndex?: number) => {
+        const goForward = next && !prev;
+        const goBackward = !next && prev;
+        let index = storedIndex || lineIndex;
+        if (goForward) {
+          index++;
+        } else if (goBackward) {
+          index--;
+        }
+        if (index > lineEls.current.length - 1 || index < 0) return null;
+        const currentLineEl = lineEls.current[index];
+        const prevLineEl = lineEls.current[index - 1];
+        const prevPrevLineEl = lineEls.current[index - 2];
+        const nextLineEl = lineEls.current[index + 1];
+
+        const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
+
+        if (goForward && prevPrevLineEl) {
+          tl.to(prevPrevLineEl, {
+            height: 0,
+            marginTop: 0,
+            duration: baseDuration.current / 2,
+          }).set(prevPrevLineEl, {
+            display: "none",
+          });
         }
 
-        if (
-          elsOfLinesRef.current &&
-          index >= elsOfLinesRef.current.length - 1
-        ) {
-          setPageRead(true);
+        if (prevLineEl) {
+          if (prevLineEl.style.display !== "block") {
+            tl.set(prevLineEl, {
+              display: "block",
+            }).to(
+              prevLineEl,
+              {
+                height: "auto",
+                opacity: 0.5,
+                fontSize: animOnMobile
+                  ? fullTWConfig.theme.fontSize["lg"][0]
+                  : fullTWConfig.theme.fontSize["2xl"][0],
+                duration: baseDuration.current / 2,
+              },
+              "<+0.1"
+            );
+          } else {
+            tl.to(prevLineEl, {
+              opacity: 0.5,
+              fontSize: animOnMobile
+                ? fullTWConfig.theme.fontSize["lg"][0]
+                : fullTWConfig.theme.fontSize["2xl"][0],
+              duration: baseDuration.current / 2,
+            });
+          }
         }
 
-        tlRef.current && tlRef.current.play(`el-${index}`);
-        lineInMemory.set(
-          basePath,
-          params.slug,
-          params.page,
-          index,
-          memoryOfLine.current
-        );
-        setCurrentIndex(index);
+        if (goBackward && nextLineEl)
+          tl.to(nextLineEl, {
+            height: 0,
+            marginTop: 0,
+            duration: baseDuration.current / 2,
+          }).set(nextLineEl, {
+            display: "none",
+          });
+
+        if (currentLineEl) {
+          if (currentLineEl.style.display !== "block") {
+            tl.set(currentLineEl, {
+              display: "block",
+              fontSize: animOnMobile
+                ? fullTWConfig.theme.fontSize["2xl"][0]
+                : fullTWConfig.theme.fontSize["4xl"][0],
+            }).to(
+              currentLineEl,
+              {
+                height: "auto",
+                marginTop: index > 0 ? "0.5rem" : 0,
+              },
+              "<+0.1"
+            );
+          } else {
+            tl.to(currentLineEl, {
+              marginTop: index > 0 ? "0.5rem" : 0,
+              opacity: 1,
+              fontSize: animOnMobile
+                ? fullTWConfig.theme.fontSize["2xl"][0]
+                : fullTWConfig.theme.fontSize["4xl"][0],
+            });
+          }
+        }
+
+        if (index !== lineIndex) {
+          const objStored = lineInMemory.get(basePath, params.slug);
+
+          lineInMemory.set(
+            basePath,
+            params.slug,
+            params.page,
+            index,
+            objStored
+          );
+          setLineIndex(index);
+        }
       },
-      [textExpanded, basePath, onExpandText, params.page, params.slug]
+      [lineIndex, animOnMobile, fullTWConfig, basePath, params]
     )
   );
 
   return (
-    <div className="flex-1 flex flex-col justify-between">
+    <section className="flex-1 flex flex-col justify-between">
       <div className="flex-1 flex flex-col justify-center py-4 ">
         <div ref={container} className="max-h-[60vh] overflow-x-hidden">
           <CustomRichTextBody
             body={body}
             classList={
-              "line overflow-y-hidden text-2xl leading-normal sm:leading-normal sm:text-4xl opacity-0 hidden h-0 origin-[100%_0%] translate-x-[10rem] skew-x-[60deg] transition-[font-size] transition-[line-height]" +
-              " duration-" +
-              defaultDuration.current * 1000
+              "line overflow-y-hidden leading-normal sm:leading-normal h-0 hidden"
             }
           />
         </div>
       </div>
       <LineAndPageNav
-        linesLength={Array.from(elsOfLinesRef.current || []).length}
-        textExpanded={textExpanded}
-        currentIndex={currentIndex}
+        linesLength={lineEls.current.length}
+        currentIndex={lineIndex}
         currentText={
-          (Array.from(elsOfLinesRef.current || [])[currentIndex] &&
-            Array.from(elsOfLinesRef.current || [])[currentIndex]
-              .textContent) ||
+          (lineEls.current[lineIndex] &&
+            lineEls.current[lineIndex].textContent) ||
           ""
         }
         basePath={basePath}
         firstPage={firstPage}
         lastPage={lastPage}
-        pageRead={pageRead}
         goToLine={goToLine}
-        onExpandText={onExpandText}
-        setPageRead={setPageRead}
       />
-    </div>
+    </section>
   );
 };
 

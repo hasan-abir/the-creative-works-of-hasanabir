@@ -1,6 +1,4 @@
-import BackgroundAnimations from "@/components/BackgroundAnimations";
 import LinesList from "@/components/LinesList";
-import NewLinesList from "@/components/NewLinesList";
 import StoryPageHeader from "@/components/headers/StoryPageHeader";
 import { fetchData } from "@/lib/sanity/client";
 import { notFound } from "next/navigation";
@@ -88,19 +86,12 @@ const StoryPage = async ({
           page={parseInt(page)}
           pageCount={pageCount}
         />
-        <NewLinesList
+        <LinesList
           body={pageContent[0].body}
           basePath="/stories"
           firstPage={parseInt(page) === 1}
           lastPage={parseInt(page) === pageCount}
         />
-        {/* <BackgroundAnimations /> */}
-        {/* <LinesList
-          body={(pageContent[0] && pageContent[0].body) || []}
-          basePath="/stories"
-          firstPage={parseInt(page) === 1}
-          lastPage={parseInt(page) === pageCount}
-        /> */}
       </div>
     </main>
   );

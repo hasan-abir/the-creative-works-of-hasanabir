@@ -2,48 +2,32 @@ import ProgressBar from "@/components/ProgressBar";
 import {
   ArrowLeft,
   ArrowRight,
-  ArrowSeparateVertical,
-  ArrowUnionVertical,
+  FastArrowUp,
   FastArrowDown,
-  LongArrowUpRight,
   Pause,
   Play,
 } from "iconoir-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import {
-  Dispatch,
-  SetStateAction,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import { useCallback, useEffect, useState } from "react";
 
 interface Props {
   basePath: string;
   firstPage: boolean;
   lastPage: boolean;
-  pageRead: boolean;
   currentIndex: number;
-  textExpanded: boolean;
   linesLength: number;
   currentText: string;
-  setPageRead: Dispatch<SetStateAction<boolean>>;
-  onExpandText: (index: number) => void;
-  goToLine: (index: number) => void;
+  goToLine: (next?: boolean, prev?: boolean, storedIndex?: number) => void;
 }
 
 const LineAndPageNav = ({
   basePath,
   firstPage,
   lastPage,
-  pageRead,
   currentIndex,
-  textExpanded,
   linesLength,
   currentText,
-  setPageRead,
-  onExpandText,
   goToLine,
 }: Props) => {
   const [autoPlay, setAutoPlay] = useState<boolean>(false);
@@ -69,7 +53,7 @@ const LineAndPageNav = ({
       msToWait = msToWait < 2000 ? 2000 : msToWait;
 
       const autoPlaytimeOut = setTimeout(() => {
-        goToLine(currentIndex + 1);
+        goToLine(true);
       }, msToWait);
 
       setTimeOutId(autoPlaytimeOut);
@@ -95,21 +79,19 @@ const LineAndPageNav = ({
             <ArrowLeft className="w-6 h-6" />
           </Link>
         )}
-
         <button
-          className="underline"
-          data-testid="to-top-btn"
-          aria-label="Start from the top"
-          title="Start from the top"
+          data-testid="prev-line-btn"
+          className="underline flex justify-center"
+          aria-label="Go to previous line"
+          title="Go to previous line"
           onClick={() => {
             if (autoPlay) {
               toggleAutoPlay();
             }
-            setPageRead(false);
-            goToLine(0);
+            goToLine(false, true);
           }}
         >
-          <LongArrowUpRight className="w-6 h-6" />
+          <FastArrowUp className="w-6 h-6" />
         </button>
         <button
           className="underline"
@@ -125,59 +107,31 @@ const LineAndPageNav = ({
           )}
         </button>
         <button
-          className="underline"
-          data-testid="expand-text-btn"
-          aria-label="Expand previous lines"
-          title="Expand previous lines"
+          data-testid="next-line-btn"
+          className="underline flex justify-center"
+          aria-label="Go to next line"
+          title="Go to next line"
           onClick={() => {
             if (autoPlay) {
               toggleAutoPlay();
             }
-            onExpandText(currentIndex);
+            goToLine(true);
           }}
         >
-          {textExpanded ? (
-            <ArrowUnionVertical
-              className="w-6 h-6"
-              data-testid="text-expanded-icon"
-            />
-          ) : (
-            <ArrowSeparateVertical
-              className="w-6 h-6"
-              data-testid="text-not-expanded-icon"
-            />
-          )}
+          <FastArrowDown className="w-6 h-6" />
         </button>
-
-        {pageRead ? (
-          lastPage ? (
-            <p className="text-center text-xs sm:text-sm">The End</p>
-          ) : (
-            <Link
-              data-testid="next-page-link"
-              aria-label="Go to next page"
-              title="Go to next page"
-              href={`${basePath}/${params.slug}/${parseInt(params.page) + 1}`}
-              className="underline flex justify-center"
-            >
-              <ArrowRight className="w-6 h-6" />
-            </Link>
-          )
+        {lastPage ? (
+          <p className="text-center text-xs sm:text-sm">The End</p>
         ) : (
-          <button
-            data-testid="next-line-btn"
+          <Link
+            data-testid="next-page-link"
+            aria-label="Go to next page"
+            title="Go to next page"
+            href={`${basePath}/${params.slug}/${parseInt(params.page) + 1}`}
             className="underline flex justify-center"
-            aria-label="Go to next line"
-            title="Go to next line"
-            onClick={() => {
-              if (autoPlay) {
-                toggleAutoPlay();
-              }
-              goToLine(currentIndex + 1);
-            }}
           >
-            <FastArrowDown className="w-6 h-6" />
-          </button>
+            <ArrowRight className="w-6 h-6" />
+          </Link>
         )}
       </div>
     </div>
