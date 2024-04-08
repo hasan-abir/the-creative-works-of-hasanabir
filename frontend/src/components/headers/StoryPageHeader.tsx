@@ -10,20 +10,18 @@ interface Props {
 const StoryPageHeader = ({ title, page, pageCount }: Props) => {
   return (
     <section>
-      <div className="flex justify-between mb-3">
-        <h1 className="font-bold text-xl sm:text-3xl max-w-[180px] sm:max-w-full">
-          {title}
-        </h1>
-        <p>
+      <div className="flex justify-between items-center mb-3">
+        <h1 className="font-bold text-[2rem] sm:text-4xl pr-2">{title}</h1>
+        <p className="text-xl sm:text-2xl whitespace-nowrap">
           {page} of {pageCount}
         </p>
       </div>
       <div className="flex justify-between items-center">
-        <Link href="/stories" className="text-xs sm:text-sm flex items-center">
+        <Link href="/stories" className="flex items-center sm:text-lg">
           <NavArrowLeft />
           <span>All Stories</span>
         </Link>
-        <p className="text-xs sm:text-sm">
+        <p className="sm:text-lg">
           by
           <Link
             href="https://hasanabir.netlify.app/"

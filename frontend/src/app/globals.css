@@ -2,29 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 82, 82, 91;
-  --background-start-rgb: 255, 251, 235;
-  --background-end-rgb: 255, 255, 255;
+body {
+  @apply text-zinc-600 bg-light-50
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 251, 235;
-    --background-start-rgb: 24, 24, 27;
-    --background-end-rgb: 0, 0, 0;
+  body {
+    @apply text-light-100 bg-dark-50
   }
-}
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: rgb(var(--background-start-rgb));
-  /* background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb)); */
 }
 
 /* Scrollbar styles */

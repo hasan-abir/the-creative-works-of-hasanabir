@@ -122,20 +122,20 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
               prevLineEl,
               {
                 height: "auto",
-                opacity: 0.5,
+                opacity: 0.6,
                 fontSize: animOnMobile
-                  ? fullTWConfig.theme.fontSize["lg"][0]
-                  : fullTWConfig.theme.fontSize["2xl"][0],
+                  ? fullTWConfig.theme.fontSize["base"][0]
+                  : fullTWConfig.theme.fontSize["xl"][0],
                 duration: baseDuration.current / 2,
               },
               "<+0.1"
             );
           } else {
             tl.to(prevLineEl, {
-              opacity: 0.5,
+              opacity: 0.6,
               fontSize: animOnMobile
-                ? fullTWConfig.theme.fontSize["lg"][0]
-                : fullTWConfig.theme.fontSize["2xl"][0],
+                ? fullTWConfig.theme.fontSize["base"][0]
+                : fullTWConfig.theme.fontSize["xl"][0],
               duration: baseDuration.current / 2,
             });
           }
@@ -155,7 +155,7 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
             tl.set(currentLineEl, {
               display: "block",
               fontSize: animOnMobile
-                ? fullTWConfig.theme.fontSize["2xl"][0]
+                ? "1.75rem"
                 : fullTWConfig.theme.fontSize["4xl"][0],
             }).to(
               currentLineEl,
@@ -170,7 +170,7 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
               marginTop: index > 0 ? "0.5rem" : 0,
               opacity: 1,
               fontSize: animOnMobile
-                ? fullTWConfig.theme.fontSize["2xl"][0]
+                ? "1.75rem"
                 : fullTWConfig.theme.fontSize["4xl"][0],
             });
           }
@@ -195,8 +195,8 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
 
   return (
     <section className="flex-1 flex flex-col justify-between">
-      <div className="flex-1 flex flex-col justify-center py-4 ">
-        <div ref={container} className="max-h-[60vh] overflow-x-hidden">
+      <div className="flex-1 flex flex-col justify-center py-4 relative">
+        <div ref={container} className="max-h-[60vh]  overflow-y-auto">
           <CustomRichTextBody
             body={body}
             classList={
@@ -204,6 +204,26 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
             }
           />
         </div>
+        <svg
+          className="w-[200%] h-[120%] py-8 block absolute top-50% left-50% translate-x-[-25%] z-[-1000]"
+          viewBox="0 0 430 589"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle
+            cx="214.5"
+            cy="294.5"
+            r="294.5"
+            className="fill-light-200 dark:fill-dark-200"
+          />
+          <ellipse
+            cx="193.992"
+            cy="294.5"
+            rx="273.992"
+            ry="294.5"
+            className="fill-light-100 dark:fill-dark-100"
+          />
+        </svg>
       </div>
       <LineAndPageNav
         linesLength={lineEls.current.length}

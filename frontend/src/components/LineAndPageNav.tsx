@@ -67,7 +67,7 @@ const LineAndPageNav = ({
       <ProgressBar progress={currentIndex / (linesLength - 1)} />
       <div className="flex justify-between items-center mt-6 sm:mt-8">
         {firstPage ? (
-          <p className="text-center text-xs sm:text-sm">The Start</p>
+          <p className="text-center text-sm sm:text-base">The Start</p>
         ) : (
           <Link
             data-testid="prev-page-link"
@@ -76,7 +76,7 @@ const LineAndPageNav = ({
             href={`${basePath}/${params.slug}/${parseInt(params.page) - 1}`}
             className="underline flex justify-center"
           >
-            <ArrowLeft className="w-6 h-6" />
+            <ArrowLeft className="w-8 h-8" />
           </Link>
         )}
         <button
@@ -91,7 +91,7 @@ const LineAndPageNav = ({
             goToLine(false, true);
           }}
         >
-          <FastArrowUp className="w-6 h-6" />
+          <FastArrowUp className="w-8 h-8" />
         </button>
         <button
           className="underline"
@@ -101,9 +101,9 @@ const LineAndPageNav = ({
           onClick={toggleAutoPlay}
         >
           {autoPlay ? (
-            <Pause data-testid="autoplay-pause-icon" className="w-6 h-6" />
+            <Pause data-testid="autoplay-pause-icon" className="w-8 h-8" />
           ) : (
-            <Play data-testid="autoplay-icon" className="w-6 h-6" />
+            <Play data-testid="autoplay-icon" className="w-8 h-8" />
           )}
         </button>
         <button
@@ -118,10 +118,10 @@ const LineAndPageNav = ({
             goToLine(true);
           }}
         >
-          <FastArrowDown className="w-6 h-6" />
+          <FastArrowDown className="w-8 h-8" />
         </button>
         {lastPage ? (
-          <p className="text-center text-xs sm:text-sm">The End</p>
+          <p className="text-center text-sm sm:text-base">The End</p>
         ) : (
           <Link
             data-testid="next-page-link"
@@ -130,7 +130,7 @@ const LineAndPageNav = ({
             href={`${basePath}/${params.slug}/${parseInt(params.page) + 1}`}
             className="underline flex justify-center"
           >
-            <ArrowRight className="w-6 h-6" />
+            <ArrowRight className="w-8 h-8" />
           </Link>
         )}
       </div>
