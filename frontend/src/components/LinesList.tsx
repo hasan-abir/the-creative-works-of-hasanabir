@@ -88,6 +88,18 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
   const goToLine = contextSafe(
     useCallback(
       (next?: boolean, prev?: boolean, storedIndex?: number) => {
+        const curtain = document.querySelector<HTMLDivElement>(".curtain");
+        if (curtain && curtain.style.display !== "none") {
+          gsap
+            .timeline()
+            .to(".curtain", {
+              yPercent: -100,
+              duration: baseDuration.current * 3,
+              ease: "expo.inOut",
+            })
+            .set(".curtain", { display: "none" });
+        }
+
         const goForward = next && !prev;
         const goBackward = !next && prev;
         let index = storedIndex || lineIndex;
@@ -195,8 +207,13 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
 
   return (
     <section className="flex-1 flex flex-col justify-between">
-      <div className="flex-1 flex flex-col justify-center py-4 relative">
+      <div className="flex-1 flex flex-col justify-center py-4">
         <div ref={container} className="max-h-[60vh]  overflow-y-auto">
+          <div className="curtain absolute top-0 left-0 z-[1000] w-full h-screen bg-light-100 dark:bg-dark-100 border-b-8 border-light-200 dark:border-dark-200 origin-top flex items-center justify-center">
+            <h1 className="font-bold text-[2rem] sm:text-4xl opacity-60">
+              Flipping page...
+            </h1>
+          </div>
           <CustomRichTextBody
             body={body}
             classList={"line overflow-y-hidden leading-snug h-0 hidden"}
