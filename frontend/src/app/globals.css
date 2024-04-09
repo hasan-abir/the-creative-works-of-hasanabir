@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  @apply text-zinc-600 bg-light-50
+  @apply text-yellow-950 bg-light-50
 }
 
 @media (prefers-color-scheme: dark) {
@@ -25,12 +25,12 @@ body {
  
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  @apply dark:bg-neutral-700 bg-neutral-300
+  @apply dark:bg-dark-100 bg-light-100
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  @apply dark:bg-neutral-600 bg-neutral-400
+  @apply dark:bg-dark-100 bg-light-100
 }
 /* Scrollbar styles */
 

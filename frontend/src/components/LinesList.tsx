@@ -199,31 +199,9 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
         <div ref={container} className="max-h-[60vh]  overflow-y-auto">
           <CustomRichTextBody
             body={body}
-            classList={
-              "line overflow-y-hidden leading-normal sm:leading-normal h-0 hidden"
-            }
+            classList={"line overflow-y-hidden leading-snug h-0 hidden"}
           />
         </div>
-        <svg
-          className="w-[200%] h-[120%] py-8 block absolute top-50% left-50% translate-x-[-25%] z-[-1000]"
-          viewBox="0 0 430 589"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <circle
-            cx="214.5"
-            cy="294.5"
-            r="294.5"
-            className="fill-light-200 dark:fill-dark-200"
-          />
-          <ellipse
-            cx="193.992"
-            cy="294.5"
-            rx="273.992"
-            ry="294.5"
-            className="fill-light-100 dark:fill-dark-100"
-          />
-        </svg>
       </div>
       <LineAndPageNav
         linesLength={lineEls.current.length}
