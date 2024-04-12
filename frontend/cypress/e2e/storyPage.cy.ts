@@ -10,8 +10,8 @@ describe("Story Page", () => {
     cy.url().should("include", `/stories/${firstStory.slug.current}`);
 
     cy.get("h1").contains(firstStory.title);
-    cy.get("a:first").contains("Start reading");
-    cy.get("a:first").trigger("click");
+    cy.get("a").eq(1).contains("Read Here");
+    cy.get("a").eq(1).trigger("click");
     cy.url().should("include", `/stories/${firstStory.slug.current}/1`);
     cy.get("h1").contains(firstStory.title);
     cy.get("p:first").contains("1 of 3");

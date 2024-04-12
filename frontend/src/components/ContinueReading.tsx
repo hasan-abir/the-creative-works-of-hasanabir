@@ -40,7 +40,7 @@ const ContinueReading = ({ basePath, classList }: Props) => {
       className={classList}
       href={`${basePath}/${params.slug}/${pageNumber}`}
     >
-      {pageNumber > 1 ? "Continue reading" : "Start reading"}
+      {pageNumber > 1 ? "Continue Reading" : "Read Here"}
     </Link>
   );
 };

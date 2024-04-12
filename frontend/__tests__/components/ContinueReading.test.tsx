@@ -32,9 +32,9 @@ describe("ContinueReading", () => {
 
     renderContinueReading();
 
-    expect(screen.queryByText("Continue reading")).toBeInTheDocument();
+    expect(screen.queryByText("Continue Reading")).toBeInTheDocument();
     expect(
-      (screen.getByText("Continue reading") as HTMLLinkElement).getAttribute(
+      (screen.getByText("Continue Reading") as HTMLLinkElement).getAttribute(
         "href"
       )
     ).toBe(`${basePath}/${slug}/4`);
@@ -43,11 +43,9 @@ describe("ContinueReading", () => {
   it("renders the initial link correctly", () => {
     renderContinueReading();
 
-    expect(screen.queryByText("Start reading")).toBeInTheDocument();
+    expect(screen.queryByText("Read Here")).toBeInTheDocument();
     expect(
-      (screen.getByText("Start reading") as HTMLLinkElement).getAttribute(
-        "href"
-      )
+      (screen.getByText("Read Here") as HTMLLinkElement).getAttribute("href")
     ).toBe(`${basePath}/${slug}/1`);
   });
 });
