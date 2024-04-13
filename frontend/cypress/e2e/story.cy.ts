@@ -6,7 +6,7 @@ describe("Story", () => {
     cy.visit("http://localhost:3000/stories");
     const firstStory: Story = stories.list[0];
 
-    cy.get("a:first").trigger("click");
+    cy.get("a").eq(1).trigger("click");
     cy.url().should("include", `/stories/${firstStory.slug.current}`);
 
     cy.get("h1").contains(firstStory.title);

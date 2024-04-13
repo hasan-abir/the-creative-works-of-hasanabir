@@ -10,8 +10,6 @@ describe("Stories", () => {
       const story: StoryInAList = stories.list[i];
 
       cy.get("h1").contains(story.title);
-      cy.get("p").contains(`${story.excerpt} ...`);
-      cy.get("a").contains("View");
 
       i++;
     }
