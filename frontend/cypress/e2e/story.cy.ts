@@ -10,9 +10,9 @@ describe("Story", () => {
     cy.url().should("include", `/stories/${firstStory.slug.current}`);
 
     cy.get("h1").contains(firstStory.title);
-    cy.get("a").eq(1).contains("Read Here");
-    cy.get("a").eq(2).contains("Read The PDF");
-    cy.get("a").eq(0).trigger("click");
+    cy.get("a").eq(2).contains("Read Here");
+    cy.get("a").eq(3).contains("Read The PDF");
+    cy.get("a").eq(1).trigger("click");
     cy.url().should("eq", `http://localhost:3000/stories`);
   });
   it("should display not found", () => {

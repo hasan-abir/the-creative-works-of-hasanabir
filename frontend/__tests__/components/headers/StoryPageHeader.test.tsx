@@ -9,10 +9,15 @@ describe("Page", () => {
     const pageCount = 2;
 
     render(
-      <StoryPageHeader title="Test title" page={page} pageCount={pageCount} />
+      <StoryPageHeader
+        title="Test title"
+        slug="test-title"
+        page={page}
+        pageCount={pageCount}
+      />
     );
 
-    expect(screen.queryByText(title)).toBeInTheDocument();
+    expect(screen.queryAllByText(title).length).toBe(2);
     expect(screen.queryByText(`${page} of ${pageCount}`)).toBeInTheDocument();
   });
 });

@@ -83,6 +83,7 @@ const StoryPage = async ({
           title={
             pageContent[0] && pageContent[0].story && pageContent[0].story.title
           }
+          slug={slug}
           page={parseInt(page)}
           pageCount={pageCount}
         />

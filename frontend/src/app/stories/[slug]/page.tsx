@@ -65,10 +65,19 @@ const Story = async ({ params: { slug } }: { params: { slug: string } }) => {
           <h1 className="font-bold text-3xl sm:text-6xl mb-4 sm:mb-8">
             {story[0].title}
           </h1>
-          <Link href="/stories" className="inline-flex items-center sm:text-lg">
-            <NavArrowLeft />
-            <span>All Stories</span>
-          </Link>
+          <div className="flex">
+            <Link href="/" className="inline-flex items-center sm:text-lg">
+              <NavArrowLeft />
+              <span>Home</span>
+            </Link>
+            <Link
+              href="/stories"
+              className="ml-2 inline-flex items-center sm:text-lg"
+            >
+              <NavArrowLeft />
+              <span>Stories</span>
+            </Link>
+          </div>
         </section>
         <section className="flex-1 mt-8 sm:mt-12 pb-6 sm:pb-16">
           <div className="flex flex-col sm:flex-row justify-between">
