@@ -67,16 +67,21 @@ const BackNav = ({ links }: Props) => {
     <div ref={container}>
       <div className="relative z-[500]">
         <button
+          data-testid="back-btn"
           onClick={togglePopUp}
           className="text-2xl w-12 h-12 flex justify-center items-center bg-light-100  dark:bg-dark-100 rounded-full"
         >
           <NavArrowLeft />
         </button>
-        <div className="links opacity-0 translate-x-[-1rem] absolute left-full hidden top-0 items-start flex-col sm:flex-row ml-4">
+        <div
+          data-testid="back-links"
+          className="links opacity-0 translate-x-[-1rem] absolute left-full hidden top-0 items-start flex-col sm:flex-row ml-4"
+        >
           {links.map((item) => {
             return (
               <Link
                 key={item.url}
+                data-testid="back-link"
                 href={item.url}
                 className="text-lg sm:text-xl mb-2 sm:mb-0 sm:mr-2 text-nowrap bg-light-100  dark:bg-dark-100 py-1 px-4 rounded-full text-nowrap "
               >
@@ -87,9 +92,12 @@ const BackNav = ({ links }: Props) => {
         </div>
       </div>
       <div
+        data-testid="back-btn-bg"
         onClick={togglePopUp}
-        className="popup-bg hidden opacity-0 absolute top-0 left-0 w-full h-screen bg-dark-50 z-[400]"
-      ></div>
+        className="popup-bg hidden opacity-0 absolute top-0 left-0 w-full h-full z-[400]"
+      >
+        <div className="fixed top-0 left-0 w-full h-screen bg-dark-50"></div>
+      </div>
     </div>
   );
 };

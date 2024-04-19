@@ -13,5 +13,8 @@ describe("Stories", () => {
 
       i++;
     }
+    cy.get("button:first").click()
+    cy.get("a:first").click()
+    cy.url().should("eq", `http://localhost:3000/`)
   });
 });

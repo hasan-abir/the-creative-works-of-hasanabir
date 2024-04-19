@@ -2,7 +2,7 @@ import ContinueReading from "@/components/ContinueReading";
 import { fetchData } from "@/lib/sanity/client";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { NavArrowLeft } from "iconoir-react";
+import BackNav from "@/components/BackNav";
 
 interface Props {
   params: { slug: string };
@@ -94,18 +94,19 @@ const Story = async ({ params: { slug } }: { params: { slug: string } }) => {
               {new Date(story[0].finishedAt).getFullYear()}
             </span>
           </p>
-          <div className="flex">
-            <Link href="/" className="inline-flex items-center sm:text-lg">
-              <NavArrowLeft />
-              <span>Home</span>
-            </Link>
-            <Link
-              href="/stories"
-              className="ml-2 inline-flex items-center sm:text-lg"
-            >
-              <NavArrowLeft />
-              <span>Stories</span>
-            </Link>
+          <div className="flex justify-start">
+            <BackNav
+              links={[
+                {
+                  url: "/",
+                  txt: "Home",
+                },
+                {
+                  url: "/stories",
+                  txt: "Stories",
+                },
+              ]}
+            />
           </div>
         </section>
         <section className="flex-1 mt-8 sm:mt-12 pb-6 sm:pb-16">
@@ -113,7 +114,7 @@ const Story = async ({ params: { slug } }: { params: { slug: string } }) => {
             <div className="max-w-[400px]">
               <ContinueReading
                 basePath="/stories"
-                classList="font-bold inline-block py-2 px-6 bg-light-100 dark:bg-dark-100 border-b-2 border-dark-100 dark:border-light-100 text-lg rounded-md sm:text-2xl mb-4 sm:mb-6 hover:bg-light-100 hover:dark:bg-dark-100"
+                classList="font-bold inline-block py-2 px-6 bg-light-100 dark:bg-dark-100 border-b-4 border-dark-100 dark:border-dark-200 text-lg rounded-md sm:text-2xl mb-4 sm:mb-6 hover:opacity-70"
               />
               <p className="text-sm sm:text-base opacity-70">
                 This allows you to read the story line by line, so that
@@ -125,7 +126,7 @@ const Story = async ({ params: { slug } }: { params: { slug: string } }) => {
               <Link
                 href={`/${story[0].slug.current}.pdf`}
                 target="_blank"
-                className="font-bold inline-block py-2 px-6 bg-light-100 dark:bg-dark-210 border-b-2 border-dark-100 dark:border-light-100 text-lg rounded-md sm:text-2xl mb-4 sm:mb-6 hover:bg-light-100 hover:dark:bg-dark-100"
+                className="font-bold inline-block py-2 px-6 bg-light-100 dark:bg-dark-100 border-b-4 border-dark-100 dark:border-dark-200 text-lg rounded-md sm:text-2xl mb-4 sm:mb-6 hover:opacity-70"
               >
                 Read The PDF
               </Link>
@@ -135,7 +136,7 @@ const Story = async ({ params: { slug } }: { params: { slug: string } }) => {
               </p>
             </div>
           </div>
-          <div className="before:content-[''] before:absolute before:top-0 before:left-0 before:w-6 before:h-6 before:sm:w-10 before:sm:h-10 before:border-2 before:border-yellow-950 before:dark:border-light-100 before:translate-x-[-50%]  before:translate-y-[-50%] relative border-2 border-yellow-950 dark:border-light-100 p-4 sm:p-8 mt-12 sm:mt-16">
+          <div className="before:content-[''] before:absolute before:top-0 before:left-0 before:w-6 before:h-6 before:sm:w-10 before:sm:h-10 before:border-2 before:border-dark-50 before:dark:border-light-100 before:translate-x-[-50%]  before:translate-y-[-50%] relative border-2 border-dark-50 dark:border-light-100 p-4 sm:p-8 mt-12 sm:mt-16">
             <h2 className="text-lg sm:text-3xl mb-6">An Excerpt</h2>
             <p className="text-lg sm:text-3xl opacity-70">
               &quot;{story[0].excerpt}&quot;
