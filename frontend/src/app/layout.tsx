@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Merriweather } from "next/font/google";
+import { Merriweather, Rubik_Mono_One } from "next/font/google";
 import "./globals.css";
 
 const merriweather = Merriweather({

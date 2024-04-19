@@ -2,6 +2,12 @@ import LinesList from "@/components/LinesList";
 import StoryPageHeader from "@/components/headers/StoryPageHeader";
 import { fetchData } from "@/lib/sanity/client";
 import { notFound } from "next/navigation";
+import { Rubik_Mono_One } from "next/font/google";
+
+const rubyMonoOne = Rubik_Mono_One({
+  weight: ["400"],
+  subsets: ["latin"],
+});
 
 interface Props {
   params: {
@@ -78,6 +84,15 @@ const StoryPage = async ({
 
   return (
     <main className="h-screen pt-6 sm:pt-16 px-6 sm:px-8 flex justify-center overflow-x-hidden">
+      <div className="hidden sm:flex absolute top-0 left-0 z-[-1000] w-full h-screen items-center justify-center opacity-5">
+        <h1
+          className={
+            rubyMonoOne.className + " text-center leading-none text-[20vw]"
+          }
+        >
+          {pageContent[0].story.title}
+        </h1>
+      </div>
       <div className="max-w-5xl w-full h-full flex flex-col justify-between">
         <StoryPageHeader
           title={

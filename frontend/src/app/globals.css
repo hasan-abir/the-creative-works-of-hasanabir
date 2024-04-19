@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  @apply text-yellow-950 bg-light-50
+  @apply text-dark-100 bg-light-50
 }
 
 @media (prefers-color-scheme: dark) {

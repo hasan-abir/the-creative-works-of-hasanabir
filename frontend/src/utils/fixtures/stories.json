@@ -4,12 +4,14 @@
         "title": "Story 1",
         "slug": { "current": "story1" },
         "excerpt": "Lorem ipsum",
+        "startedAt": "2023-1-1",
         "finishedAt": "2024-1-1"
       }, {
         "_id": "2",
         "title": "Story 2",
         "slug": { "current": "story2" },
         "excerpt": "Lorem ipsum",
+        "startedAt": "2023-1-1",
         "finishedAt": "2024-1-1"
       },
       {
@@ -17,6 +19,7 @@
         "title": "Story 3",
         "slug": { "current": "story3" },
         "excerpt": "Lorem ipsum",
+        "startedAt": "2023-1-1",
         "finishedAt": "2024-1-1"
       }, 
       {
@@ -24,12 +27,14 @@
         "title": "Story 4",
         "slug": { "current": "story4" },
         "excerpt": "Lorem ipsum",
+        "startedAt": "2023-1-1",
         "finishedAt": "2024-1-1"
       },{
         "_id": "5",
         "title": "Story 5",
         "slug": { "current": "story5" },
         "excerpt": "Lorem ipsum",
+        "startedAt": "2023-1-1",
         "finishedAt": "2024-1-1"
       },
       {
@@ -37,12 +42,14 @@
         "title": "Story 6",
         "slug": { "current": "story6" },
         "excerpt": "Lorem ipsum",
+        "startedAt": "2023-1-1",
         "finishedAt": "2024-1-1"
       }, {
         "_id": "7",
         "title": "Story 7",
         "slug": { "current": "story7" },
         "excerpt": "Lorem ipsum",
+        "startedAt": "2023-1-1",
         "finishedAt": "2024-1-1"
       },
       {
@@ -50,6 +57,7 @@
         "title": "Story 8",
         "slug": { "current": "story8" },
         "excerpt": "Lorem ipsum",
+        "startedAt": "2023-1-1",
         "finishedAt": "2024-1-1"
       }, 
       {
@@ -57,12 +65,14 @@
         "title": "Story 9",
         "slug": { "current": "story9" },
         "excerpt": "Lorem ipsum",
+        "startedAt": "2023-1-1",
         "finishedAt": "2024-1-1"
       },{
         "_id": "10",
         "title": "Story 10",
         "slug": { "current": "story10" },
         "excerpt": "Lorem ipsum",
+        "startedAt": "2023-1-1",
         "finishedAt": "2024-1-1"
       }]
 }

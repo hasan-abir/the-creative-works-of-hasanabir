@@ -14,7 +14,7 @@ describe("Story Page", () => {
     cy.get("a").eq(2).trigger("click");
     cy.url().should("include", `/stories/${firstStory.slug.current}/1`);
     cy.get("h1").contains(firstStory.title);
-    cy.get("p:first").contains("1 of 3");
+    cy.get("p").eq(1).contains("1 of 3");
     cy.get(".line:first").contains("The beginning");
     cy.get(".line:first").should("be.visible");
   });

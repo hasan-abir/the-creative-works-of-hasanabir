@@ -16,6 +16,8 @@ export interface Story {
   title: string;
   excerpt: string;
   slug: { current: string };
+  startedAt: string;
+  finishedAt: string;
 }
 
 export const generateStaticParams = async () => {
@@ -46,10 +48,25 @@ export const generateMetadata = async ({ params }: Props) => {
   };
 };
 
+const monthNames = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+
 const Story = async ({ params: { slug } }: { params: { slug: string } }) => {
   const story = await fetchData<Story[]>(
     `*[_type == "story" && slug.current == "${slug}"]{
-      title, excerpt, slug
+      title, excerpt, slug, startedAt, finishedAt
     }`,
     { slug }
   );
@@ -62,9 +79,21 @@ const Story = async ({ params: { slug } }: { params: { slug: string } }) => {
     <main className="h-screen pt-6 sm:pt-16 px-6 sm:px-8 flex justify-center">
       <div className="max-w-5xl w-full h-hull flex flex-col justify-between items-start">
         <section>
-          <h1 className="font-bold text-3xl sm:text-6xl mb-4 sm:mb-8">
+          <h1 className="font-bold text-3xl sm:text-6xl sm:mb-2">
             {story[0].title}
           </h1>
+          <p className="mb-4 sm:mb-8 text-sm sm:text-base opacity-70">
+            Written between{" "}
+            <span>
+              {monthNames[new Date(story[0].startedAt).getMonth()]}.{" "}
+              {new Date(story[0].startedAt).getFullYear()}
+            </span>{" "}
+            and{" "}
+            <span>
+              {monthNames[new Date(story[0].finishedAt).getMonth()]}.{" "}
+              {new Date(story[0].finishedAt).getFullYear()}
+            </span>
+          </p>
           <div className="flex">
             <Link href="/" className="inline-flex items-center sm:text-lg">
               <NavArrowLeft />
@@ -84,7 +113,7 @@ const Story = async ({ params: { slug } }: { params: { slug: string } }) => {
             <div className="max-w-[400px]">
               <ContinueReading
                 basePath="/stories"
-                classList="font-bold inline-block py-2 px-6 bg-light-200 dark:bg-dark-200 border-b-2 border-yellow-950 dark:border-light-100 text-lg rounded-md sm:text-2xl mb-4 sm:mb-6 hover:bg-light-100 hover:dark:bg-dark-100"
+                classList="font-bold inline-block py-2 px-6 bg-light-100 dark:bg-dark-100 border-b-2 border-dark-100 dark:border-light-100 text-lg rounded-md sm:text-2xl mb-4 sm:mb-6 hover:bg-light-100 hover:dark:bg-dark-100"
               />
               <p className="text-sm sm:text-base opacity-70">
                 This allows you to read the story line by line, so that
@@ -96,7 +125,7 @@ const Story = async ({ params: { slug } }: { params: { slug: string } }) => {
               <Link
                 href={`/${story[0].slug.current}.pdf`}
                 target="_blank"
-                className="font-bold inline-block py-2 px-6 bg-light-200 dark:bg-dark-200 border-b-2 border-yellow-950 dark:border-light-100 text-lg rounded-md sm:text-2xl mb-4 sm:mb-6 hover:bg-light-100 hover:dark:bg-dark-100"
+                className="font-bold inline-block py-2 px-6 bg-light-100 dark:bg-dark-210 border-b-2 border-dark-100 dark:border-light-100 text-lg rounded-md sm:text-2xl mb-4 sm:mb-6 hover:bg-light-100 hover:dark:bg-dark-100"
               >
                 Read The PDF
               </Link>

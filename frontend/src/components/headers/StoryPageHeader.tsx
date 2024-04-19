@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { NavArrowLeft } from "iconoir-react";
+import BackNav from "@/components/BackNav";
 
 interface Props {
   title: string;
@@ -11,39 +12,35 @@ interface Props {
 const StoryPageHeader = ({ title, slug, page, pageCount }: Props) => {
   return (
     <section>
-      <div className="flex justify-between items-center mb-3">
-        <h1 className="font-bold text-[2rem] sm:text-4xl pr-2">{title}</h1>
-        <p className="text-xl sm:text-2xl whitespace-nowrap">
-          {page} of {pageCount}
-        </p>
-      </div>
+      <p className="text-center sm:text-xl mb-4 sm:mb-6">
+        <strong>{title}</strong> written by{" "}
+        <Link
+          href="https://hasanabir.netlify.app/"
+          className="underline text-nowrap"
+        >
+          Hasan Abir
+        </Link>
+      </p>
       <div className="flex justify-between items-center">
-        <div className="flex flex-wrap">
-          <Link href="/" className="flex items-center sm:text-lg">
-            <NavArrowLeft />
-            <span>Home</span>
-          </Link>
-          <Link href="/stories" className="ml-2 flex items-center sm:text-lg">
-            <NavArrowLeft />
-            <span>Stories</span>
-          </Link>
-          <Link
-            href={"/stories/" + slug}
-            className="ml-2 flex items-center sm:text-lg"
-          >
-            <NavArrowLeft />
-            <span>{title}</span>
-          </Link>
-        </div>
+        <BackNav
+          links={[
+            {
+              url: "/",
+              txt: "Home",
+            },
+            {
+              url: "/stories",
+              txt: "Stories",
+            },
+            {
+              url: "/stories/" + slug,
+              txt: title,
+            },
+          ]}
+        />
 
-        <p className="sm:text-lg">
-          by
-          <Link
-            href="https://hasanabir.netlify.app/"
-            className="ml-1 hover:underline"
-          >
-            Hasan Abir
-          </Link>
+        <p className="sm:text-xl ml-4 whitespace-nowrap">
+          {page} of {pageCount}
         </p>
       </div>
     </section>
