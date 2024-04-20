@@ -33,19 +33,22 @@ const Stories = async () => {
               <Link
                 key={story._id}
                 href={`/stories/${story.slug.current}`}
-                className="bg-light-100 dark:bg-dark-100 after:content-[''] after:w-full after:h-full after:absolute after:top-0 after:left-0 relative after:translate-x-2 after:translate-y-2 after:rounded-lg after:bg-dark-50 after:dark:bg-dark-200 rounded-lg px-4 py-6 sm:px-8 sm:py-10 mt-6 sm:mt-8 mr-6 sm:mr-8 max-w-[450px] after:z-[-1000]"
+                className="relative mt-6 sm:mt-8 mr-6 sm:mr-8 max-w-[450px] "
               >
-                <div className="flex justify-between">
-                  <h1 className="font-bold text-lg sm:text-3xl mb-6 pr-2 sm:pr-4">
-                    {story.title}
-                  </h1>
-                  <p className="text-base sm:text-lg">
-                    {new Date(story.finishedAt).getFullYear()}
+                <div className="z-[-1000] w-full h-full absolute top-0 left-0 translate-x-2 translate-y-2 rounded-lg bg-dark-50 dark:bg-dark-200 "></div>
+                <div className="hover:translate-y-[-0.5rem] hover:translate-x-[-0.5rem] transition-transform bg-light-100 dark:bg-dark-100 rounded-lg px-4 py-6 sm:px-8 sm:py-10">
+                  <div className="flex justify-between">
+                    <h1 className="font-bold text-lg sm:text-3xl mb-6 pr-2 sm:pr-4">
+                      {story.title}
+                    </h1>
+                    <p className="text-base sm:text-lg">
+                      {new Date(story.finishedAt).getFullYear()}
+                    </p>
+                  </div>
+                  <p className="line-clamp-4 opacity-70 text-base sm:text-lg">
+                    {story.excerpt}
                   </p>
                 </div>
-                <p className="line-clamp-4 opacity-70 text-base sm:text-lg">
-                  {story.excerpt}
-                </p>
               </Link>
             );
           })}

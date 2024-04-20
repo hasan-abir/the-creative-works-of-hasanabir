@@ -62,23 +62,25 @@ const CustomRichTextBody = ({ body, classList }: Props) => {
                     data-testid="paragraph"
                     className={classList ? classList : undefined}
                   >
-                    {line.children.map((child: any, j: number) => {
-                      if (child.marks.includes("em")) {
-                        return (
-                          <em key={j} data-testid="italic">
-                            {child.text}
-                          </em>
-                        );
-                      } else if (child.marks.includes("strong")) {
-                        return (
-                          <strong key={j} data-testid="bold">
-                            {child.text}
-                          </strong>
-                        );
-                      } else {
-                        return child.text;
-                      }
-                    })}
+                    <span className="block">
+                      {line.children.map((child: any, j: number) => {
+                        if (child.marks.includes("em")) {
+                          return (
+                            <em key={j} data-testid="italic">
+                              {child.text}
+                            </em>
+                          );
+                        } else if (child.marks.includes("strong")) {
+                          return (
+                            <strong key={j} data-testid="bold">
+                              {child.text}
+                            </strong>
+                          );
+                        } else {
+                          return child.text;
+                        }
+                      })}
+                    </span>
                   </p>
                 );
               })}

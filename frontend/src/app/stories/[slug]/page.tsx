@@ -114,7 +114,7 @@ const Story = async ({ params: { slug } }: { params: { slug: string } }) => {
             <div className="max-w-[400px]">
               <ContinueReading
                 basePath="/stories"
-                classList="font-bold inline-block py-2 px-6 bg-light-100 dark:bg-dark-100 border-b-4 border-dark-100 dark:border-dark-200 text-lg rounded-md sm:text-2xl mb-4 sm:mb-6 hover:opacity-70"
+                classList="font-bold inline-block py-2 px-6 bg-light-100 dark:bg-dark-100 border-b-4 border-dark-100 dark:border-dark-200 text-lg rounded-md sm:text-2xl mb-4 sm:mb-6 hover:translate-y-[-0.3rem] transition-transform"
               />
               <p className="text-sm sm:text-base opacity-70">
                 This allows you to read the story line by line, so that
@@ -126,7 +126,7 @@ const Story = async ({ params: { slug } }: { params: { slug: string } }) => {
               <Link
                 href={`/${story[0].slug.current}.pdf`}
                 target="_blank"
-                className="font-bold inline-block py-2 px-6 bg-light-100 dark:bg-dark-100 border-b-4 border-dark-100 dark:border-dark-200 text-lg rounded-md sm:text-2xl mb-4 sm:mb-6 hover:opacity-70"
+                className="font-bold inline-block py-2 px-6 bg-light-100 dark:bg-dark-100 border-b-4 border-dark-100 dark:border-dark-200 text-lg rounded-md sm:text-2xl mb-4 sm:mb-6 hover:translate-y-[-0.3rem] transition-transform"
               >
                 Read The PDF
               </Link>
