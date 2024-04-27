@@ -10,15 +10,19 @@ const config: Config = {
     extend: {
       colors: {
         light: {
-          50: "#F7F7F3",
-          100: "#EFEFE7",
+          50: "#FFFFFF",
+          100: "#F8FFF4",
           200: "#87875A",
         },
         dark: {
-          50: "#171116",
-          100: "#2F232D",
-          200: "#231A22",
+          50: "#1B1B1B",
+          100: "#282827",
+          200: "#343433",
+          300: "#404426",
         },
+        primary: {
+          50: "#B7FF9D"
+        }
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

@@ -3,12 +3,12 @@
 @tailwind utilities;
 
 body {
-  @apply text-dark-100 bg-light-50
+  @apply text-dark-300 bg-light-100
 }
 
 @media (prefers-color-scheme: dark) {
   body {
-    @apply text-light-100 bg-dark-50
+    @apply text-light-100 bg-dark-100
   }
 }
 
@@ -51,5 +51,8 @@ body {
 @supports (height: 100dvh) {
   .h-screen {
     height: 100dvh
+  }
+  .min-h-screen {
+    min-height: 100dvh
   }
 }

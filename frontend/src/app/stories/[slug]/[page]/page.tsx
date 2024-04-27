@@ -2,9 +2,9 @@ import LinesList from "@/components/LinesList";
 import StoryPageHeader from "@/components/headers/StoryPageHeader";
 import { fetchData } from "@/lib/sanity/client";
 import { notFound } from "next/navigation";
-import { Rubik_Mono_One } from "next/font/google";
+import { Marcellus_SC } from "next/font/google";
 
-const rubyMonoOne = Rubik_Mono_One({
+const marcellusSC = Marcellus_SC({
   weight: ["400"],
   subsets: ["latin"],
 });
@@ -84,11 +84,11 @@ const StoryPage = async ({
 
   return (
     <main className="h-screen pt-6 sm:pt-16 px-6 sm:px-8 flex justify-center overflow-x-hidden">
-      <div className="hidden sm:flex absolute top-0 left-0 z-[-1000] w-full h-screen items-center justify-center opacity-[3%] overflow-hidden">
+      <div className="hidden sm:flex absolute top-0 left-0 z-[-1000] w-full h-screen items-center justify-center opacity-5 dark:opacity-[3%] overflow-hidden">
         <h1
           className={
-            rubyMonoOne.className +
-            " text-center leading-none text-[20vw] lg:text-[15rem] max-w-5xl"
+            marcellusSC.className +
+            " text-center leading-none text-[20vw] lg:text-[12rem] max-w-5xl"
           }
         >
           {pageContent[0].story.title}

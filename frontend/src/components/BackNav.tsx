@@ -69,7 +69,7 @@ const BackNav = ({ links }: Props) => {
         <button
           data-testid="back-btn"
           onClick={togglePopUp}
-          className="text-2xl w-12 h-12 flex justify-center items-center bg-light-100  dark:bg-dark-100 rounded-full"
+          className="text-2xl w-12 h-12 flex justify-center items-center bg-light-50 dark:bg-dark-200 rounded-full border-2 border-dark-300 dark:border-dark-50"
         >
           <NavArrowLeft />
         </button>
@@ -83,7 +83,7 @@ const BackNav = ({ links }: Props) => {
                 key={item.url}
                 data-testid="back-link"
                 href={item.url}
-                className="text-lg sm:text-xl mb-2 sm:mb-0 sm:mr-2 text-nowrap bg-light-100  dark:bg-dark-100 py-1 px-4 rounded-full text-nowrap "
+                className="text-lg sm:text-xl mb-2 sm:mb-0 sm:mr-2 text-nowrap bg-light-50 dark:bg-dark-200 py-1 px-4 rounded-full text-nowrap  border-2 border-dark-300 dark:border-dark-50"
               >
                 {item.txt}
               </Link>

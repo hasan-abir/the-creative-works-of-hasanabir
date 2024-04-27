@@ -4,13 +4,13 @@ import lineInMemory from "@/utils/lineInMemory";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import CTALink from "@/components/CTALink";
 
 interface Props {
   basePath: string;
-  classList: string | undefined;
 }
 
-const ContinueReading = ({ basePath, classList }: Props) => {
+const ContinueReading = ({ basePath }: Props) => {
   const [pageNumber, setPageNumber] = useState<number>(1);
 
   const params = useParams<{ slug: string }>();
@@ -36,12 +36,11 @@ const ContinueReading = ({ basePath, classList }: Props) => {
     setPageNumber(highestPageNumber);
   }, [basePath, params.slug]);
   return (
-    <Link
-      className={classList}
+    <CTALink
+      text={pageNumber > 1 ? "Continue Reading" : "Read Here"}
       href={`${basePath}/${params.slug}/${pageNumber}`}
-    >
-      {pageNumber > 1 ? "Continue Reading" : "Read Here"}
-    </Link>
+      extraClasses="mb-4 sm:mb-6"
+    />
   );
 };
 
