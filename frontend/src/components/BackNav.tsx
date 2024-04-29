@@ -20,6 +20,8 @@ const BackNav = ({ links }: Props) => {
     useCallback(() => {
       const duration = 0.2;
       if (popUp) {
+        document.body.style.overflowY = "hidden";
+
         gsap
           .timeline({ defaults: { duration } })
           .set(".popup-bg", {
@@ -40,6 +42,8 @@ const BackNav = ({ links }: Props) => {
             "<"
           );
       } else {
+        document.body.style.overflowY = "auto";
+
         gsap
           .timeline({ defaults: { duration } })
           .to(".links", {
@@ -96,7 +100,7 @@ const BackNav = ({ links }: Props) => {
         onClick={togglePopUp}
         className="popup-bg hidden opacity-0 absolute top-0 left-0 w-full h-full z-[400]"
       >
-        <div className="fixed top-0 left-0 w-full h-screen bg-dark-50"></div>
+        <div className="absolute top-0 left-0 w-full h-screen bg-dark-50"></div>
       </div>
     </div>
   );
