@@ -73,6 +73,7 @@ const LineAndPageNav = ({
             data-testid="prev-page-link"
             aria-label="Go to previous page"
             title="Go to previous page"
+            prefetch={false}
             href={`${basePath}/${params.slug}/${parseInt(params.page) - 1}`}
             className="underline flex justify-center"
           >
@@ -127,6 +128,7 @@ const LineAndPageNav = ({
             data-testid="next-page-link"
             aria-label="Go to next page"
             title="Go to next page"
+            prefetch={false}
             href={`${basePath}/${params.slug}/${parseInt(params.page) + 1}`}
             className="underline flex justify-center"
           >

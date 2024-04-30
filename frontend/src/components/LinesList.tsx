@@ -185,13 +185,6 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
                 },
                 "<+0.1"
               )
-              .set(
-                currentLineEl.querySelector("span"),
-                {
-                  willChange: "transform",
-                },
-                "<"
-              )
               .from(
                 currentLineEl.querySelector("span"),
                 {
@@ -199,10 +192,7 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
                   duration: baseDuration.current * 2,
                 },
                 "<"
-              )
-              .set(currentLineEl.querySelector("span"), {
-                willChange: "transform",
-              });
+              );
           } else {
             tl.to(currentLineEl, {
               marginTop: index > 0 ? "0.5rem" : 0,
