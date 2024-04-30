@@ -15,8 +15,8 @@ describe("ProgressBar", () => {
   it("renders the progress correctly", () => {
     const { progress } = renderProgressBar();
 
-    expect(screen.getByTestId("progress-bar").style.transform).toBe(
-      `scaleX(${progress}`
+    expect(screen.getByTestId("progress-bar").style.width).toBe(
+      `${100 * progress}%`
     );
   });
 });

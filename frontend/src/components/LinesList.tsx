@@ -49,12 +49,13 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
       : true;
 
     if (!lastLineEndsCompletely) {
-      lineEls.current[lineEls.current.length - 1].innerHTML =
-        `${lastLine.innerHTML}—` || "";
+      lineEls.current[lineEls.current.length - 1].children[0].innerHTML =
+        `${lastLine.children[0].innerHTML}—` || "";
     }
 
     if (!firstLineBeginsCompletely) {
-      lineEls.current[0].innerHTML = `—${firstLine.innerHTML}` || "";
+      lineEls.current[0].children[0].innerHTML =
+        `—${firstLine.children[0].innerHTML}` || "";
     }
   }, []);
 
@@ -214,15 +215,7 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
         }
 
         if (index !== lineIndex) {
-          const objStored = lineInMemory.get(basePath, params.slug);
-
-          lineInMemory.set(
-            basePath,
-            params.slug,
-            params.page,
-            index,
-            objStored
-          );
+          lineInMemory.set(basePath, params.slug, params.page, index);
           setLineIndex(index);
         }
       },

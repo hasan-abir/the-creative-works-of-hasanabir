@@ -17,7 +17,7 @@ const lineInMemory = {
     slug: string,
     page: string,
     index: number,
-    oldObj: LineInMemory | undefined | null
+    oldObj?: LineInMemory | undefined | null
   ) => {
     let updatedObj = {
       [page]: index,

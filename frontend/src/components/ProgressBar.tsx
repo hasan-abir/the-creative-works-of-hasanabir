@@ -8,13 +8,13 @@ const ProgressBar = ({ progress }: Props) => {
       <div
         data-testid="progress-bar"
         className={
-          "w-full h-1 bg-primary-50 transition-transform origin-left scale-0" +
+          "h-1 bg-primary-50 transition-[width]" +
           (progress < 1 &&
             progress > 0 &&
-            " border-r-4 border-dark-300 dark:border-dark-50")
+            " border-r-2 border-dark-300 dark:border-dark-50")
         }
         style={{
-          transform: `scaleX(${progress}`,
+          width: `${100 * progress}%`,
         }}
       ></div>
     </div>

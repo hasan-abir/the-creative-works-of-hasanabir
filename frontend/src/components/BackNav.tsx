@@ -100,7 +100,7 @@ const BackNav = ({ links }: Props) => {
         onClick={togglePopUp}
         className="popup-bg hidden opacity-0 absolute top-0 left-0 w-full h-full z-[400]"
       >
-        <div className="absolute top-0 left-0 w-full h-screen bg-dark-50"></div>
+        <div className="fixed top-0 left-0 w-full h-screen bg-dark-50"></div>
       </div>
     </div>
   );
