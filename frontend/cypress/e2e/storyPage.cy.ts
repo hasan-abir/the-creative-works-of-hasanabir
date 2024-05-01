@@ -205,6 +205,6 @@ describe("Story Page", () => {
     Cypress.on("uncaught:exception", (err, runnable) => {
       return false;
     });
-    cy.get("h1").contains("404");
+    cy.get("h1").contains("I haven't made the page you were looking for.");
   });
 });
