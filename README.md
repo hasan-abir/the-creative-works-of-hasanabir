@@ -1,10 +1,5 @@
 # The Creative Works of Hasan Abir
 
-Run the frontend dev server with
-`cd frontend && npm run dev`
+A blog type web app where I display all my work as an artist, fetched from a Headless CMS.
 
-Run the sanity studio server with
-`cd studio && npm run dev`
-
-Build and test the app with
-`cd frontend && npm run build && npm start`
+Live:- https://thecreativeworksofhasanabir.netlify.app/
