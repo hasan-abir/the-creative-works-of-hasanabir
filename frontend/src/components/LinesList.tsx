@@ -228,7 +228,7 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
             Flipping page
           </h1>
         </div>
-        <div className="sm:my-8 overflow-y-auto">
+        <div className="sm:my-8 overflow-y-auto rich-text-container">
           <CustomRichTextBody
             body={body}
             classList={"line overflow-y-hidden leading-snug h-0 hidden"}

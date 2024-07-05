@@ -84,7 +84,7 @@ const StoryPage = async ({
 
   return (
     <main className="h-screen pt-6 sm:pt-16 px-6 sm:px-8 flex justify-center overflow-x-hidden">
-      <div className="hidden sm:flex absolute top-0 left-0 z-[-1000] w-full h-screen items-center justify-center opacity-5 dark:opacity-[3%] overflow-hidden">
+      <div className="hidden sm:flex absolute top-0 left-0 z-[-1000] w-full h-screen items-center justify-center opacity-5 dark:opacity-[1%] overflow-hidden">
         <h1
           className={
             marcellusSC.className +

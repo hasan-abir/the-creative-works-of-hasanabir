@@ -40,12 +40,12 @@ body {
   }
 }
 
-.rich-text-container > div > p:first-child{
-  @apply mt-4;
+.rich-text-container > div > p:last-child {
+  @apply mb-10;
 }
 
-.rich-text-container > div:first-child > p:first-child{
-  @apply mt-0;
+.rich-text-container > div:last-child > p:last-child{
+  @apply mb-0;
 }
 
 @supports (height: 100dvh) {
