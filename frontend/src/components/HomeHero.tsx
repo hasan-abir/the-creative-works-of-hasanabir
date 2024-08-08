@@ -4,7 +4,7 @@ import CTALink from "@/components/CTALink";
 import Image from "next/image";
 import { Marcellus_SC } from "next/font/google";
 import { useGSAP } from "@gsap/react";
-import { useRef } from "react";
+import { useCallback, useRef } from "react";
 import gsap from "gsap";
 const marcellusSC = Marcellus_SC({
   weight: ["400"],
@@ -13,9 +13,10 @@ const marcellusSC = Marcellus_SC({
 
 const HomeHero = () => {
   const container = useRef<HTMLDivElement>(null);
+  const { contextSafe } = useGSAP(() => {}, { scope: container });
 
-  useGSAP(
-    () => {
+  const onImageLoad = contextSafe(
+    useCallback(() => {
       gsap
         .timeline({ defaults: { duration: 1, ease: "expo.out" } })
         .to(".line-before", {
@@ -74,8 +75,7 @@ const HomeHero = () => {
           },
           "<"
         );
-    },
-    { scope: container }
+    }, [])
   );
 
   return (
@@ -105,12 +105,14 @@ const HomeHero = () => {
             <Image
               src="/ducks.webp"
               alt="Quack"
-              width="0"
-              height="0"
+              width="400"
+              height="250"
               priority={true}
-              sizes="100vw"
-              className="w-[400px] h-auto max-h-[250px]"
+              quality={100}
+              onLoad={onImageLoad}
               style={{
+                width: "400px",
+                height: "auto",
                 objectFit: "cover",
               }}
             />
