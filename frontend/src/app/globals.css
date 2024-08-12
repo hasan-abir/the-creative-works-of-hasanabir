@@ -3,12 +3,12 @@
 @tailwind utilities;
 
 body {
-  @apply text-dark-300 bg-light-100
+  @apply text-dark-200 bg-light-50;
 }
 
 @media (prefers-color-scheme: dark) {
   body {
-    @apply text-light-100 bg-dark-100
+    @apply text-light-50 bg-dark-100;
   }
 }
 
@@ -20,17 +20,17 @@ body {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  @apply bg-transparent; 
+  @apply bg-transparent;
 }
- 
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  @apply dark:bg-dark-100 bg-light-100
+  @apply dark:bg-dark-100 bg-light-100;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  @apply dark:bg-dark-100 bg-light-100
+  @apply dark:bg-dark-100 bg-light-100;
 }
 /* Scrollbar styles */
 
@@ -44,15 +44,15 @@ body {
   @apply mb-10;
 }
 
-.rich-text-container > div:last-child > p:last-child{
+.rich-text-container > div:last-child > p:last-child {
   @apply mb-0;
 }
 
 @supports (height: 100dvh) {
   .h-screen {
-    height: 100dvh
+    height: 100dvh;
   }
   .min-h-screen {
-    min-height: 100dvh
+    min-height: 100dvh;
   }
 }

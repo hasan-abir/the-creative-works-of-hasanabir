@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { Merriweather, Rubik_Mono_One } from "next/font/google";
+import { Epilogue } from "next/font/google";
 import "./globals.css";
 
-const merriweather = Merriweather({
+const epilogue = Epilogue({
   weight: ["400", "700"],
   subsets: ["latin"],
 });
@@ -23,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={merriweather.className}>{children}</body>
+      <body className={epilogue.className}>{children}</body>
     </html>
   );
 }

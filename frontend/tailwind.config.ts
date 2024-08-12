@@ -16,12 +16,12 @@ const config: Config = {
         },
         dark: {
           50: "#1B1B1B",
-          100: "#282827",
-          200: "#343433",
+          100: "#1E1D1D",
+          200: "#3E3D3D",
           300: "#404426",
         },
         primary: {
-          50: "#B7FF9D"
+          50: "#EB9859"
         }
       },
       backgroundImage: {

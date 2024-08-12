@@ -1,10 +1,5 @@
 import Link from "next/link";
-import { Marcellus_SC } from "next/font/google";
-
-const marcellusSC = Marcellus_SC({
-  weight: ["400"],
-  subsets: ["latin"],
-});
+import { PlaySolid } from "iconoir-react";
 
 interface Props {
   text: string;
@@ -19,12 +14,12 @@ const CTALink = ({ text, href, target, extraClasses = "" }: Props) => {
       href={href}
       target={target ? target : undefined}
       className={
-        marcellusSC.className +
-        " inline-block text-center py-2 px-6 bg-light-50 dark:bg-dark-200 border-2 border-b-0 border-dark-300 dark:border-dark-50 text-lg sm:text-2xl relative after:content-[''] after:absolute after:top-full after:left-0 after:w-full after:h-1 after:bg-primary-50 after:ring-2 after:ring-dark-300 after:dark:ring-dark-50 hover:translate-y-[-0.3rem] transition-transform" +
+        "inline-block uppercase font-bold text-center text-sm sm:text-xl text-dark-200 bg-primary-50 px-2 sm:px-4 py-1 sm:py-2 rounded" +
         (extraClasses && " " + extraClasses)
       }
     >
-      {text}
+      <span className="mr-2 sm:mr-4">{text}</span>
+      <PlaySolid className="inline text-xs sm:text-sm" />
     </Link>
   );
 };
