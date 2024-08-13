@@ -13,39 +13,22 @@ const HomeHero = () => {
   const onImageLoad = contextSafe(
     useCallback(() => {
       gsap
-        .timeline({ defaults: { duration: 1, ease: "expo.out" } })
+        .timeline({ defaults: { duration: 2, ease: "expo.out" } })
+        .to(".img-cover", {
+          scaleX: 0,
+          transformOrigin: "right",
+        })
         .to(
-          "h1",
+          ".wave",
           {
-            x: 0,
+            translateY: 0,
             opacity: 1,
-          },
-          "<+0.2"
-        )
-        .to(
-          "p",
-          {
-            x: 0,
-            opacity: 0.7,
-          },
-          "<+0.2"
-        )
-        .to(
-          ".cta-links",
-          {
-            x: 0,
-            opacity: 1,
+            stagger: 0.2,
+            duration: 0.5,
+            ease: "circ.out",
           },
           "<+0.2"
         );
-      // .to(
-      //   ".img-cover",
-      //   {
-      //     scaleX: 0,
-      //     transformOrigin: "center right",
-      //   },
-      //   "<"
-      // )
     }, [])
   );
 
@@ -54,7 +37,7 @@ const HomeHero = () => {
       ref={container}
       className="w-full flex-1 flex items-center max-w-7xl mx-auto h-full"
     >
-      <div className="absolute top-0 left-0 w-full h-screen z-[-1000]">
+      <div className="absolute top-0 left-0 w-full h-screen z-[-2000]">
         <Image
           src="/herobg.webp"
           alt="Quack"
@@ -65,17 +48,20 @@ const HomeHero = () => {
           className="object-cover object-left lg:object-right"
         />
       </div>
-      <section className="w-full h-full flex flex-col items-center sm:items-start justify-center">
+      <div className="img-cover absolute top-0 left-0 w-full h-screen z-[-1000] bg-light-50 dark:bg-dark-100"></div>
+      <section className="text-white w-full h-full flex flex-col items-center sm:items-start justify-center">
         <h1 className={"leading-none text-center sm:text-left"}>
-          <span className="text-xl sm:text-5xl block">Art & Literature of</span>
-          <span className="mt-2 sm:mt-4 sm:pl-8 font-bold uppercase block text-5xl sm:text-9xl">
+          <span className="wave opacity-0 translate-y-6 text-xl sm:text-5xl block">
+            Art & Literature of
+          </span>
+          <span className="wave opacity-0 translate-y-6 mt-2 font-bold uppercase block text-5xl sm:text-9xl">
             hasan abir
           </span>
         </h1>
-        <p className="sm:pl-8 mb-12 sm:mb-4 sm:mb-12 text-sm sm:text-2xl">
+        <p className="wave opacity-0 translate-y-6 mb-12 sm:mb-8 sm:mb-12 text-sm sm:text-2xl text-light-100">
           Home for all my work as an artist
         </p>
-        <div className="cta-links sm:pl-8">
+        <div className="wave opacity-0 translate-y-6">
           <CTALink href="/stories" text="Short Stories" />
         </div>
       </section>

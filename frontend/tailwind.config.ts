@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  lightMode: "class",
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -11,7 +12,7 @@ const config: Config = {
       colors: {
         light: {
           50: "#FFFFFF",
-          100: "#F8FFF4",
+          100: "#CECECE",
           200: "#87875A",
         },
         dark: {

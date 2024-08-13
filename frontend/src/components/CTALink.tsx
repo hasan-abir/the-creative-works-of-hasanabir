@@ -18,8 +18,10 @@ const CTALink = ({ text, href, target, extraClasses = "" }: Props) => {
         (extraClasses && " " + extraClasses)
       }
     >
-      <span className="mr-2 sm:mr-4">{text}</span>
-      <PlaySolid className="inline text-xs sm:text-sm" />
+      <span className="flex items-center gap-1 sm:gap-2">
+        <span className="leading-none">{text}</span>
+        <PlaySolid className="inline text-xs sm:text-sm" />
+      </span>
     </Link>
   );
 };
