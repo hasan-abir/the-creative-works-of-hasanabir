@@ -37,7 +37,7 @@ const BackNav = ({ links }: Props) => {
           .to(
             ".popup-bg",
             {
-              opacity: 0.6,
+              opacity: 0.8,
             },
             "<"
           );
@@ -73,13 +73,13 @@ const BackNav = ({ links }: Props) => {
         <button
           data-testid="back-btn"
           onClick={togglePopUp}
-          className="text-2xl w-12 h-12 flex justify-center items-center bg-light-50 dark:bg-dark-200 rounded-full border-2 border-dark-300 dark:border-dark-50"
+          className="text-2xl w-12 h-12 flex justify-center items-center"
         >
-          <NavArrowLeft />
+          <NavArrowLeft strokeWidth={3} />
         </button>
         <div
           data-testid="back-links"
-          className="links opacity-0 translate-x-[-1rem] absolute left-full hidden top-0 items-start flex-col sm:flex-row ml-4"
+          className="links opacity-0 translate-x-[-1rem] translate-y-[-50%] absolute left-full hidden top-1/2 items-start flex-col sm:flex-row ml-4"
         >
           {links.map((item) => {
             return (
@@ -87,7 +87,7 @@ const BackNav = ({ links }: Props) => {
                 key={item.url}
                 data-testid="back-link"
                 href={item.url}
-                className="text-lg sm:text-xl mb-2 sm:mb-0 sm:mr-2 text-nowrap bg-light-50 dark:bg-dark-200 py-1 px-4 rounded-full text-nowrap  border-2 border-dark-300 dark:border-dark-50"
+                className="uppercase font-bold text-lg sm:text-xl mb-2 sm:mb-0 sm:mr-2 text-nowrap bg-light-50 dark:bg-dark-200 py-1 px-3 rounded-md text-nowrap  border-2 border-dark-100 dark:border-dark-50"
               >
                 {item.txt}
               </Link>

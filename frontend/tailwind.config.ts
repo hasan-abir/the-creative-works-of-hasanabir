@@ -22,7 +22,8 @@ const config: Config = {
           300: "#404426",
         },
         primary: {
-          50: "#EB9859"
+          50: "#EB9859",
+          100: "#FF9A4D"
         }
       },
       backgroundImage: {

@@ -2,10 +2,6 @@ import { fetchData } from "@/lib/sanity/client";
 import Link from "next/link";
 import BackNav from "@/components/BackNav";
 import { Marcellus_SC } from "next/font/google";
-const marcellusSC = Marcellus_SC({
-  weight: ["400"],
-  subsets: ["latin"],
-});
 
 export interface StoryInAList {
   _id: string;
@@ -34,20 +30,19 @@ const Stories = async () => {
           />
           <h1
             className={
-              marcellusSC.className +
-              " mt-4 ml-0 sm:mt-0 sm:ml-16 text-3xl sm:text-6xl mb-4 sm:mb-8"
+              "uppercase mt-4 ml-0 sm:mt-0 sm:ml-16 text-3xl sm:text-6xl mb-4 sm:mb-8"
             }
           >
-            A Collection Of Short Stories
+            Short Stories
           </h1>
         </section>
-        <section className="pb-6 sm:pb-16 flex flex-col sm:flex-row flex-wrap">
+        <section className="pb-6 sm:pb-16 flex flex-col sm:flex-row gap-4 flex-wrap">
           {stories.map((story) => {
             return (
               <Link
                 key={story._id}
                 href={`/stories/${story.slug.current}`}
-                className="mt-6 mr-0 sm:mr-8 max-w-[450px] inline-block py-8 px-6 sm:py-10 sm:px-8 bg-light-50 dark:bg-dark-200 border-2 border-b-0 border-dark-300 dark:border-dark-50 text-lg sm:text-2xl relative after:content-[''] after:absolute after:top-full after:left-0 after:w-full after:h-1 after:bg-primary-50 after:ring-2 after:ring-dark-300 after:dark:ring-dark-50 hover:translate-y-[-0.3rem] transition-transform"
+                className="max-w-[450px] inline-block py-8 px-6 sm:py-10 sm:px-8 bg-light-50 dark:bg-dark-200 border-2 border-b-0 border-dark-300 dark:border-dark-50 text-lg sm:text-2xl"
               >
                 <div className="flex justify-between">
                   <h1 className="font-bold text-lg sm:text-3xl mb-6 pr-2 sm:pr-4">

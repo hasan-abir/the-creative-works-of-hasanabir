@@ -19,6 +19,14 @@ const HomeHero = () => {
           transformOrigin: "right",
         })
         .to(
+          ".img",
+          {
+            translateX: 0,
+            transformOrigin: "right",
+          },
+          "<"
+        )
+        .to(
           ".wave",
           {
             translateY: 0,
@@ -27,7 +35,7 @@ const HomeHero = () => {
             duration: 0.5,
             ease: "circ.out",
           },
-          "<+0.2"
+          "<+0.5"
         );
     }, [])
   );
@@ -37,7 +45,7 @@ const HomeHero = () => {
       ref={container}
       className="w-full flex-1 flex items-center max-w-7xl mx-auto h-full"
     >
-      <div className="absolute top-0 left-0 w-full h-screen z-[-2000]">
+      <div className="img translate-x-[-2rem] absolute top-0 left-0 w-full h-screen z-[-2000]">
         <Image
           src="/herobg.webp"
           alt="Quack"
