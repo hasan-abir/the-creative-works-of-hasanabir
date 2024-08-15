@@ -21,7 +21,7 @@ const HomeHero = () => {
         .to(
           ".img",
           {
-            translateX: 0,
+            x: 0,
             transformOrigin: "right",
           },
           "<"
@@ -29,7 +29,7 @@ const HomeHero = () => {
         .to(
           ".wave",
           {
-            translateY: 0,
+            y: 0,
             opacity: 1,
             stagger: 0.2,
             duration: 0.5,
