@@ -15,9 +15,9 @@ const Stories = async () => {
   } | order(finishedAt desc)`);
 
   return (
-    <main className="h-screen pt-6 sm:pt-16 px-6 sm:px-8 flex justify-center">
+    <div className="page-container">
       <StoriesHero stories={stories} />
-    </main>
+    </div>
   );
 };
 

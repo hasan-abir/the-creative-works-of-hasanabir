@@ -41,10 +41,7 @@ const HomeHero = () => {
   );
 
   return (
-    <div
-      ref={container}
-      className="w-full flex-1 flex items-center max-w-7xl mx-auto h-full"
-    >
+    <div ref={container} className="flex-1 flex items-center">
       <div className="img translate-x-[-2rem] absolute top-0 left-0 w-full h-screen z-[-2000]">
         <Image
           src="/herobg.webp"
