@@ -15,13 +15,11 @@ const StoriesHero = ({ stories }: { stories: StoryInAList[] }) => {
   const onImageLoad = contextSafe(
     useCallback(() => {
       gsap
-        .timeline({ defaults: { duration: 2, ease: "expo.out" } })
+        .timeline({ defaults: { duration: 0.5, ease: "circ.out" } })
         .to("h1", {
           y: 0,
           opacity: 1,
           stagger: 0.2,
-          duration: 0.5,
-          ease: "circ.out",
         })
         .to(
           ".card",
@@ -29,8 +27,6 @@ const StoriesHero = ({ stories }: { stories: StoryInAList[] }) => {
             x: 0,
             opacity: 1,
             stagger: 0.2,
-            duration: 0.5,
-            ease: "circ.out",
           },
           "<+0.5"
         );
@@ -39,7 +35,7 @@ const StoriesHero = ({ stories }: { stories: StoryInAList[] }) => {
 
   return (
     <section ref={container}>
-      <div className="flex items-center justify-between sm:justify-start mb-12 sm:mb-24">
+      <div className="flex gap-2 justify-between sm:justify-start mb-12 sm:mb-24">
         <BackNav
           links={[
             {

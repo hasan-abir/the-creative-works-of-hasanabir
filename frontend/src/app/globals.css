@@ -41,7 +41,7 @@ body {
 }
 
 .page-container {
-  @apply min-h-screen max-w-7xl mx-auto py-24 px-6 flex flex-col sm:px-8;
+  @apply min-h-screen max-w-7xl mx-auto py-12 sm:py-24 px-6 flex flex-col sm:px-8;
 }
 
 .rich-text-container > div > p:last-child {

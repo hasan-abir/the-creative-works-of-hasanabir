@@ -87,7 +87,7 @@ const BackNav = ({ links }: Props) => {
                 key={item.url}
                 data-testid="back-link"
                 href={item.url}
-                className="uppercase font-bold text-lg sm:text-xl mb-2 sm:mb-0 sm:mr-2 text-nowrap bg-light-50 dark:bg-dark-200 py-1 px-3 rounded-md text-nowrap  border-2 border-dark-100 dark:border-dark-50"
+                className="uppercase font-bold text-lg sm:text-xl mb-2 sm:mb-0 sm:mr-2 text-nowrap bg-light-50 dark:bg-dark-200 py-1 px-3 rounded-md text-nowrap  border-2 border-dark-50"
               >
                 {item.txt}
               </Link>
