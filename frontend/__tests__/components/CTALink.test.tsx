@@ -32,8 +32,18 @@ describe("CTALink", () => {
 
     renderCTALink({ text, href, target, extraClasses });
 
-    expect(screen.getByText(text).getAttribute("href")).toBe(href);
-    expect(screen.getByText(text).getAttribute("target")).toBe(target);
-    expect(screen.getByText(text).classList.contains(extraClasses)).toBe(true);
+    expect(
+      screen.getByText(text).parentElement?.parentElement?.getAttribute("href")
+    ).toBe(href);
+    expect(
+      screen
+        .getByText(text)
+        .parentElement?.parentElement?.getAttribute("target")
+    ).toBe(target);
+    expect(
+      screen
+        .getByText(text)
+        .parentElement?.parentElement?.classList.contains(extraClasses)
+    ).toBe(true);
   });
 });

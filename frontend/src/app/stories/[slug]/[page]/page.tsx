@@ -2,12 +2,6 @@ import LinesList from "@/components/LinesList";
 import StoryPageHeader from "@/components/headers/StoryPageHeader";
 import { fetchData } from "@/lib/sanity/client";
 import { notFound } from "next/navigation";
-import { Marcellus_SC } from "next/font/google";
-
-const marcellusSC = Marcellus_SC({
-  weight: ["400"],
-  subsets: ["latin"],
-});
 
 interface Props {
   params: {
@@ -83,34 +77,27 @@ const StoryPage = async ({
   }
 
   return (
-    <main className="h-screen pt-6 sm:pt-16 px-6 sm:px-8 flex justify-center overflow-x-hidden">
-      <div className="hidden sm:flex absolute top-0 left-0 z-[-1000] w-full h-screen items-center justify-center opacity-5 dark:opacity-[1%] overflow-hidden">
-        <h1
-          className={
-            marcellusSC.className +
-            " text-center leading-none text-[20vw] lg:text-[12rem] max-w-5xl"
-          }
-        >
+    <div className="page-container max-h-screen pb-6 sm:pb-8">
+      <div className="hidden sm:flex absolute top-0 left-0 z-[-1000] w-full h-full items-center justify-center opacity-5 dark:opacity-[1%] overflow-hidden">
+        <h1 className="uppercase font-bold text-center leading-none text-[20vw] lg:text-[12rem] max-w-5xl">
           {pageContent[0].story.title}
         </h1>
       </div>
-      <div className="max-w-5xl w-full h-full flex flex-col justify-between">
-        <StoryPageHeader
-          title={
-            pageContent[0] && pageContent[0].story && pageContent[0].story.title
-          }
-          slug={slug}
-          page={parseInt(page)}
-          pageCount={pageCount}
-        />
-        <LinesList
-          body={pageContent[0].body}
-          basePath="/stories"
-          firstPage={parseInt(page) === 1}
-          lastPage={parseInt(page) === pageCount}
-        />
-      </div>
-    </main>
+      <StoryPageHeader
+        title={
+          pageContent[0] && pageContent[0].story && pageContent[0].story.title
+        }
+        slug={slug}
+        page={parseInt(page)}
+        pageCount={pageCount}
+      />
+      <LinesList
+        body={pageContent[0].body}
+        basePath="/stories"
+        firstPage={parseInt(page) === 1}
+        lastPage={parseInt(page) === pageCount}
+      />
+    </div>
   );
 };
 

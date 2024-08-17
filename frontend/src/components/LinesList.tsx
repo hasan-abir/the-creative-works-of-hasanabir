@@ -9,12 +9,6 @@ import LineAndPageNav from "@/components/LineAndPageNav";
 import tailwindConfig from "../../tailwind.config";
 import lineInMemory from "@/utils/lineInMemory";
 import { useParams } from "next/navigation";
-import { Marcellus_SC } from "next/font/google";
-
-const marcellusSC = Marcellus_SC({
-  weight: ["400"],
-  subsets: ["latin"],
-});
 
 interface Props {
   basePath: string;
@@ -219,12 +213,8 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
         ref={container}
         className="flex-1 w-full max-w-[700px] overflow-y-auto flex flex-col justify-center py-4"
       >
-        <div className="curtain absolute top-0 left-0 z-[1000] w-full h-screen bg-light-100 dark:bg-dark-100 border-b-8 border-light-50 dark:border-dark-200 origin-top flex items-center justify-center">
-          <h1
-            className={
-              marcellusSC.className + " text-[2rem] sm:text-4xl opacity-60"
-            }
-          >
+        <div className="curtain absolute top-0 left-0 z-[1000] w-full h-screen bg-light-50 dark:bg-dark-100 border-b-8 border-light-100 dark:border-dark-50 origin-top flex items-center justify-center">
+          <h1 className="font-bold uppercase text-[2rem] sm:text-4xl opacity-60">
             Flipping page
           </h1>
         </div>

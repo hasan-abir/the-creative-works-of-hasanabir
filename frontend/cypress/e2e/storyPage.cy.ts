@@ -135,15 +135,15 @@ describe("Story Page", () => {
     cy.get(".line").eq(1).should("not.be.visible");
 
     cy.get("button:first").click()
-    cy.get("a").eq(1).click();
+    cy.get("a").eq(0).click();
     cy.url().should("eq", `http://localhost:3000/`);
     cy.visit(`http://localhost:3000/stories/${firstStory.slug.current}/1`);
     cy.get("button:first").click()
-    cy.get("a").eq(2).click();
+    cy.get("a").eq(1).click();
     cy.url().should("eq", `http://localhost:3000/stories`);
     cy.visit(`http://localhost:3000/stories/${firstStory.slug.current}/1`);
     cy.get("button:first").click()
-    cy.get("a").eq(3).click();
+    cy.get("a").eq(2).click();
     cy.url().should("eq", `http://localhost:3000/stories/${firstStory.slug.current}`);
   });
   it("should indicate the start and end of a story properly", () => {

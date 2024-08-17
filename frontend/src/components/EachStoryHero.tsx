@@ -48,6 +48,14 @@ const EachStoryHero = ({ story }: { story: Story }) => {
             stagger: 0.2,
           },
           "<+0.5"
+        )
+        .to(
+          ".excerpt",
+          {
+            x: 0,
+            opacity: 0.8,
+          },
+          ">-0.2"
         );
     },
     { scope: container }
@@ -117,7 +125,7 @@ const EachStoryHero = ({ story }: { story: Story }) => {
           <p
             className={
               merriweather.className +
-              " segment opacity-0 translate-x-6 text-base sm:text-2xl text-light-100"
+              " excerpt opacity-0 translate-x-6 text-base sm:text-2xl"
             }
           >
             &quot;{story.excerpt}&quot;

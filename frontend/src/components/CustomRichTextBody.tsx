@@ -2,8 +2,14 @@
 
 import splitBlockIntoLines from "@/utils/splitBlockIntoLines";
 import { PortableText, PortableTextComponents } from "@portabletext/react";
-import { v4 as uuidv4 } from "uuid";
+import { Merriweather } from "next/font/google";
 import { useMemo } from "react";
+
+const merriweather = Merriweather({
+  weight: ["400"],
+  style: ["normal", "italic"],
+  subsets: ["latin"],
+});
 
 interface Props {
   body: any[];
@@ -54,7 +60,7 @@ const CustomRichTextBody = ({ body, classList }: Props) => {
           }
 
           return (
-            <div>
+            <div className={merriweather.className}>
               {newBlocks.map((line: any, i: number) => {
                 return (
                   <p

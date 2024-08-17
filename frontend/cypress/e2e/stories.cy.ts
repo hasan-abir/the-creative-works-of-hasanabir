@@ -9,7 +9,7 @@ describe("Stories", () => {
     while (i < stories.list.length) {
       const story: StoryInAList = stories.list[i];
 
-      cy.get("h1").contains(story.title);
+      cy.get("h2").contains(story.title);
 
       i++;
     }

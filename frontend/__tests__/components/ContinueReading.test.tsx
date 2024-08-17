@@ -34,9 +34,9 @@ describe("ContinueReading", () => {
 
     expect(screen.queryByText("Continue Reading")).toBeInTheDocument();
     expect(
-      (screen.getByText("Continue Reading") as HTMLLinkElement).getAttribute(
-        "href"
-      )
+      (
+        screen.getByText("Continue Reading") as HTMLSpanElement
+      ).parentElement?.parentElement?.getAttribute("href")
     ).toBe(`${basePath}/${slug}/4`);
   });
 
@@ -45,7 +45,9 @@ describe("ContinueReading", () => {
 
     expect(screen.queryByText("Read Here")).toBeInTheDocument();
     expect(
-      (screen.getByText("Read Here") as HTMLLinkElement).getAttribute("href")
+      (
+        screen.getByText("Read Here") as HTMLSpanElement
+      ).parentElement?.parentElement?.getAttribute("href")
     ).toBe(`${basePath}/${slug}/1`);
   });
 });

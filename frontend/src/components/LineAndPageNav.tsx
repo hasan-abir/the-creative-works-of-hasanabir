@@ -63,7 +63,7 @@ const LineAndPageNav = ({
   }, [autoPlay, currentIndex, linesLength, goToLine, currentText]);
 
   return (
-    <div className="w-full max-w-[400px] mx-auto pb-6 sm:pb-8">
+    <div className="w-full max-w-[400px] mx-auto">
       <ProgressBar progress={currentIndex / (linesLength - 1)} />
       <div className="flex justify-between items-center mt-6 sm:mt-8">
         {firstPage ? (
