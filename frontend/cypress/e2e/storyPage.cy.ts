@@ -19,7 +19,7 @@ describe("Story Page", () => {
     cy.get(".line:first").should("be.visible");
   });
   it("should navigate lines and pages properly on mobile", () => {
-    cy.viewport("iphone-6")
+    cy.viewport("iphone-6");
 
     const firstStory: Story = stories.list[0];
     cy.visit(`http://localhost:3000/stories/${firstStory.slug.current}/1`);
@@ -76,7 +76,7 @@ describe("Story Page", () => {
     cy.wait(1000);
     cy.get(".line").eq(0).should("be.visible");
     cy.get(".line").eq(1).should("not.be.visible");
-  })
+  });
   it("should navigate lines and pages properly", () => {
     const firstStory: Story = stories.list[0];
     cy.visit(`http://localhost:3000/stories/${firstStory.slug.current}/1`);
@@ -134,17 +134,20 @@ describe("Story Page", () => {
     cy.get(".line").eq(0).should("be.visible");
     cy.get(".line").eq(1).should("not.be.visible");
 
-    cy.get("button:first").click()
+    cy.get("button:first").click();
     cy.get("a").eq(0).click();
     cy.url().should("eq", `http://localhost:3000/`);
     cy.visit(`http://localhost:3000/stories/${firstStory.slug.current}/1`);
-    cy.get("button:first").click()
+    cy.get("button:first").click();
     cy.get("a").eq(1).click();
     cy.url().should("eq", `http://localhost:3000/stories`);
     cy.visit(`http://localhost:3000/stories/${firstStory.slug.current}/1`);
-    cy.get("button:first").click()
+    cy.get("button:first").click();
     cy.get("a").eq(2).click();
-    cy.url().should("eq", `http://localhost:3000/stories/${firstStory.slug.current}`);
+    cy.url().should(
+      "eq",
+      `http://localhost:3000/stories/${firstStory.slug.current}`
+    );
   });
   it("should indicate the start and end of a story properly", () => {
     const firstStory: Story = stories.list[0];
@@ -158,7 +161,7 @@ describe("Story Page", () => {
     cy.get(`[data-testid="next-line-btn"]`).trigger("click");
     cy.get("p").eq(7).contains("The End");
   });
-    it("should autoplay as expected", () => {
+  it("should autoplay as expected", () => {
     const firstStory: Story = stories.list[0];
     cy.visit(`http://localhost:3000/stories/${firstStory.slug.current}/1`);
     cy.wait(1000);
@@ -205,6 +208,6 @@ describe("Story Page", () => {
     Cypress.on("uncaught:exception", (err, runnable) => {
       return false;
     });
-    cy.get("h1").contains("I haven't made the page you were looking for.");
+    cy.get("h1").contains("Page not found (nor its meaning)");
   });
 });

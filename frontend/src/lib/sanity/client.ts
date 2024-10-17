@@ -1,5 +1,6 @@
 import { createClient } from "next-sanity";
 import stories from "@/utils/fixtures/stories.json";
+import poems from "@/utils/fixtures/poems.json";
 import storyPages from "@/utils/fixtures/story_pages.json";
 
 export const client = createClient({
@@ -45,6 +46,15 @@ export const fetchData = async <T>(
       return storyPages.list.filter(
         (item) => item.story.slug.current === params.slug
       ).length as T;
+    } else if (query.includes(`[_type == "poem"]`)) {
+      return poems.list as T;
+    } else if (
+      params &&
+      query.includes(`[_type == "poem" && slug.current == "${params.slug}"]`)
+    ) {
+      return poems.list.filter(
+        (item) => item.slug.current === params.slug
+      ) as T;
     }
 
     return [] as T;

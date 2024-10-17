@@ -63,11 +63,12 @@ const HomeHero = () => {
             hasan abir
           </span>
         </h1>
-        <p className="wave opacity-0 translate-y-6 mb-12 sm:mb-8 sm:mb-12 text-sm sm:text-2xl text-light-100">
+        <p className="wave opacity-0 translate-y-6 mb-12 sm:mb-8 sm:mb-12 text-sm sm:text-2xl text-center sm:text-left text-light-100">
           Home for all my work as an artist
         </p>
-        <div className="wave opacity-0 translate-y-6">
+        <div className="wave flex justify-center sm:justify-start flex-wrap gap-2 opacity-0 translate-y-6">
           <CTALink href="/stories" text="Short Stories" />
+          <CTALink href="/poems" text="Poems" />
         </div>
       </section>
     </div>

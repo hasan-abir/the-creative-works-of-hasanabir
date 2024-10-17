@@ -52,6 +52,13 @@ body {
   @apply mb-0;
 }
 
+.poem-container p {
+  @apply mb-10;
+}
+.poem-container p:last-child {
+  @apply mb-0;
+}
+
 @supports (height: 100dvh) {
   .h-screen {
     height: 100dvh;

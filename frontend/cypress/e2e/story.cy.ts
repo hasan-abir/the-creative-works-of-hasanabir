@@ -13,16 +13,15 @@ describe("Story", () => {
     cy.get("a").eq(2).contains("Read Here");
     cy.get("a").eq(3).contains("Read The PDF");
 
-    cy.get("button").click()
+    cy.get("button").click();
     cy.get("a").eq(0).click();
     cy.url().should("eq", `http://localhost:3000/`);
 
     cy.visit(`http://localhost:3000/stories/${firstStory.slug.current}`);
 
-    cy.get("button").click()
+    cy.get("button").click();
     cy.get("a").eq(1).click();
     cy.url().should("eq", `http://localhost:3000/stories`);
-
   });
   it("should display not found", () => {
     cy.visit("http://localhost:3000/stories/story11", {
@@ -31,6 +30,6 @@ describe("Story", () => {
     Cypress.on("uncaught:exception", (err, runnable) => {
       return false;
     });
-    cy.get("h1").contains("I haven't made the page you were looking for.");
+    cy.get("h1").contains("Page not found (nor its meaning)");
   });
 });
