@@ -72,7 +72,7 @@ const EachPoemHero = ({ poem }: { poem: Poem }) => {
             },
             {
               url: "/poems",
-              txt: "Poem",
+              txt: "Poems",
             },
           ]}
         />
