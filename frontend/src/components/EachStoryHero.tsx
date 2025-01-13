@@ -8,27 +8,13 @@ import { Merriweather } from "next/font/google";
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { monthNames } from "@/utils/dateVariables";
 
 const merriweather = Merriweather({
   weight: ["400"],
   style: ["normal", "italic"],
   subsets: ["latin"],
 });
-
-const monthNames = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
-];
 
 const EachStoryHero = ({ story }: { story: Story }) => {
   const container = useRef<HTMLDivElement>(null);

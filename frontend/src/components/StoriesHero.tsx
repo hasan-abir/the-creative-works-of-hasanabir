@@ -44,11 +44,7 @@ const StoriesHero = ({ stories }: { stories: StoryInAList[] }) => {
             },
           ]}
         />
-        <h1
-          className={
-            "opacity-0 translate-y-6 font-bold uppercase ml-0 sm:ml-16 text-3xl sm:text-6xl"
-          }
-        >
+        <h1 className="opacity-0 translate-y-6 font-bold uppercase ml-0 sm:ml-16 text-3xl sm:text-6xl">
           Short Stories
         </h1>
       </div>

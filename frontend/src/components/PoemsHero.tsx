@@ -44,11 +44,7 @@ const PoemsHero = ({ poems }: { poems: PoemsInAList[] }) => {
             },
           ]}
         />
-        <h1
-          className={
-            "opacity-0 translate-y-6 font-bold uppercase ml-0 sm:ml-16 text-3xl sm:text-6xl"
-          }
-        >
+        <h1 className="opacity-0 translate-y-6 font-bold uppercase ml-0 sm:ml-16 text-3xl sm:text-6xl">
           Poems
         </h1>
       </div>

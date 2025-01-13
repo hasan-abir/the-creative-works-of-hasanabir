@@ -69,6 +69,7 @@ const HomeHero = () => {
         <div className="wave flex justify-center sm:justify-start flex-wrap gap-2 opacity-0 translate-y-6">
           <CTALink href="/stories" text="Short Stories" />
           <CTALink href="/poems" text="Poems" />
+          <CTALink href="/artwork" text="Artwork" />
         </div>
       </section>
     </div>
