@@ -23,7 +23,7 @@ const ArtworkHero = () => {
   const { contextSafe } = useGSAP(
     () => {
       gsap
-        .timeline({ defaults: { duration: 2, ease: "circ.out" } })
+        .timeline({ defaults: { duration: 0.5, ease: "circ.out" } })
         .to("h1", {
           y: 0,
           opacity: 1,
