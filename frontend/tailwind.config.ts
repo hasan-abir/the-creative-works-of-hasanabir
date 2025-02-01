@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import plugin from "tailwindcss/plugin";
 
 const config: Config = {
   lightMode: "class",
@@ -11,9 +12,9 @@ const config: Config = {
     extend: {
       colors: {
         light: {
-          50: "#FFFFFF",
+          50: "#F0F1DC",
           100: "#CECECE",
-          200: "#87875A",
+          200: "#FFE180",
         },
         dark: {
           50: "#1B1B1B",
@@ -23,8 +24,16 @@ const config: Config = {
         },
         primary: {
           50: "#EB9859",
-          100: "#FF9A4D"
-        }
+          100: "#FF9A4D",
+        },
+        primaryrgb: {
+          50: "rgba(235, 152, 89, 0.5)",
+        },
+      },
+      textShadow: {
+        sm: "0 1px 2px rgba(240, 241, 220, 0.5)",
+        DEFAULT: "0 2px 4px rgba(240, 241, 220, 0.5)",
+        lg: "0 8px 16px rgba(240, 241, 220, 0.5)",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
@@ -36,6 +45,17 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(function ({ matchUtilities, theme }) {
+      matchUtilities(
+        {
+          "text-shadow": (value) => ({
+            textShadow: value,
+          }),
+        },
+        { values: theme("textShadow") }
+      );
+    }),
+  ],
 };
 export default config;

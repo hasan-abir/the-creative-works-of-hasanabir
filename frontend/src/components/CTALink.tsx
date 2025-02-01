@@ -77,7 +77,7 @@ const CTALink = ({
       onMouseLeave={hoverOut}
       className={
         (block ? "block" : "inline-block") +
-        " hover:shadow-lg uppercase font-bold text-center text-dark-200 bg-primary-50 px-2 sm:px-4 py-1 sm:py-2 rounded-md" +
+        " shadow-lg shadow-primaryrgb-50 uppercase font-bold text-center text-dark-200 bg-gradient-to-r from-light-200 to-primary-50 px-2 sm:px-4 py-1 sm:py-2 rounded-md" +
         (extraClasses && " " + extraClasses)
       }
     >
