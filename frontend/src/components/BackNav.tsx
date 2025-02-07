@@ -8,9 +8,10 @@ import { useCallback, useRef, useState } from "react";
 
 interface Props {
   links: { url: string; txt: string }[];
+  animateOnLoad?: boolean;
 }
 
-const BackNav = ({ links }: Props) => {
+const BackNav = ({ links, animateOnLoad }: Props) => {
   const [popUp, setPopUp] = useState<boolean>(true);
 
   const container = useRef<HTMLDivElement>(null);
@@ -73,7 +74,10 @@ const BackNav = ({ links }: Props) => {
         <button
           data-testid="back-btn"
           onClick={togglePopUp}
-          className="text-2xl w-12 h-12 flex justify-center items-center"
+          className={
+            (animateOnLoad && "back-btn ") +
+            "opacity-0 translate-x-6 text-2xl w-12 h-12 flex justify-center items-center"
+          }
         >
           <NavArrowLeft strokeWidth={3} />
         </button>
@@ -87,6 +91,7 @@ const BackNav = ({ links }: Props) => {
                 key={item.url}
                 data-testid="back-link"
                 href={item.url}
+                onClick={togglePopUp}
                 className="uppercase font-bold text-lg sm:text-xl mb-2 sm:mb-0 sm:mr-2 text-nowrap bg-light-50 dark:bg-dark-200 py-1 px-3 rounded-md text-nowrap  border-2 border-dark-50"
               >
                 {item.txt}

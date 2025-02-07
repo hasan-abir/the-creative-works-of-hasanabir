@@ -29,6 +29,15 @@ const StoriesHero = ({ stories }: { stories: StoryInAList[] }) => {
             stagger: 0.2,
           },
           "<+0.5"
+        )
+        .to(
+          ".back-btn",
+          {
+            x: 0,
+            opacity: 1,
+            stagger: 0.2,
+          },
+          "<+0.5"
         );
     }, [])
   );
@@ -37,6 +46,7 @@ const StoriesHero = ({ stories }: { stories: StoryInAList[] }) => {
     <section ref={container}>
       <div className="flex gap-2 justify-between sm:justify-start mb-12 sm:mb-24">
         <BackNav
+          animateOnLoad
           links={[
             {
               url: "/",

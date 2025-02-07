@@ -2,10 +2,10 @@
 
 import splitBlockIntoLines from "@/utils/splitBlockIntoLines";
 import { PortableText, PortableTextComponents } from "@portabletext/react";
-import { Merriweather } from "next/font/google";
+import { DM_Serif_Text } from "next/font/google";
 import { useMemo } from "react";
 
-const merriweather = Merriweather({
+const dmserif = DM_Serif_Text({
   weight: ["400"],
   style: ["normal", "italic"],
   subsets: ["latin"],
@@ -60,7 +60,7 @@ const CustomRichTextBody = ({ body, classList }: Props) => {
           }
 
           return (
-            <div className={merriweather.className}>
+            <div className={dmserif.className}>
               {newBlocks.map((line: any, i: number) => {
                 return (
                   <p

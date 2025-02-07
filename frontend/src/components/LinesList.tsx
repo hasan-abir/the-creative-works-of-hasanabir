@@ -8,7 +8,7 @@ import resolveConfig from "tailwindcss/resolveConfig";
 import LineAndPageNav from "@/components/LineAndPageNav";
 import tailwindConfig from "../../tailwind.config";
 import lineInMemory from "@/utils/lineInMemory";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 interface Props {
   basePath: string;
@@ -28,6 +28,7 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
     slug: string;
     page: string;
   }>();
+  const router = useRouter();
   const fullTWConfig = useMemo(() => {
     return resolveConfig(tailwindConfig);
   }, []);
@@ -36,20 +37,20 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
     const firstLine = lineEls.current[0];
     const lastLine = lineEls.current[lineEls.current.length - 1];
     const firstLineBeginsCompletely = firstLine.textContent
-      ? /^[A-Z—[]/.test(firstLine.textContent || "")
+      ? /^[A-Z—←[]/.test(firstLine.textContent || "")
       : true;
     const lastLineEndsCompletely = lastLine.textContent
-      ? /[-—:\].!?…]$/.test(lastLine.textContent || "")
+      ? /[-—→:\].!?…]$/.test(lastLine.textContent || "")
       : true;
 
     if (!lastLineEndsCompletely) {
       lineEls.current[lineEls.current.length - 1].children[0].innerHTML =
-        `${lastLine.children[0].innerHTML}—` || "";
+        `${lastLine.children[0].innerHTML} &rarr;` || "";
     }
 
     if (!firstLineBeginsCompletely) {
       lineEls.current[0].children[0].innerHTML =
-        `—${firstLine.children[0].innerHTML}` || "";
+        `&larr; ${firstLine.children[0].innerHTML}` || "";
     }
   }, []);
 
@@ -109,7 +110,26 @@ const LinesList = ({ body, basePath, firstPage, lastPage }: Props) => {
         } else if (goBackward) {
           index--;
         }
-        if (index > lineEls.current.length - 1 || index < 0) return null;
+        // Navigate to the prev and next page here
+
+        if (index > lineEls.current.length - 1) {
+          if (!lastPage) {
+            router.push(
+              `${basePath}/${params.slug}/${parseInt(params.page) + 1}`
+            );
+          }
+          return null;
+        }
+
+        if (index < 0) {
+          if (!firstPage) {
+            router.push(
+              `${basePath}/${params.slug}/${parseInt(params.page) - 1}`
+            );
+          }
+          return null;
+        }
+
         const currentLineEl = lineEls.current[index];
         const prevLineEl = lineEls.current[index - 1];
         const prevPrevLineEl = lineEls.current[index - 2];

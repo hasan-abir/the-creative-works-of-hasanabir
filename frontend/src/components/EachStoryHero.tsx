@@ -4,13 +4,13 @@ import { Story } from "@/app/stories/[slug]/page";
 import BackNav from "./BackNav";
 import ContinueReading from "./ContinueReading";
 import CTALink from "./CTALink";
-import { Merriweather } from "next/font/google";
+import { DM_Serif_Text } from "next/font/google";
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { monthNames } from "@/utils/dateVariables";
 
-const merriweather = Merriweather({
+const dmserif = DM_Serif_Text({
   weight: ["400"],
   style: ["normal", "italic"],
   subsets: ["latin"],
@@ -26,6 +26,15 @@ const EachStoryHero = ({ story }: { story: Story }) => {
           y: 0,
           opacity: 1,
         })
+        .to(
+          ".back-btn",
+          {
+            x: 0,
+            opacity: 1,
+            stagger: 0.2,
+          },
+          "<+0.5"
+        )
         .to(
           ".segment",
           {
@@ -51,6 +60,7 @@ const EachStoryHero = ({ story }: { story: Story }) => {
     <section ref={container}>
       <div className="flex gap-2 justify-between sm:justify-start mb-12 sm:mb-24">
         <BackNav
+          animateOnLoad
           links={[
             {
               url: "/",
@@ -110,7 +120,7 @@ const EachStoryHero = ({ story }: { story: Story }) => {
           </h2>
           <p
             className={
-              merriweather.className +
+              dmserif.className +
               " excerpt opacity-0 translate-x-6 text-base sm:text-2xl"
             }
           >

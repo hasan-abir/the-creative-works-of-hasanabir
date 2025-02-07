@@ -3,14 +3,14 @@
 import { Poem } from "@/app/poems/[slug]/page";
 import BackNav from "./BackNav";
 import CTALink from "./CTALink";
-import { Merriweather } from "next/font/google";
+import { DM_Serif_Text } from "next/font/google";
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { PortableText } from "@portabletext/react";
 import { monthNames } from "@/utils/dateVariables";
 
-const merriweather = Merriweather({
+const dmserif = DM_Serif_Text({
   weight: ["400"],
   style: ["normal", "italic"],
   subsets: ["latin"],
@@ -26,6 +26,15 @@ const EachPoemHero = ({ poem }: { poem: Poem }) => {
           y: 0,
           opacity: 1,
         })
+        .to(
+          ".back-btn",
+          {
+            x: 0,
+            opacity: 1,
+            stagger: 0.2,
+          },
+          "<+0.5"
+        )
         .to(
           ".segment",
           {
@@ -51,6 +60,7 @@ const EachPoemHero = ({ poem }: { poem: Poem }) => {
     <section ref={container}>
       <div className="flex gap-2 justify-between sm:justify-start mb-12 sm:mb-24">
         <BackNav
+          animateOnLoad
           links={[
             {
               url: "/",
@@ -93,7 +103,7 @@ const EachPoemHero = ({ poem }: { poem: Poem }) => {
         <div className="before:content-[''] before:absolute before:top-0 before:left-0 before:w-2 before:h-2 before:sm:w-4 before:sm:h-4 before:border-[0.025rem] before:border-dark-300 before:dark:border-light-100 before:translate-x-[-50%]  before:translate-y-[-50%] before:opacity-20 relative p-4 sm:p-8">
           <div
             className={
-              merriweather.className +
+              dmserif.className +
               " poem-container opacity-0 text-center translate-x-6 text-base sm:text-2xl"
             }
           >
