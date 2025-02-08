@@ -43,14 +43,6 @@ const EachPoemHero = ({ poem }: { poem: Poem }) => {
             stagger: 0.2,
           },
           "<+0.5"
-        )
-        .to(
-          ".poem-container",
-          {
-            x: 0,
-            opacity: 0.8,
-          },
-          ">-0.2"
         );
     },
     { scope: container }
@@ -93,24 +85,22 @@ const EachPoemHero = ({ poem }: { poem: Poem }) => {
       <div className="flex-1 mt-8 sm:mt-12 pb-6 sm:pb-16">
         <div className="segment flex justify-center opacity-0 translate-x-6">
           <CTALink
-            text="Read The PDF"
+            text="Read PDF"
             href={`/${poem.slug.current}.pdf`}
             target="_blank"
             extraClasses="mb-4 sm:mb-6"
           />
         </div>
-        <div className="h-[0.025rem] bg-dark-300 dark:bg-light-100  mt-12 sm:mt-16 opacity-20"></div>
-        <div className="before:content-[''] before:absolute before:top-0 before:left-0 before:w-2 before:h-2 before:sm:w-4 before:sm:h-4 before:border-[0.025rem] before:border-dark-300 before:dark:border-light-100 before:translate-x-[-50%]  before:translate-y-[-50%] before:opacity-20 relative p-4 sm:p-8">
+        <div className="segment relative p-4 sm:p-8 opacity-0 translate-x-6">
           <div
             className={
               dmserif.className +
-              " poem-container opacity-0 text-center translate-x-6 text-base sm:text-2xl"
+              " poem-container text-center text-base sm:text-2xl"
             }
           >
-            <PortableText value={poem.body} />
+            <PortableText value={poem.body} components={{}} />
           </div>
         </div>
-        <div className="h-[0.025rem] bg-dark-300 dark:bg-light-100 opacity-20"></div>
       </div>
     </section>
   );

@@ -13,14 +13,14 @@ const config: Config = {
       colors: {
         light: {
           50: "#F0F1DC",
-          100: "#CECECE",
+          100: "#EBECD5",
           200: "#FFE180",
         },
         dark: {
           50: "#1B1B1B",
           100: "#1E1D1D",
           200: "#3E3D3D",
-          300: "#404426",
+          300: "#272626",
         },
         primary: {
           50: "#EB9859",

@@ -43,14 +43,6 @@ const EachStoryHero = ({ story }: { story: Story }) => {
             stagger: 0.2,
           },
           "<+0.5"
-        )
-        .to(
-          ".excerpt",
-          {
-            x: 0,
-            opacity: 0.8,
-          },
-          ">-0.2"
         );
     },
     { scope: container }
@@ -99,10 +91,10 @@ const EachStoryHero = ({ story }: { story: Story }) => {
               easier to take in and understand.
             </p>
           </div>
-          <div className="h-[0.025rem] sm:w-px sm:h-auto my-8 sm:my-0 sm:mx-8 bg-dark-300 dark:bg-light-100 opacity-20"></div>
+          <div className="segment opacity-0 translate-x-6 h-[0.025rem] sm:w-px sm:h-auto my-8 sm:my-0 sm:mx-8 bg-dark-300 dark:bg-light-100"></div>
           <div className="segment opacity-0 translate-x-6 max-w-[400px]">
             <CTALink
-              text="Read The PDF"
+              text="Read PDF"
               href={`/${story.slug.current}.pdf`}
               target="_blank"
               extraClasses="mb-4 sm:mb-6"
@@ -113,21 +105,16 @@ const EachStoryHero = ({ story }: { story: Story }) => {
             </p>
           </div>
         </div>
-        <div className="h-[0.025rem] bg-dark-300 dark:bg-light-100  mt-12 sm:mt-16 opacity-20"></div>
-        <div className="before:content-[''] before:absolute before:top-0 before:left-0 before:w-2 before:h-2 before:sm:w-4 before:sm:h-4 before:border-[0.025rem] before:border-dark-300 before:dark:border-light-100 before:translate-x-[-50%]  before:translate-y-[-50%] before:opacity-20 relative p-4 sm:p-8">
-          <h2 className="segment opacity-0 translate-x-6 font-semibold uppercase text-lg sm:text-3xl mb-6">
+        <div className="segment opacity-0 translate-x-6 mt-8 sm:mt-16 p-4 sm:p-8 bg-light-100 dark:bg-dark-300 rounded-lg">
+          <h2 className="font-semibold uppercase text-lg sm:text-3xl mb-6">
             An Excerpt
           </h2>
           <p
-            className={
-              dmserif.className +
-              " excerpt opacity-0 translate-x-6 text-base sm:text-2xl"
-            }
+            className={dmserif.className + " opacity-60 text-base sm:text-2xl"}
           >
             &quot;{story.excerpt}&quot;
           </p>
         </div>
-        <div className="h-[0.025rem] bg-dark-300 dark:bg-light-100 opacity-20"></div>
       </div>
     </section>
   );
