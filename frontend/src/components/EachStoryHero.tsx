@@ -86,6 +86,9 @@ const EachStoryHero = ({ story }: { story: Story }) => {
         <div className="flex flex-col sm:flex-row justify-between">
           <div className="segment opacity-0 translate-x-6 max-w-[400px]">
             <ContinueReading basePath="/stories" />
+            <p className="text-sm sm:text-base mb-2">
+              <strong>(Only the first page here)</strong>
+            </p>
             <p className="text-sm sm:text-base opacity-80">
               This allows you to read the story line by line, so that it&apos;s
               easier to take in and understand.
@@ -99,6 +102,9 @@ const EachStoryHero = ({ story }: { story: Story }) => {
               target="_blank"
               extraClasses="mb-4 sm:mb-6"
             />
+            <p className="text-sm sm:text-base mb-2">
+              <strong>(Only the first page here)</strong>
+            </p>
             <p className="text-sm sm:text-base opacity-80">
               This allows you to read the story in its original format, the way
               it would look in a book.

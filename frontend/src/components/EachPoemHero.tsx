@@ -83,19 +83,24 @@ const EachPoemHero = ({ poem }: { poem: Poem }) => {
         </header>
       </div>
       <div className="flex-1 mt-8 sm:mt-12 pb-6 sm:pb-16">
-        <div className="segment flex justify-center opacity-0 translate-x-6">
+        <div className="segment opacity-0 translate-x-6">
           <CTALink
             text="Read PDF"
             href={`/${poem.slug.current}.pdf`}
             target="_blank"
             extraClasses="mb-4 sm:mb-6"
           />
+          <p className="text-sm sm:text-base">
+            <strong>(Only the first stanza or so here)</strong>
+          </p>
         </div>
-        <div className="segment relative p-4 sm:p-8 opacity-0 translate-x-6">
+        <div className="segment relative opacity-0 translate-x-6 mt-8 sm:mt-16 p-4 sm:p-8 bg-light-100 dark:bg-dark-300 rounded-lg">
+          <h2 className="font-semibold uppercase text-lg sm:text-3xl mb-6">
+            An Excerpt
+          </h2>
           <div
             className={
-              dmserif.className +
-              " poem-container text-center text-base sm:text-2xl"
+              dmserif.className + " poem-container text-base sm:text-2xl"
             }
           >
             <PortableText value={poem.body} components={{}} />

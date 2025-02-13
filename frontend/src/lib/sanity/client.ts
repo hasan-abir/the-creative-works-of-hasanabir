@@ -6,6 +6,10 @@ import storyPages from "@/utils/fixtures/story_pages.json";
 export const client = createClient({
   projectId: "n4zh8b7w",
   dataset: "production",
+  perspective:
+    process.env.IS_PUBLISHED && process.env.IS_PUBLISHED === "1"
+      ? "published"
+      : "raw",
   apiVersion: "2023-05-03", // https://www.sanity.io/docs/api-versioning,
   useCdn: false, // https://github.com/sanity-io/next-sanity?tab=readme-ov-file#should-usecdn-be-true-or-false
 });
