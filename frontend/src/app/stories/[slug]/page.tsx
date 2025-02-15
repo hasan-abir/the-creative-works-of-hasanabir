@@ -1,5 +1,6 @@
 import EachStoryHero from "@/components/EachStoryHero";
 import { fetchData } from "@/lib/sanity/client";
+import { isPublished } from "@/utils/envVariables";
 import { notFound } from "next/navigation";
 
 interface Props {
@@ -60,7 +61,7 @@ const Story = async ({ params: { slug } }: { params: { slug: string } }) => {
 
   return (
     <div className="page-container">
-      <EachStoryHero story={story[0]} />
+      <EachStoryHero story={story[0]} isPublished={isPublished} />
     </div>
   );
 };

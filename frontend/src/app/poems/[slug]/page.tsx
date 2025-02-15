@@ -1,5 +1,6 @@
 import EachPoemHero from "@/components/EachPoemHero";
 import { fetchData } from "@/lib/sanity/client";
+import { isPublished } from "@/utils/envVariables";
 import { notFound } from "next/navigation";
 
 interface Props {
@@ -60,7 +61,7 @@ const Poem = async ({ params: { slug } }: { params: { slug: string } }) => {
 
   return (
     <div className="page-container">
-      <EachPoemHero poem={poem[0]} />
+      <EachPoemHero poem={poem[0]} isPublished={isPublished} />
     </div>
   );
 };

@@ -16,7 +16,13 @@ const dmserif = DM_Serif_Text({
   subsets: ["latin"],
 });
 
-const EachPoemHero = ({ poem }: { poem: Poem }) => {
+const EachPoemHero = ({
+  poem,
+  isPublished,
+}: {
+  poem: Poem;
+  isPublished: boolean;
+}) => {
   const container = useRef<HTMLDivElement>(null);
   useGSAP(
     () => {
@@ -90,9 +96,11 @@ const EachPoemHero = ({ poem }: { poem: Poem }) => {
             target="_blank"
             extraClasses="mb-4 sm:mb-6"
           />
-          <p className="text-sm sm:text-base">
-            <strong>(Only the first stanza or so here)</strong>
-          </p>
+          {isPublished ? (
+            <p className="text-sm sm:text-base">
+              <strong>(Only the first stanza or so here)</strong>
+            </p>
+          ) : null}
         </div>
         <div className="segment relative opacity-0 translate-x-6 mt-8 sm:mt-16 p-4 sm:p-8 bg-light-100 dark:bg-dark-300 rounded-lg">
           <h2 className="font-semibold uppercase text-lg sm:text-3xl mb-6">
