@@ -9,6 +9,12 @@ import { monthNames } from "@/utils/dateVariables";
 
 const images = [
   {
+    title: "The Most Upsetting Memorial",
+    src: "/themostupsettingmemorial.jpg",
+    from: new Date(2025, 6),
+    to: new Date(2025, 8),
+  },
+  {
     title: "A Juggler's Left Spectrum",
     src: "/ajugglersleftspectrum.jpg",
     from: new Date(2025, 3),
@@ -146,7 +152,7 @@ const ArtworkHero = () => {
                   className="object-contain w-full h-full"
                 />
               </div>
-              <header className="p-6">
+              <header className="p-6 text-light-50">
                 <h1 className="text-2xl font-bold">
                   {images[currentImgIndex].title}{" "}
                   <span className="text-sm sm:text-lg font-normal font-italic">
