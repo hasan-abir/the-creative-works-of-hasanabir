@@ -22,7 +22,7 @@ const images = [
   },
   {
     title: "The Prayer and Sacrifice for Cheaper Holidays",
-    src: "/the-prayer-and-sacrifice-for-cheaper-holidays.jpg",
+    src: "/theprayerandsacrificeforcheaperholidays.jpg",
     from: new Date(2025, 0),
     to: new Date(2025, 2),
   },
