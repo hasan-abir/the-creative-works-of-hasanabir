@@ -9,6 +9,12 @@ import { monthNames } from "@/utils/dateVariables";
 
 const images = [
   {
+    title: "Sudden Divorce",
+    src: "/suddendivorce.jpg",
+    from: new Date(2025, 8),
+    to: new Date(2025, 10),
+  },
+  {
     title: "The Most Upsetting Memorial",
     src: "/themostupsettingmemorial.jpg",
     from: new Date(2025, 6),
