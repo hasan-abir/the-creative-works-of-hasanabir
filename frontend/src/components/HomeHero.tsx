@@ -39,7 +39,7 @@ const HomeHero = () => {
         .to(
           ".img",
           {
-            x: 0,
+            translateX: 0,
             transformOrigin: "right",
           },
           "<"
@@ -98,6 +98,7 @@ const HomeHero = () => {
           <CTALink href="/stories" text="Short Stories" />
           <CTALink href="/poems" text="Poems" />
           <CTALink href="/artwork" text="Artwork" />
+          <CTALink href="/songs" text="Songs" />
         </div>
         <div className="wave text-light-200 bg-dark-200 rounded-md flex items-center overflow-hidden opacity-0 translate-x-6">
           <span className="pl-4 pr-2 text-sm sm:text-md">
