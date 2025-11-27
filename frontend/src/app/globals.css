@@ -6,11 +6,25 @@ body {
   @apply text-dark-200 bg-light-50;
 }
 
-@media (prefers-color-scheme: dark) {
+@layer components {
+  h1 {
+    @apply text-5xl mb-8;
+  }
+
+  h2 {
+    @apply text-2xl mb-4;
+  }
+
+  img {
+    @apply w-full;
+  }
+}
+
+/* @media (prefers-color-scheme: dark) {
   body {
     @apply text-light-50 bg-dark-100;
   }
-}
+} */
 
 /* Scrollbar styles */
 /* width */
