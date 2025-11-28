@@ -1,4 +1,7 @@
 import TodaysHighlight from "@/components/TodaysHighlight";
+import CardList from "@/components/CardList";
+import Card from "@/components/Card";
+import { paintings } from "@/utils/content";
 
 export default function Home() {
   return (
@@ -7,13 +10,21 @@ export default function Home() {
         <h1>Today's Highlight</h1>
         <TodaysHighlight />
         <h1>Short Stories</h1>
-        {/* list of content el */}
         <h1>Paintings</h1>
-        {/* list of content el */}
+        <CardList>
+          {paintings.map((painting) => {
+            return (
+              <Card
+                extraClasses="mr-4"
+                title={painting.title}
+                thumbnailSrc={painting.thumbnailSrc}
+                published_year={painting.published_year}
+              />
+            );
+          })}
+        </CardList>
         <h1>Poems</h1>
-        {/* list of content el */}
         <h1>Songs</h1>
-        {/* list of content el */}
       </section>
     </div>
   );
