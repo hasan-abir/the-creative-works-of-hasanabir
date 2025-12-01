@@ -21,3 +21,26 @@ export const paintings: Content[] = [
     published_year: "2025",
   },
 ];
+
+export const songs: Content[] = [
+  {
+    title: "The Sweeping Period",
+    thumbnailSrc: "/the-sweeping-period.mp3",
+    published_year: "2025",
+  },
+  {
+    title: "Three Flies",
+    thumbnailSrc: "/three-flies.mp3",
+    published_year: "2025",
+  },
+  {
+    title: "A Proper Ride",
+    thumbnailSrc: "/a-proper-ride.mp3",
+    published_year: "2025",
+  },
+  {
+    title: "An Offer to a Barricade",
+    thumbnailSrc: "/an-offer-to-a-barricade.mp3",
+    published_year: "2025",
+  },
+];
