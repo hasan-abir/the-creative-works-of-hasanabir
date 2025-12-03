@@ -1,4 +1,4 @@
-interface Content {
+export interface Content {
   title: string;
   thumbnailSrc: string;
   published_year: string;
