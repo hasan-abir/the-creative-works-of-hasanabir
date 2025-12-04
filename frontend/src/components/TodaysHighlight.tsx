@@ -15,8 +15,8 @@ const TodaysHighlight = ({ content }: Props) => {
           {content.title} <span>({content.published_year})</span>
         </h2>
         <p>
-          A <span className="font-bold">Category</span> by{" "}
-          <span className="font-bold">Author Name</span>
+          A <span className="font-bold capitalize">{content.type}</span> by{" "}
+          <span className="font-bold">Hasan Abir</span>
         </p>
       </div>
     </article>

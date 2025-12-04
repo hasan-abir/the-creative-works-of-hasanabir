@@ -31,13 +31,15 @@ const Home = async () => {
   const stories: Content[] = fetchedStories.map<Content>((story) => ({
     title: story.title,
     published_year: new Date(story.finishedAt).getFullYear().toString(),
-    thumbnailSrc: "/herobg.webp",
+    thumbnailSrc: story.slug.current + ".svg",
+    type: "story",
   }));
 
   const poems: Content[] = fetchedPoems.map<Content>((poem) => ({
     title: poem.title,
     published_year: new Date(poem.finishedAt).getFullYear().toString(),
-    thumbnailSrc: "/herobg.webp",
+    thumbnailSrc: poem.slug.current + ".svg",
+    type: "poem",
   }));
 
   const contentPool: Content[] = [...stories, ...poems, ...paintings];
