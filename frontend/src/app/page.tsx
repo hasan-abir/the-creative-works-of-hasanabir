@@ -49,7 +49,9 @@ const Home = async () => {
     <div className="page-container">
       <section>
         <h1>Today's Highlight</h1>
-        <TodaysHighlight content={contentPool[randomContentIndex]} />
+        <p>Todo: the Card designs. Test them here in isolation.</p>
+
+        {/* <TodaysHighlight content={contentPool[randomContentIndex]} />
         <h1>Short Stories</h1>
         <CardList>
           {stories.map((story) => {
@@ -106,7 +108,7 @@ const Home = async () => {
               />
             );
           })}
-        </CardList>
+        </CardList> */}
       </section>
     </div>
   );

@@ -3,7 +3,14 @@ services:
     build: .
     ports:
       - "3000:3000"
-    volumes:
-      - .:/usr/local/app
-
-      - /usr/local/app/node_modules
+    develop:
+      watch:
+        - action: sync
+          path: ./src/app
+          target: /app/src/app
+          initial_sync: true
+          ignore:
+            - node_modules/
+            - .next/
+        - action: rebuild
+          path: package.json
