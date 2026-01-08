@@ -1,37 +1,22 @@
 "use client";
 
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
 import Thumbnail from "@/components/Thumbnail";
 
 interface Props {
-  thumbnailSrc: string;
-  title: string;
-  published_year: string;
+  children: React.ReactNode;
   extraClasses?: string;
-  audio?: boolean;
 }
 
-const Card = ({
-  thumbnailSrc,
-  title,
-  published_year,
-  extraClasses,
-  audio = false,
-}: Props) => {
-  return (
-    <article className={"mb-6" + extraClasses ? " " + extraClasses : ""}>
-      <p className="text-right">{published_year}</p>
-      {audio ? (
-        <audio controls>
-          <source src={thumbnailSrc} type="audio/mpeg" />
-          Your browser does not support the audio element.
-        </audio>
-      ) : (
-        <Thumbnail src={thumbnailSrc} alt={title} width={350} />
-      )}
-      <h3>{title}</h3>
-    </article>
-  );
+const Card = ({ children, extraClasses }: Props) => {
+  let classList =
+    "mr-4 size-fit min-w-[360px] bg-white rounded-3xl p-2 min-h-[250px] shadow-[0_16px_32px_rgba(0,0,0,0.10)]";
+
+  if (extraClasses) {
+    classList += " " + extraClasses;
+  }
+
+  return <article className={classList}>{children}</article>;
 };
 
 export default Card;

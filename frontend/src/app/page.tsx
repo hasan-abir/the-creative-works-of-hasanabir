@@ -49,7 +49,20 @@ const Home = async () => {
     <div className="page-container">
       <section>
         <h1>Today's Highlight</h1>
-        <p>Todo: the Card designs. Test them here in isolation.</p>
+        <p className="mb-8">
+          Todo: the Card designs. Test them here in isolation.
+        </p>
+        <div className="flex">
+          <Card>
+            <p>She want some Marvin Gaye 😉</p>
+          </Card>
+          <Card>
+            <p>Some Luther Vandross 😏</p>
+          </Card>
+          <Card>
+            <p>A little Anita 😩</p>
+          </Card>
+        </div>
 
         {/* <TodaysHighlight content={contentPool[randomContentIndex]} />
         <h1>Short Stories</h1>

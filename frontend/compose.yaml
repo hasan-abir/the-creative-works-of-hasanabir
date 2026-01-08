@@ -6,8 +6,8 @@ services:
     develop:
       watch:
         - action: sync
-          path: ./src/app
-          target: /app/src/app
+          path: ./src
+          target: /app/src
           initial_sync: true
           ignore:
             - node_modules/
