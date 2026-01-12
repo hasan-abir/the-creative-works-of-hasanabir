@@ -3,6 +3,7 @@ import CardList from "@/components/CardList";
 import Card from "@/components/Card";
 import { paintings, songs, Content } from "@/utils/content";
 import { fetchData } from "@/lib/sanity/client";
+import { getAllBooksData } from "@/lib/remark/getContent";
 
 export interface StoryInAList {
   _id: string;
@@ -20,30 +21,7 @@ export interface PoemsInAList {
 }
 
 const Home = async () => {
-  const fetchedStories = await fetchData<StoryInAList[]>(`*[_type == "story"]{
-    _id, title, excerpt, slug, finishedAt
-  } | order(finishedAt desc)`);
-
-  const fetchedPoems = await fetchData<PoemsInAList[]>(`*[_type == "poem"]{
-      _id, title, slug, finishedAt
-    } | order(finishedAt desc)`);
-
-  const stories: Content[] = fetchedStories.map<Content>((story) => ({
-    title: story.title,
-    published_year: new Date(story.finishedAt).getFullYear().toString(),
-    thumbnailSrc: story.slug.current + ".svg",
-    type: "story",
-  }));
-
-  const poems: Content[] = fetchedPoems.map<Content>((poem) => ({
-    title: poem.title,
-    published_year: new Date(poem.finishedAt).getFullYear().toString(),
-    thumbnailSrc: poem.slug.current + ".svg",
-    type: "poem",
-  }));
-
-  const contentPool: Content[] = [...stories, ...poems, ...paintings];
-  const randomContentIndex = Math.floor(Math.random() * contentPool.length - 1);
+  const books = await getAllBooksData();
 
   return (
     <div className="page-container">
@@ -52,6 +30,9 @@ const Home = async () => {
         <p className="mb-8">
           Todo: the Card designs. Test them here in isolation.
         </p>
+        <pre>
+          <code>{JSON.stringify(books, null, 2)}</code>
+        </pre>
         <div className="flex">
           <Card>
             <p>She want some Marvin Gaye 😉</p>
