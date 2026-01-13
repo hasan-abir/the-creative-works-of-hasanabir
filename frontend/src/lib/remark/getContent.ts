@@ -4,7 +4,25 @@ import matter from "gray-matter";
 
 const booksDirectory = path.join(process.cwd(), "src", "content", "books");
 
-export async function getAllBooksData() {
+export interface Book {
+  id: string;
+  title: string;
+  content: string;
+  publishedAt: string;
+  cover_image: string;
+  amazon_link: string;
+  category: string;
+  format: string;
+  genre: string[];
+  tags: string[];
+  language: string;
+  market: string;
+  word_count_range?: string;
+  poem_count?: string;
+  page_count?: string;
+}
+
+export async function getAllBooksData(): Promise<Book[]> {
   const fileNames = fs.readdirSync(booksDirectory);
 
   const allBooksData = fileNames
@@ -19,6 +37,7 @@ export async function getAllBooksData() {
 
       return {
         id,
+        content: matterResult.content,
         ...matterResult.data,
       };
     });

@@ -1,51 +1,22 @@
-import TodaysHighlight from "@/components/TodaysHighlight";
-import CardList from "@/components/CardList";
 import Card from "@/components/Card";
-import { paintings, songs, Content } from "@/utils/content";
-import { fetchData } from "@/lib/sanity/client";
+import BookList from "@/components/BookList";
 import { getAllBooksData } from "@/lib/remark/getContent";
 
-export interface StoryInAList {
-  _id: string;
-  title: string;
-  finishedAt: string;
-  slug: { current: string };
-  excerpt: string;
-}
-
-export interface PoemsInAList {
-  _id: string;
-  title: string;
-  finishedAt: string;
-  slug: { current: string };
-}
-
-const Home = async () => {
-  const books = await getAllBooksData();
-
+const Home = () => {
   return (
     <div className="page-container">
       <section>
-        <h1>Today's Highlight</h1>
+        <h2>Today's Highlight</h2>
         <p className="mb-8">
           Todo: the Card designs. Test them here in isolation.
         </p>
-        <pre>
-          <code>{JSON.stringify(books, null, 2)}</code>
-        </pre>
-        <div className="flex">
-          <Card>
-            <p>She want some Marvin Gaye 😉</p>
-          </Card>
-          <Card>
-            <p>Some Luther Vandross 😏</p>
-          </Card>
-          <Card>
-            <p>A little Anita 😩</p>
-          </Card>
-        </div>
+      </section>
+      <section>
+        <h2>Books</h2>
+        <BookList />
+      </section>
 
-        {/* <TodaysHighlight content={contentPool[randomContentIndex]} />
+      {/* <TodaysHighlight content={contentPool[randomContentIndex]} />
         <h1>Short Stories</h1>
         <CardList>
           {stories.map((story) => {
@@ -103,7 +74,6 @@ const Home = async () => {
             );
           })}
         </CardList> */}
-      </section>
     </div>
   );
 };
