@@ -8,7 +8,7 @@ export interface Book {
   id: string;
   title: string;
   content: string;
-  publishedAt: string;
+  published_date: string;
   cover_image: string;
   amazon_link: string;
   category: string;
