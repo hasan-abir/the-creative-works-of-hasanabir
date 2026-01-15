@@ -8,11 +8,13 @@ format: "Poetry Collection / Hardcover"
 genre: ["Contemporary Poetry", "Verse", "Modern Classics"]
 tags:
   ["English Edition", "World Literature", "Experimental Verse", "Minimalism"]
+content_short: "A collection of poetry"
 language: "en-US"
 market: "Global"
 poem_count: 12
 page_count: 32
 ---
+
 MONEY IS TIME, AND BY THAT I MEANT POEMS. A POEM IS TIME AND MAKES NO MONEY (GOOD). And you'll find more than just a few of them in my book, Our Digs. What's so funny about that?
 
 Our Digs is what it sounds like: I love digs, though more in a collection of poetry than not. I love a collection of remarks. I can't get enough of it, whether I love it or not. And so can't you. You'll find twelve poems in this book, those of which, at times, prefer being polite and other times, abrasive, and at times, brush its interior (how vast) and other times, exterior (how vast). Sounds familiar, doesn't it?

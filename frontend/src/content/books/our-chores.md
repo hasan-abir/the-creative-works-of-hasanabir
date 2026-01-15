@@ -7,10 +7,12 @@ category: "Literary Fiction"
 format: "Novelette / Story Collection"
 genre: ["Contemporary Fiction", "Novelette", "Long-form Prose"]
 tags: ["English Edition", "Extended Narrative", "World Literature"]
+content_short: "A collection of short stories"
 language: "en-US"
 market: "Global"
 word_count_range: "5k - 10k words"
 ---
+
 SPEND YOUR MONEY ELSEWHERE. And that elsewhere is here, my book, Our Chores. Avant-garde?
 
 No, my bourgeois readers. Avant-garde means "ahead of time" in French, and this book is rather in English, written by a Bengali, and doesn't whatsoever have a university's seal on it saying "Postmodern." So, what Our Chores rather must be is a set of, yes, chores, a set divided cleanly into four quick chores, the everyday, uneventful work of the 21st century. And a string of uneventful work makes for a whole event. And that event is, make no mistake, the exact plot of Our Chores, aside from also being its label or category, the Chore category, yes.

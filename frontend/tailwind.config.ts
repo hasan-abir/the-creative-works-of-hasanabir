@@ -13,7 +13,7 @@ const config: Config = {
       colors: {
         light: {
           50: "#FFFFFF",
-          100: "#EBECD5",
+          100: "#FFF3EE",
           200: "#FFE180",
         },
         dark: {
