@@ -9,7 +9,7 @@ const ImgEl = ({ src, alt, book_cover = false }: Props) => {
 
   if (book_cover) {
     classList +=
-      "max-w-fit rounded-l-[16px] h-[250px] border overflow-hidden border-gray-500";
+      "w-[156px] rounded-l-[16px] h-[250px] border overflow-hidden border-gray-500";
   }
 
   return <img className={classList} src={src} alt={alt} />;

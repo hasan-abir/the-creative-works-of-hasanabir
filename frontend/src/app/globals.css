@@ -16,12 +16,20 @@ body {
   }
 
   h3 {
-    @apply text-lg mt-2;
+    @apply text-2xl mb-2 font-semibold;
   }
 
   img {
     @apply w-full;
   }
+}
+
+.primary-btn {
+  background: radial-gradient(ellipse 50% 50% at center, #fdd9ba, #fde6d2);
+  box-shadow: inset 0 -2px 4px 0 rgba(0, 0, 0, 0.2),
+    inset 0 8px 16px 0 rgba(255, 255, 255, 0.3);
+
+  @apply px-4 py-3 rounded-lg border border-primary-50;
 }
 
 /* @media (prefers-color-scheme: dark) {

@@ -19,11 +19,11 @@ const config: Config = {
         dark: {
           50: "#1B1B1B",
           100: "#1E1D1D",
-          200: "#3E3D3D",
+          200: "#505151",
           300: "#272626",
         },
         primary: {
-          50: "#EB9859",
+          50: "#D1BCAA",
           100: "#FF9A4D",
         },
         primaryrgb: {

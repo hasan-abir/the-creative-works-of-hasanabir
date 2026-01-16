@@ -5,7 +5,7 @@ interface Props {
 }
 
 const CTABtn = ({ children, block = false }: Props) => {
-  let classList = "px-4 py-3 rounded-lg bg-red-400";
+  let classList = "primary-btn";
 
   if (block) {
     classList += " w-full";
