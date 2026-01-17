@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import { Poppins, Work_Sans } from "next/font/google";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -7,7 +7,12 @@ const poppins = Poppins({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
+export const workSans = Work_Sans({
+  weight: ["900"],
+  subsets: ["latin"],
+});
+
+const metadata: Metadata = {
   title: {
     template: "%s | The Creative Works of Hasan Abir",
     default: "The Creative Works of Hasan Abir",

@@ -8,7 +8,7 @@ const BookList = async () => {
   const books = await getAllBooksData();
 
   return (
-    <CardList>
+    <CardList heading="Books">
       {books.map((book) => {
         return (
           <Card key={book.id}>

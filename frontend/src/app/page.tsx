@@ -11,10 +11,7 @@ const Home = () => {
           Todo: the Card designs. Test them here in isolation.
         </p>
       </section>
-      <section>
-        <h2>Books</h2>
-        <BookList />
-      </section>
+      <BookList />
 
       {/* <TodaysHighlight content={contentPool[randomContentIndex]} />
         <h1>Short Stories</h1>
