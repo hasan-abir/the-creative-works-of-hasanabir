@@ -2,7 +2,8 @@ import path from "path";
 import fs from "fs";
 import matter from "gray-matter";
 
-const booksDirectory = path.join(process.cwd(), "src", "content", "books");
+const contentDirectory = (folder: string) =>
+  path.join(process.cwd(), "src", "content", folder);
 
 export interface Book {
   id: string;
@@ -23,25 +24,46 @@ export interface Book {
   page_count?: string;
 }
 
-export async function getAllBooksData(): Promise<Book[]> {
-  const fileNames = fs.readdirSync(booksDirectory);
+export interface Painting {
+  id: string;
+  title: string;
+  date_created: string;
+  thumbnail: string;
+  full_res: string;
+  category: string;
+  medium: string;
+  style: string[];
+  tags: string[];
+  dimensions: string;
+  availability: string;
+}
 
-  const allBooksData = fileNames
+export async function getAllContentData<T>(folder: string): Promise<T[]> {
+  const directory = contentDirectory(folder);
+  const fileNames = fs.readdirSync(directory);
+
+  const allContentData = fileNames
     .filter((fileName) => fileName.endsWith(".md") || fileName.endsWith(".mdx"))
     .map((fileName) => {
       const id = fileName.replace(/\.mdx?$/, "");
 
-      const fullPath = path.join(booksDirectory, fileName);
+      const fullPath = path.join(directory, fileName);
       const fileContents = fs.readFileSync(fullPath, "utf8");
 
       const matterResult = matter(fileContents);
 
-      return {
+      const returnValue = {
         id,
         content: matterResult.content,
         ...matterResult.data,
       };
+
+      if (matterResult.content) {
+        returnValue["content"] = matterResult.content;
+      }
+
+      return returnValue as T;
     });
 
-  return allBooksData;
+  return allContentData;
 }

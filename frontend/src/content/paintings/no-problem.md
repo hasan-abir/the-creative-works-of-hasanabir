@@ -1,6 +1,6 @@
 ---
 title: "No Problem"
-date_created: 2024-11-01
+date_created: 2025-01-01
 thumbnail: "/paintings/noproblem-comp.jpg"
 full_res: "/paintings/noproblem.jpg"
 category: "Visual Art"

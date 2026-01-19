@@ -1,6 +1,6 @@
 ---
-title: "No Problem"
-date_created: 2024-11-01
+title: "The Prayer & Sacrifice for Cheaper Holidays"
+date_created: 2025-03-01
 thumbnail: "/paintings/theprayerandsacrificeforcheaperholidays-comp.jpg"
 full_res: "/paintings/theprayerandsacrificeforcheaperholidays.jpg"
 category: "Visual Art"

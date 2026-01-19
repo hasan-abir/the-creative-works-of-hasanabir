@@ -1,6 +1,6 @@
 ---
 title: "Hair"
-date_created: 2024-11-01
+date_created: 2024-12-01
 thumbnail: "/paintings/hair-comp.jpg"
 full_res: "/paintings/hair.jpg"
 category: "Visual Art"

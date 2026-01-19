@@ -1,6 +1,6 @@
 ---
 title: "The Most Upsetting Memorial"
-date_created: 2024-11-01
+date_created: 2025-09-01
 thumbnail: "/paintings/themostupsettingmemorial-comp.jpg"
 full_res: "/paintings/themostupsettingmemorial.jpg"
 category: "Visual Art"

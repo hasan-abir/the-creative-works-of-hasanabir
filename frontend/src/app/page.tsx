@@ -1,6 +1,6 @@
 import Card from "@/components/Card";
 import BookList from "@/components/BookList";
-import { getAllBooksData } from "@/lib/remark/getContent";
+import PaintingList from "@/components/PaintingList";
 
 const Home = () => {
   return (
@@ -12,6 +12,7 @@ const Home = () => {
         </p>
       </section>
       <BookList />
+      <PaintingList />
 
       {/* <TodaysHighlight content={contentPool[randomContentIndex]} />
         <h1>Short Stories</h1>

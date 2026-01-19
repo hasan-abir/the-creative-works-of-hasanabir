@@ -1,6 +1,6 @@
 ---
 title: "Sudden Divorce"
-date_created: 2024-11-01
+date_created: 2025-11-01
 thumbnail: "/paintings/suddendivorce-comp.jpg"
 full_res: "/paintings/suddendivorce.jpg"
 category: "Visual Art"

@@ -12,7 +12,7 @@ export const workSans = Work_Sans({
   subsets: ["latin"],
 });
 
-const metadata: Metadata = {
+export const metadata: Metadata = {
   title: {
     template: "%s | The Creative Works of Hasan Abir",
     default: "The Creative Works of Hasan Abir",

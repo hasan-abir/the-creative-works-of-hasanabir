@@ -2,10 +2,10 @@ import CardList from "@/components/CardList";
 import Card from "@/components/Card";
 import CTABtn from "@/components/CTABtn";
 import ImgEl from "@/components/ImgEl";
-import { getAllBooksData } from "@/lib/remark/getContent";
+import { getAllContentData, Book } from "@/lib/remark/getContent";
 
 const BookList = async () => {
-  const books = await getAllBooksData();
+  const books = await getAllContentData<Book>("books");
 
   return (
     <CardList heading="Books">
