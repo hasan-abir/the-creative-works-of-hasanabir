@@ -1,8 +1,7 @@
 ---
 title: "The Prayer & Sacrifice for Cheaper Holidays"
 date_created: 2025-03-01
-thumbnail: "/paintings/theprayerandsacrificeforcheaperholidays-comp.jpg"
-full_res: "/paintings/theprayerandsacrificeforcheaperholidays.jpg"
+thumbnail: "/paintings/theprayerandsacrificeforcheaperholidays.jpg"
 category: "Visual Art"
 medium: "Sketch Paper"
 style: ["Minimalism", "Abstract Expressionism", "Monochrome"]

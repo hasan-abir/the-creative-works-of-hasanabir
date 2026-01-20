@@ -1,8 +1,7 @@
 ---
 title: "The Most Upsetting Memorial"
 date_created: 2025-09-01
-thumbnail: "/paintings/themostupsettingmemorial-comp.jpg"
-full_res: "/paintings/themostupsettingmemorial.jpg"
+thumbnail: "/paintings/themostupsettingmemorial.jpg"
 category: "Visual Art"
 medium: "Acrylic on Watercolor Paper"
 style: ["Minimalism", "Abstract Expressionism", "Monochrome"]

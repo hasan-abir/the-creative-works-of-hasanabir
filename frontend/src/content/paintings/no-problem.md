@@ -1,8 +1,7 @@
 ---
 title: "No Problem"
 date_created: 2025-01-01
-thumbnail: "/paintings/noproblem-comp.jpg"
-full_res: "/paintings/noproblem.jpg"
+thumbnail: "/paintings/noproblem.jpg"
 category: "Visual Art"
 medium: "Sketch Paper"
 style: ["Minimalism", "Abstract Expressionism", "Monochrome"]

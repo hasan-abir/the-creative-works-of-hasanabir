@@ -1,8 +1,7 @@
 ---
 title: "Sudden Divorce"
 date_created: 2025-11-01
-thumbnail: "/paintings/suddendivorce-comp.jpg"
-full_res: "/paintings/suddendivorce.jpg"
+thumbnail: "/paintings/suddendivorce.jpg"
 category: "Visual Art"
 medium: "Acrylic on Watercolor Paper"
 style: ["Minimalism", "Abstract Expressionism", "Monochrome"]

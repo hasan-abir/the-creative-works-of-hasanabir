@@ -29,7 +29,6 @@ export interface Painting {
   title: string;
   date_created: string;
   thumbnail: string;
-  full_res: string;
   category: string;
   medium: string;
   style: string[];

@@ -8,7 +8,7 @@ interface Props {
 
 const CardList = ({ children, heading }: Props) => {
   return (
-    <section>
+    <section className="overflow-x-auto">
       <h1 className={workSans.className + " font-black"}>{heading}</h1>
       <div className="flex mb-12">{children}</div>
     </section>

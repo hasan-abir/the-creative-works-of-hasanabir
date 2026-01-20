@@ -1,8 +1,7 @@
 ---
 title: "A Juggler's Left Spectrum"
 date_created: 2025-06-01
-thumbnail: "/paintings/ajugglersleftspectrum-comp.jpg"
-full_res: "/paintings/ajugglersleftspectrum.jpg"
+thumbnail: "/paintings/ajugglersleftspectrum.jpg"
 category: "Visual Art"
 medium: "Acrylic on Watercolor Paper"
 style: ["Minimalism", "Abstract Expressionism", "Monochrome"]

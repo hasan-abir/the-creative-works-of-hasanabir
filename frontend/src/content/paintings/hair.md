@@ -1,8 +1,7 @@
 ---
 title: "Hair"
 date_created: 2024-12-01
-thumbnail: "/paintings/hair-comp.jpg"
-full_res: "/paintings/hair.jpg"
+thumbnail: "/paintings/hair.jpg"
 category: "Visual Art"
 medium: "Sketch Paper"
 style: ["Minimalism", "Abstract Expressionism", "Monochrome"]
