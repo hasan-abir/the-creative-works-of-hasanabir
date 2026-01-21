@@ -37,6 +37,16 @@ export interface Painting {
   availability: string;
 }
 
+export interface Song {
+  id: string;
+  title: string;
+  date_created: string;
+  song_preview: string;
+  category: string;
+  style: string[];
+  tags: string[];
+}
+
 export async function getAllContentData<T>(folder: string): Promise<T[]> {
   const directory = contentDirectory(folder);
   const fileNames = fs.readdirSync(directory);

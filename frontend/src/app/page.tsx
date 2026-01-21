@@ -1,6 +1,7 @@
 import Card from "@/components/Card";
 import BookList from "@/components/BookList";
 import PaintingList from "@/components/PaintingList";
+import SongList from "@/components/SongList";
 
 const Home = () => {
   return (
@@ -13,6 +14,7 @@ const Home = () => {
       </section>
       <BookList />
       <PaintingList />
+      <SongList />
 
       {/* <TodaysHighlight content={contentPool[randomContentIndex]} />
         <h1>Short Stories</h1>

@@ -4,11 +4,15 @@ interface Props {
   extraClasses?: string;
 }
 
-const CTABtn = ({ children, block = false }: Props) => {
+const CTABtn = ({ children, block = false, extraClasses }: Props) => {
   let classList = "primary-btn";
 
   if (block) {
-    classList += " w-full";
+    classList += " w-full rounded-[16px]";
+  }
+
+  if (extraClasses) {
+    classList += " " + extraClasses;
   }
 
   return <button className={classList}>{children}</button>;
