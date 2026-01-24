@@ -1,4 +1,8 @@
-import AudioPlayer from "@/components/AudioPlayer";
+// Disable SSR as AudioPlayer is a client only feature
+import dynamic from "next/dynamic";
+const AudioPlayer = dynamic(() => import("@/components/AudioPlayer"), {
+  ssr: false,
+});
 import Card from "@/components/Card";
 import CardList from "@/components/CardList";
 import CTABtn from "@/components/CTABtn";
