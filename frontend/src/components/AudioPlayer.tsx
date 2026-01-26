@@ -27,7 +27,18 @@ const AudioPlayer = ({ src }: Props) => {
 
   const playAudio = useCallback(() => {
     if (audioRef.current) {
+      const audio = audioRef.current;
+
+      if (audio.currentTime >= audio.duration) {
+        audioRef.current.currentTime = 0;
+      }
       audioRef.current.play();
+    }
+  }, []);
+
+  const pauseAudio = useCallback(() => {
+    if (audioRef.current) {
+      audioRef.current.pause();
     }
   }, []);
 
@@ -41,8 +52,14 @@ const AudioPlayer = ({ src }: Props) => {
       >
         <source src={src} type="audio/mpeg" />
       </audio>
-      <p className="text-center" onClick={playAudio}>
-        {duration}/{totalDuration}
+      <p className="text-center">
+        <span className="text-left inline-block w-[50px]" onClick={playAudio}>
+          {duration}
+        </span>
+        /
+        <span className="text-right inline-block w-[50px]" onClick={pauseAudio}>
+          {totalDuration}
+        </span>
       </p>
     </div>
   );
