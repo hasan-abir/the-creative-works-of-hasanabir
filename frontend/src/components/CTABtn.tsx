@@ -2,9 +2,10 @@ interface Props {
   children: React.ReactNode | string;
   block?: boolean;
   extraClasses?: string;
+  onClick?: () => void;
 }
 
-const CTABtn = ({ children, block = false, extraClasses }: Props) => {
+const CTABtn = ({ children, block = false, extraClasses, onClick }: Props) => {
   let classList = "primary-btn";
 
   if (block) {
@@ -15,7 +16,11 @@ const CTABtn = ({ children, block = false, extraClasses }: Props) => {
     classList += " " + extraClasses;
   }
 
-  return <button className={classList}>{children}</button>;
+  return (
+    <button onClick={onClick || undefined} className={classList}>
+      {children}
+    </button>
+  );
 };
 
 export default CTABtn;

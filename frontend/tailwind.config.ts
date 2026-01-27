@@ -24,7 +24,7 @@ const config: Config = {
         },
         primary: {
           50: "#D1BCAA",
-          100: "#FF9A4D",
+          100: "#E4D0BE",
         },
         primaryrgb: {
           50: "rgba(235, 152, 89, 0.5)",
@@ -53,7 +53,7 @@ const config: Config = {
             textShadow: value,
           }),
         },
-        { values: theme("textShadow") }
+        { values: theme("textShadow") },
       );
     }),
   ],
