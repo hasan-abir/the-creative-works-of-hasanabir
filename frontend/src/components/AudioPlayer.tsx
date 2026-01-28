@@ -30,7 +30,13 @@ const AudioPlayer = ({ song }: Props) => {
   const calculateProgress = useMemo(() => {
     if (audioRef.current) {
       const audio: HTMLAudioElement = audioRef.current;
-      return audio.currentTime / audio.duration;
+      const progress = (audio.currentTime / audio.duration) * 100;
+
+      if (progress >= 100) {
+        setSongPlaying(false);
+      }
+
+      return progress;
     } else {
       return 0;
     }
@@ -62,7 +68,20 @@ const AudioPlayer = ({ song }: Props) => {
           onClick={songPlaying ? pauseAudio : playAudio}
           extraClasses="flex-shrink-0 w-[100px] h-[100px] flex justify-center items-center rounded-[20px]"
         >
-          {songPlaying ? (
+          {calculateProgress >= 100 ? (
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 32 32"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M2.66663 16.0001C2.66663 23.3638 8.63616 29.3334 16 29.3334C23.3637 29.3334 29.3333 23.3638 29.3333 16.0001C29.3333 8.63628 23.3637 2.66675 16 2.66675V5.33341C21.891 5.33341 26.6666 10.109 26.6666 16.0001C26.6666 21.8911 21.891 26.6667 16 26.6667C10.1089 26.6667 5.33329 21.8911 5.33329 16.0001C5.33329 12.3337 7.18308 9.09937 10.0003 7.17943L9.99996 10.6667H12.6666V2.66675H4.66663V5.33341L7.99887 5.33327C4.76096 7.76587 2.66663 11.6384 2.66663 16.0001Z"
+                fill="#343A3A"
+              />
+            </svg>
+          ) : songPlaying ? (
             <svg
               width="32"
               height="32"
@@ -110,10 +129,12 @@ const AudioPlayer = ({ song }: Props) => {
             {totalDuration}
           </span>
         </p>
-        <div className="bg-dark-200 h-[5px] rounded-xl overflow-hidden my-6">
+        <div className="bg-dark-200 h-[5px] rounded-2xl overflow-hidden my-6">
           <div
             className="bg-primary-100 text-white h-24 transition-transform origin-left"
-            style={{ transform: `scaleX(${calculateProgress})` }}
+            style={{
+              transform: `translateX(calc(-100% + ${calculateProgress}%))`,
+            }}
           ></div>
         </div>
       </div>
