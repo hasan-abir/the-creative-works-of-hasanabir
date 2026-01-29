@@ -2,7 +2,7 @@
 
 import CTABtn from "@/components/CTABtn";
 import { Song } from "@/lib/remark/getContent";
-import { useCallback, useRef, useState, useMemo } from "react";
+import React, { useCallback, useRef, useState, useMemo } from "react";
 
 interface Props {
   song: Song;
