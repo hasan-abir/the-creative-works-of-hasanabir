@@ -42,13 +42,16 @@ const AudioPlayer = ({ song }: Props) => {
     }
   }, [duration]);
 
-  const playAudio = useCallback(() => {
+  const playAudio = useCallback((customTime?: number) => {
     if (audioRef.current) {
       const audio = audioRef.current;
 
-      if (audio.currentTime >= audio.duration) {
+      if (customTime && customTime <= audio.duration) {
+        audioRef.current.currentTime = customTime;
+      } else if (audio.currentTime >= audio.duration) {
         audioRef.current.currentTime = 0;
       }
+
       audioRef.current.play();
       setSongPlaying(true);
     }
@@ -58,6 +61,21 @@ const AudioPlayer = ({ song }: Props) => {
     if (audioRef.current) {
       audioRef.current.pause();
       setSongPlaying(false);
+    }
+  }, []);
+
+  const playAudioFromPosition = useCallback((e: React.MouseEvent) => {
+    if (audioRef.current) {
+      const audio = audioRef.current;
+
+      const clientX = e.clientX ?? (e.nativeEvent && e.nativeEvent.clientX);
+      const rect = e.currentTarget.getBoundingClientRect();
+      const x = clientX - rect.left;
+      const percent = (x / rect.width) * 100;
+
+      const audioPosition = (audio.duration * percent) / 100;
+
+      playAudio(audioPosition);
     }
   }, []);
 
@@ -129,7 +147,10 @@ const AudioPlayer = ({ song }: Props) => {
             {totalDuration}
           </span>
         </p>
-        <div className="bg-dark-200 h-[5px] rounded-2xl overflow-hidden my-6">
+        <div
+          className="bg-dark-200 h-[5px] rounded-2xl overflow-hidden my-6 cursor-pointer"
+          onClick={playAudioFromPosition}
+        >
           <div
             className="bg-primary-100 text-white h-24 transition-transform origin-left"
             style={{
