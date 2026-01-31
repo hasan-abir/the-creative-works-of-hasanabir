@@ -17,30 +17,28 @@ const AudioPlayer = ({ song }: Props) => {
   const onLoadedMetadata = useCallback(() => {
     if (audioRef.current) {
       const audio: HTMLAudioElement = audioRef.current;
-      setDuration(convertSecondsIntoTime(Math.floor(audio.currentTime)));
 
-      const totalDuration =
-        audio.duration > 30
-          ? Math.floor(audio.duration)
-          : Math.ceil(audio.duration);
-      setTotalDuration(convertSecondsIntoTime(totalDuration));
+      setDuration(convertSecondsIntoTime(Math.floor(audio.currentTime)));
+      setTotalDuration(convertSecondsIntoTime(Math.floor(audio.duration)));
     }
   }, [audioRef.current]);
 
   const calculateProgress = useMemo(() => {
     if (audioRef.current) {
       const audio: HTMLAudioElement = audioRef.current;
-      const progress = (audio.currentTime / audio.duration) * 100;
-
-      if (progress >= 100) {
+      const progress =
+        (Math.floor(audio.currentTime) / Math.floor(audio.duration)) * 100;
+      console.log(audio.currentTime, audio.duration, progress);
+      if (progress > 100) {
         setSongPlaying(false);
+        audioRef.current.pause();
       }
 
       return progress;
     } else {
       return 0;
     }
-  }, [duration]);
+  }, [audioRef.current?.currentTime]);
 
   const playAudio = useCallback((customTime?: number) => {
     if (audioRef.current) {
