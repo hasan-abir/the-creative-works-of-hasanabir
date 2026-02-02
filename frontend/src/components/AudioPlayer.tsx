@@ -28,8 +28,7 @@ const AudioPlayer = ({ song }: Props) => {
       const audio: HTMLAudioElement = audioRef.current;
       const progress =
         (Math.floor(audio.currentTime) / Math.floor(audio.duration)) * 100;
-      console.log(audio.currentTime, audio.duration, progress);
-      if (progress > 100) {
+      if (progress >= 100) {
         setSongPlaying(false);
         audioRef.current.pause();
       }
@@ -43,10 +42,12 @@ const AudioPlayer = ({ song }: Props) => {
   const playAudio = useCallback((customTime?: number) => {
     if (audioRef.current) {
       const audio = audioRef.current;
+      const currentDuration = Math.floor(audio.currentTime);
+      const currentTotalDuration = Math.floor(audio.duration);
 
-      if (customTime && customTime <= audio.duration) {
+      if (customTime && Math.floor(customTime) <= audio.duration) {
         audioRef.current.currentTime = customTime;
-      } else if (audio.currentTime >= audio.duration) {
+      } else if (currentDuration >= currentTotalDuration) {
         audioRef.current.currentTime = 0;
       }
 
