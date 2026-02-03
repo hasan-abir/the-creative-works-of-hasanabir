@@ -3,6 +3,7 @@
 import CTABtn from "@/components/CTABtn";
 import { Song } from "@/lib/remark/getContent";
 import React, { useCallback, useRef, useState, useMemo } from "react";
+import { icons } from "@/utils/icons/";
 
 interface Props {
   song: Song;
@@ -86,44 +87,11 @@ const AudioPlayer = ({ song }: Props) => {
           extraClasses="flex-shrink-0 w-[100px] h-[100px] flex justify-center items-center rounded-[20px]"
         >
           {calculateProgress >= 100 ? (
-            <svg
-              width="32"
-              height="32"
-              viewBox="0 0 32 32"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M2.66663 16.0001C2.66663 23.3638 8.63616 29.3334 16 29.3334C23.3637 29.3334 29.3333 23.3638 29.3333 16.0001C29.3333 8.63628 23.3637 2.66675 16 2.66675V5.33341C21.891 5.33341 26.6666 10.109 26.6666 16.0001C26.6666 21.8911 21.891 26.6667 16 26.6667C10.1089 26.6667 5.33329 21.8911 5.33329 16.0001C5.33329 12.3337 7.18308 9.09937 10.0003 7.17943L9.99996 10.6667H12.6666V2.66675H4.66663V5.33341L7.99887 5.33327C4.76096 7.76587 2.66663 11.6384 2.66663 16.0001Z"
-                fill="#343A3A"
-              />
-            </svg>
+            <icons.ResetIcon />
           ) : songPlaying ? (
-            <svg
-              width="32"
-              height="32"
-              viewBox="0 0 32 32"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M8 6.66675H10.6667V25.3334H8V6.66675ZM21.3333 6.66675H24V25.3334H21.3333V6.66675Z"
-                fill="#343A3A"
-              />
-            </svg>
+            <icons.PauseIcon />
           ) : (
-            <svg
-              width="32"
-              height="32"
-              viewBox="0 0 32 32"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M8 26.9276V5.07228C8 4.02504 9.15193 3.38658 10.04 3.94162L27.5243 14.8693C28.3599 15.3915 28.3599 16.6084 27.5243 17.1307L10.04 28.0583C9.15193 28.6133 8 27.9749 8 26.9276Z"
-                fill="#505151"
-              />
-            </svg>
+            <icons.PlayIcon />
           )}
         </CTABtn>
         <h3 className="pl-5">{song.title}</h3>
@@ -156,6 +124,29 @@ const AudioPlayer = ({ song }: Props) => {
               transform: `translateX(calc(-100% + ${calculateProgress}%))`,
             }}
           ></div>
+        </div>
+        <div className="flex justify-center items-center">
+          <button
+            onClick={() =>
+              audioRef &&
+              audioRef.current &&
+              playAudio(audioRef.current.currentTime - 5)
+            }
+          >
+            <icons.RewindIcon />
+          </button>
+          <button className="mx-5">
+            <icons.VolIcon />
+          </button>
+          <button
+            onClick={() =>
+              audioRef &&
+              audioRef.current &&
+              playAudio(audioRef.current.currentTime + 5)
+            }
+          >
+            <icons.ForwardIcon />
+          </button>
         </div>
       </div>
     </div>
