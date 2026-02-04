@@ -13,6 +13,7 @@ const AudioPlayer = ({ song }: Props) => {
   const [songPlaying, setSongPlaying] = useState<boolean>(false);
   const [totalDuration, setTotalDuration] = useState<string>("00:00");
   const [duration, setDuration] = useState<string>("00:00");
+  const [volControl, setVolControl] = useState<boolean>(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const onLoadedMetadata = useCallback(() => {
@@ -115,17 +116,17 @@ const AudioPlayer = ({ song }: Props) => {
           </span>
         </p>
         <div
-          className="bg-dark-200 h-[5px] rounded-2xl overflow-hidden my-6 cursor-pointer"
+          className="bg-dark-200 h-[5px] overflow-hidden my-6 cursor-pointer rounded-3xl"
           onClick={playAudioFromPosition}
         >
           <div
-            className="bg-primary-100 text-white h-24 transition-transform origin-left"
+            className="bg-primary-100 h-24 transition-transform origin-left"
             style={{
               transform: `translateX(calc(-100% + ${calculateProgress}%))`,
             }}
           ></div>
         </div>
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center relative">
           <button
             onClick={() =>
               audioRef &&
@@ -135,8 +136,24 @@ const AudioPlayer = ({ song }: Props) => {
           >
             <icons.RewindIcon />
           </button>
-          <button className="mx-5">
+          <button
+            className="mx-5"
+            onMouseEnter={() => setVolControl(true)}
+            onMouseLeave={() => setVolControl(false)}
+          >
             <icons.VolIcon />
+            {volControl ? (
+              <div className="absolute top-[-70%] left-[50%] translate-x-[-50%] shadow-xl w-[220px] p-2  bg-white rounded-3xl">
+                <div className="bg-dark-200 h-[5px] overflow-hidden cursor-pointer rounded-3xl">
+                  <div
+                    className="bg-primary-100 h-24 transition-transform origin-left"
+                    style={{
+                      transform: `translateX(calc(-50%))`,
+                    }}
+                  ></div>
+                </div>
+              </div>
+            ) : null}
           </button>
           <button
             onClick={() =>
