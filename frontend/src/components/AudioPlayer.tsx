@@ -14,10 +14,12 @@ const AudioPlayer = ({ song }: Props) => {
   const [totalDuration, setTotalDuration] = useState<string>("00:00");
   const [duration, setDuration] = useState<string>("00:00");
   const [volControl, setVolControl] = useState<boolean>(false);
+  const [volLvl, setVolLvl] = useState<number>(100);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const onLoadedMetadata = useCallback(() => {
     if (audioRef.current) {
+      audioRef.current.volume;
       const audio: HTMLAudioElement = audioRef.current;
 
       setDuration(convertSecondsIntoTime(Math.floor(audio.currentTime)));
@@ -28,6 +30,7 @@ const AudioPlayer = ({ song }: Props) => {
   const calculateProgress = useMemo(() => {
     if (audioRef.current) {
       const audio: HTMLAudioElement = audioRef.current;
+
       const progress =
         (Math.floor(audio.currentTime) / Math.floor(audio.duration)) * 100;
       if (progress >= 100) {
@@ -77,6 +80,27 @@ const AudioPlayer = ({ song }: Props) => {
       const audioPosition = (audio.duration * percent) / 100;
 
       playAudio(audioPosition);
+    }
+  }, []);
+
+  const changeVol = useCallback((e: React.MouseEvent) => {
+    if (audioRef.current) {
+      const clientX = e.clientX ?? (e.nativeEvent && e.nativeEvent.clientX);
+      const rect = e.currentTarget.getBoundingClientRect();
+      const x = clientX - rect.left;
+      const percent = (x / rect.width) * 100;
+
+      const volLvl = percent / 100;
+
+      audioRef.current.volume = volLvl;
+
+      setVolLvl(percent);
+    }
+  }, []);
+
+  const muteUnmuteVol = useCallback(() => {
+    if (audioRef.current) {
+      audioRef.current.muted = !audioRef.current.muted;
     }
   }, []);
 
@@ -141,14 +165,24 @@ const AudioPlayer = ({ song }: Props) => {
             onMouseEnter={() => setVolControl(true)}
             onMouseLeave={() => setVolControl(false)}
           >
-            <icons.VolIcon />
+            <span onClick={muteUnmuteVol}>
+              {audioRef.current?.muted ? (
+                <icons.VolMuteIcon />
+              ) : (
+                <icons.VolIcon />
+              )}
+            </span>
+
             {volControl ? (
               <div className="absolute top-[-70%] left-[50%] translate-x-[-50%] shadow-xl w-[220px] p-2  bg-white rounded-3xl">
-                <div className="bg-dark-200 h-[5px] overflow-hidden cursor-pointer rounded-3xl">
+                <div
+                  className="bg-dark-200 h-[5px] overflow-hidden cursor-pointer rounded-3xl"
+                  onClick={changeVol}
+                >
                   <div
                     className="bg-primary-100 h-24 transition-transform origin-left"
                     style={{
-                      transform: `translateX(calc(-50%))`,
+                      transform: `translateX(calc(-100% + ${volLvl}%))`,
                     }}
                   ></div>
                 </div>
