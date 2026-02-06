@@ -19,20 +19,18 @@ const AudioPlayer = ({ song }: Props) => {
 
   const onLoadedMetadata = useCallback(() => {
     if (audioRef.current) {
-      audioRef.current.volume;
-      const audio: HTMLAudioElement = audioRef.current;
+      const audio: HTMLAudioElement = getAudioWithRoundedTime(audioRef.current);
 
-      setDuration(convertSecondsIntoTime(Math.floor(audio.currentTime)));
-      setTotalDuration(convertSecondsIntoTime(Math.floor(audio.duration)));
+      setDuration(convertSecondsIntoTime(audio.currentTime));
+      setTotalDuration(convertSecondsIntoTime(audio.duration));
     }
   }, [audioRef.current]);
 
   const calculateProgress = useMemo(() => {
     if (audioRef.current) {
-      const audio: HTMLAudioElement = audioRef.current;
+      const audio: HTMLAudioElement = getAudioWithRoundedTime(audioRef.current);
 
-      const progress =
-        (Math.floor(audio.currentTime) / Math.floor(audio.duration)) * 100;
+      const progress = (audio.currentTime / audio.duration) * 100;
       if (progress >= 100) {
         setSongPlaying(false);
         audioRef.current.pause();
@@ -46,9 +44,9 @@ const AudioPlayer = ({ song }: Props) => {
 
   const playAudio = useCallback((customTime?: number) => {
     if (audioRef.current) {
-      const audio = audioRef.current;
-      const currentDuration = Math.floor(audio.currentTime);
-      const currentTotalDuration = Math.floor(audio.duration);
+      const audio = getAudioWithRoundedTime(audioRef.current);
+      const currentDuration = audio.currentTime;
+      const currentTotalDuration = audio.duration;
 
       if (customTime && Math.floor(customTime) <= audio.duration) {
         audioRef.current.currentTime = customTime;
@@ -70,7 +68,7 @@ const AudioPlayer = ({ song }: Props) => {
 
   const playAudioFromPosition = useCallback((e: React.MouseEvent) => {
     if (audioRef.current) {
-      const audio = audioRef.current;
+      const audio = getAudioWithRoundedTime(audioRef.current);
 
       const clientX = e.clientX ?? (e.nativeEvent && e.nativeEvent.clientX);
       const rect = e.currentTarget.getBoundingClientRect();
@@ -215,6 +213,14 @@ const convertSecondsIntoTime = (seconds: number): string => {
   }
 
   return `${minutes}:${cnvSeconds}`;
+};
+
+const getAudioWithRoundedTime = (audio: HTMLAudioElement) => {
+  const newAudio = { ...audio };
+  newAudio.currentTime = Math.floor(audio.currentTime);
+  newAudio.duration = Math.floor(audio.duration);
+
+  return newAudio;
 };
 
 export default AudioPlayer;
