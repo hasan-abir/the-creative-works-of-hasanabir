@@ -9,7 +9,7 @@ const CTABtn = ({ children, block = false, extraClasses, onClick }: Props) => {
   let classList = "primary-btn";
 
   if (block) {
-    classList += " w-full rounded-[16px]";
+    classList += " w-full rounded-xl";
   }
 
   if (extraClasses) {
