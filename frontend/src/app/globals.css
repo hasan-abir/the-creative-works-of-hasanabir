@@ -39,8 +39,9 @@ body {
     inset 0 8px 16px 0 rgba(255, 255, 255, 0.3);
 }
 
-.big-text-shadow {
+.big-heading {
   text-shadow: 0px 12px 0 #fde6d2;
+  @apply font-black;
 }
 
 /* @media (prefers-color-scheme: dark) {

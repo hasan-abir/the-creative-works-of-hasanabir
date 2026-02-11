@@ -5,13 +5,22 @@ interface Props {
   alt: string;
   book_cover?: boolean;
   optimized?: boolean;
+  actual?: boolean;
 }
 
-const ImgEl = ({ src, alt, book_cover = false, optimized = true }: Props) => {
-  let classList = "relative  border overflow-hidden border-gray-500";
+const ImgEl = ({
+  src,
+  alt,
+  book_cover = false,
+  optimized = true,
+  actual = false,
+}: Props) => {
+  let classList = "relative overflow-hidden";
 
   if (book_cover) {
     classList += " w-[156px] rounded-l-[16px] h-[250px]";
+  } else if (actual) {
+    classList += "w-auto h-auto max-w-[500px] max-h-[500px]";
   } else {
     classList += " w-[385px] rounded-[16px] h-[250px]";
   }
@@ -26,10 +35,12 @@ const ImgEl = ({ src, alt, book_cover = false, optimized = true }: Props) => {
   return (
     <figure className={classList}>
       <Image
-        className="w-full h-full absolute object-cover"
+        className={`border border-gray-500 w-auto h-auto${actual ? " object-contain rounded-[4px]" : " absolute object-cover"}`}
         src={src}
         alt={alt}
-        fill
+        width={actual ? 300 : undefined}
+        height={actual ? 300 : undefined}
+        fill={!actual}
         {...optimizedAttributes}
       />
     </figure>
