@@ -20,7 +20,8 @@ const ImgEl = ({
   if (book_cover) {
     classList += " w-[156px] rounded-l-[16px] h-[250px]";
   } else if (actual) {
-    classList += "w-auto h-auto max-w-[500px] max-h-[500px]";
+    classList +=
+      " w-[500px] h-[500px] shadow-[0_16px_32px_rgba(0,0,0,0.10)] rounded-[12px]";
   } else {
     classList += " w-[385px] rounded-[16px] h-[250px]";
   }
@@ -35,12 +36,10 @@ const ImgEl = ({
   return (
     <figure className={classList}>
       <Image
-        className={`border border-gray-500 w-auto h-auto${actual ? " object-contain rounded-[4px]" : " absolute object-cover"}`}
+        className={`absolute w-auto h-auto${actual ? " object-contain bg-white" : " border border-gray-500 object-cover"}`}
         src={src}
         alt={alt}
-        width={actual ? 300 : undefined}
-        height={actual ? 300 : undefined}
-        fill={!actual}
+        fill
         {...optimizedAttributes}
       />
     </figure>
