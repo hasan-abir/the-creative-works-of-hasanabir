@@ -1,16 +1,6 @@
 import type { Metadata } from "next";
-import { Poppins, Work_Sans } from "next/font/google";
+import { bodyFont } from "@/utils/fonts";
 import "./globals.css";
-
-const poppins = Poppins({
-  weight: ["400", "600", "700"],
-  subsets: ["latin"],
-});
-
-export const workSans = Work_Sans({
-  weight: ["900"],
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: {
@@ -28,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={poppins.className}>{children}</body>
+      <body className={bodyFont.className}>{children}</body>
     </html>
   );
 }

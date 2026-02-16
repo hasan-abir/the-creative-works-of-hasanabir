@@ -18,12 +18,12 @@ const ImgEl = ({
   let classList = "relative overflow-hidden";
 
   if (book_cover) {
-    classList += " w-[156px] rounded-l-[16px] h-[250px]";
+    classList += " w-[156px] rounded-l-[16px] h-[250px] border border-gray-500";
   } else if (actual) {
     classList +=
-      " w-[500px] h-[500px] shadow-[0_16px_32px_rgba(0,0,0,0.10)] rounded-[12px]";
+      " w-[400px] h-[400px] shadow-[0_16px_32px_rgba(0,0,0,0.10)] rounded-[12px]";
   } else {
-    classList += " w-[385px] rounded-[16px] h-[250px]";
+    classList += " w-[385px] rounded-[16px] h-[250px] border border-gray-500";
   }
 
   const optimizedAttributes = optimized
@@ -36,7 +36,7 @@ const ImgEl = ({
   return (
     <figure className={classList}>
       <Image
-        className={`absolute w-auto h-auto${actual ? " object-contain bg-white" : " border border-gray-500 object-cover"}`}
+        className={`absolute w-auto h-auto${actual ? " object-contain bg-white" : " object-cover"}`}
         src={src}
         alt={alt}
         fill
