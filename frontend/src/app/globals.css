@@ -49,11 +49,13 @@ body {
   box-shadow:
     inset 0 8px 16px 0 rgba(255, 255, 255, 0.8),
     0 8px 32px 0 rgba(0, 0, 0, 0.1);
-  /* box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1); */
-  @apply min-w-[200px] px-3 py-4 font-semibold border border-white;
+  @apply min-w-[200px] px-3 py-4 font-semibold transition-shadow ease-in-out border border-white;
 }
 
 .secondary-btn:hover {
+  box-shadow:
+    inset 0 -8px 16px 0 rgba(255, 255, 255, 0.8),
+    0 8px 32px 0 rgba(0, 0, 0, 0.1);
 }
 
 .big-heading {

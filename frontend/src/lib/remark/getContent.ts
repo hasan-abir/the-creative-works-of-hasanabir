@@ -76,3 +76,34 @@ export async function getAllContentData<T>(folder: string): Promise<T[]> {
 
   return allContentData;
 }
+
+export async function getContentData<T>(filePath: string): Promise<T | null> {
+  filePath = contentDirectory(filePath) + ".md";
+
+  try {
+    const fileContent = fs.readFileSync(filePath, "utf8");
+    // file exists and was read
+
+    const id = fileContent.replace(/\.mdx?$/, "");
+
+    const matterResult = matter(fileContent);
+
+    const returnValue = {
+      id,
+      content: matterResult.content,
+      ...matterResult.data,
+    };
+
+    if (matterResult.content) {
+      returnValue["content"] = matterResult.content;
+    }
+
+    return returnValue as T;
+  } catch (err: any) {
+    if (err.code === "ENOENT") {
+      return null;
+    } else {
+      throw err;
+    }
+  }
+}

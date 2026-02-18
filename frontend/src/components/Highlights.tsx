@@ -1,29 +1,40 @@
-"use client";
-
-import { useSearchParams } from "next/navigation";
 import { headingFont } from "@/utils/fonts";
 import ImgEl from "@/components/ImgEl";
 import CTABtn from "@/components/CTABtn";
+import { Book, Painting, Song } from "@/lib/remark/getContent";
 
-interface Props {}
+interface Props {
+  content: Book | Painting | Song;
+}
 
-const Highlights = ({}: Props) => {
-  const searchParams = useSearchParams();
-
-  const contentFolder = searchParams.get("highlight");
-
+const Highlights = ({ content }: Props) => {
   return (
     <section>
-      <p>{contentFolder}</p>
       <h1 className={headingFont.className + " big-heading"}>
         Today's Highlight
       </h1>
       <div className="flex mb-12 pb-12 pt-6 px-12">
-        <ImgEl src="/covers/our-chores-cover.jpg" alt="Bla" actual />
+        {"cover_image" in content || "thumbnail" in content ? (
+          <ImgEl
+            src={
+              "cover_image" in content ? content.cover_image : content.thumbnail
+            }
+            alt="Bla"
+            actual
+          />
+        ) : null}
+
         <div className="py-5 px-7">
-          <h2 className="text-4xl font-semibold mb-2">Our Chores</h2>
-          <p className="opacity-75 mb-8">Published in 2025</p>
-          <p className="mb-16">Painting done on Watercolor Paper</p>
+          <h2 className="text-4xl font-semibold mb-2">{content.title}</h2>
+          <p className="opacity-75 mb-8">
+            Published in{" "}
+            {"published_date" in content
+              ? new Date(content.published_date).getFullYear()
+              : new Date(content.date_created).getFullYear()}
+          </p>
+          <p className="mb-16">
+            {"content" in content ? content.content : null}
+          </p>
           <CTABtn primary={false}>
             <span className="flex items-center justify-center">
               <span>Discover</span>
