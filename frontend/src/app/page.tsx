@@ -9,7 +9,7 @@ const Home = async ({
 }: {
   searchParams: { [key: string]: string | undefined };
 }) => {
-  const contentFolder = searchParams["highlights"];
+  const contentFolder = searchParams["highlight"];
 
   const content = await getContentData<Book | Painting | Song>(
     contentFolder || "books/our-chores",

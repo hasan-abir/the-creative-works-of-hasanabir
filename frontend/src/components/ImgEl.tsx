@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 interface Props {
   src: string;
@@ -6,6 +7,7 @@ interface Props {
   book_cover?: boolean;
   optimized?: boolean;
   actual?: boolean;
+  href?: string;
 }
 
 const ImgEl = ({
@@ -14,6 +16,7 @@ const ImgEl = ({
   book_cover = false,
   optimized = true,
   actual = false,
+  href = "/",
 }: Props) => {
   let classList = "relative overflow-hidden";
 
@@ -34,15 +37,17 @@ const ImgEl = ({
     : {};
 
   return (
-    <figure className={classList}>
-      <Image
-        className={`absolute w-auto h-auto${actual ? " object-contain bg-white" : " object-cover"}`}
-        src={src}
-        alt={alt}
-        fill
-        {...optimizedAttributes}
-      />
-    </figure>
+    <Link href={href}>
+      <figure className={classList}>
+        <Image
+          className={`absolute w-auto h-auto${actual ? " object-contain bg-white" : " object-cover"}`}
+          src={src}
+          alt={alt}
+          fill
+          {...optimizedAttributes}
+        />
+      </figure>
+    </Link>
   );
 };
 

@@ -22,6 +22,7 @@ export interface Book {
   word_count_range?: string;
   poem_count?: string;
   page_count?: string;
+  path: string;
 }
 
 export interface Painting {
@@ -35,6 +36,7 @@ export interface Painting {
   tags: string[];
   dimensions: string;
   availability: string;
+  path: string;
 }
 
 export interface Song {
@@ -45,6 +47,7 @@ export interface Song {
   category: string;
   style: string[];
   tags: string[];
+  path: string;
 }
 
 export async function getAllContentData<T>(folder: string): Promise<T[]> {
@@ -65,6 +68,7 @@ export async function getAllContentData<T>(folder: string): Promise<T[]> {
         id,
         content: matterResult.content,
         ...matterResult.data,
+        path: `${folder}/${id}`,
       };
 
       if (matterResult.content) {

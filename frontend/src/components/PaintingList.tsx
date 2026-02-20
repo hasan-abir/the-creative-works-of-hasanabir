@@ -17,7 +17,11 @@ const PaintingList = async () => {
       {paintings.map((painting) => {
         return (
           <Card key={painting.id}>
-            <ImgEl src={painting.thumbnail} alt={painting.title} />
+            <ImgEl
+              src={painting.thumbnail}
+              alt={painting.title}
+              href={`?highlight=${painting.path}`}
+            />
           </Card>
         );
       })}

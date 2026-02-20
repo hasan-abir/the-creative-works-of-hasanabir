@@ -3,6 +3,7 @@ import Card from "@/components/Card";
 import CTABtn from "@/components/CTABtn";
 import ImgEl from "@/components/ImgEl";
 import { getAllContentData, Book } from "@/lib/remark/getContent";
+import Link from "next/link";
 
 const BookList = async () => {
   const books = await getAllContentData<Book>("books");
@@ -13,10 +14,17 @@ const BookList = async () => {
         return (
           <Card key={book.id}>
             <div className="flex">
-              <ImgEl src={book.cover_image} alt={book.title} book_cover />
+              <ImgEl
+                src={book.cover_image}
+                alt={book.title}
+                book_cover
+                href={`?highlight=${book.path}`}
+              />
               <div className="p-5 flex flex-col justify-between flex-1">
                 <div>
-                  <h3>{book.title}</h3>
+                  <Link href={`?highlight=${book.path}`}>
+                    <h3>{book.title}</h3>
+                  </Link>
                   <p className="opacity-75">
                     Published at {new Date(book.published_date).getFullYear()}
                   </p>

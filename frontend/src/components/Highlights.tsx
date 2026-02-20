@@ -1,7 +1,12 @@
 import { headingFont } from "@/utils/fonts";
 import ImgEl from "@/components/ImgEl";
+import Card from "@/components/Card";
 import CTABtn from "@/components/CTABtn";
 import { Book, Painting, Song } from "@/lib/remark/getContent";
+import dynamic from "next/dynamic";
+const AudioPlayer = dynamic(() => import("@/components/AudioPlayer"), {
+  ssr: false,
+});
 
 interface Props {
   content: Book | Painting | Song;
@@ -22,9 +27,13 @@ const Highlights = ({ content }: Props) => {
             alt="Bla"
             actual
           />
-        ) : null}
+        ) : (
+          <Card>
+            <AudioPlayer song={content} />
+          </Card>
+        )}
 
-        <div className="py-5 px-7">
+        <div className="py-5 px-7 flex-1">
           <h2 className="text-4xl font-semibold mb-2">{content.title}</h2>
           <p className="opacity-75 mb-8">
             Published in{" "}

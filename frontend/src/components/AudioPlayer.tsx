@@ -4,6 +4,7 @@ import CTABtn from "@/components/CTABtn";
 import { Song } from "@/lib/remark/getContent";
 import React, { useCallback, useRef, useState, useMemo } from "react";
 import { icons } from "@/utils/icons/";
+import Link from "next/link";
 
 interface Props {
   song: Song;
@@ -117,7 +118,13 @@ const AudioPlayer = ({ song }: Props) => {
             <icons.PlayIcon />
           )}
         </CTABtn>
-        <h3 className="pl-5">{song.title}</h3>
+        {song.path ? (
+          <Link href={`?highlight=${song.path}`}>
+            <h3 className="pl-5">{song.title}</h3>
+          </Link>
+        ) : (
+          <h3 className="pl-5">{song.title}</h3>
+        )}
       </div>
       <div>
         <audio
