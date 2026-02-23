@@ -2,7 +2,13 @@
 
 import CTABtn from "@/components/CTABtn";
 import { Song } from "@/lib/remark/getContent";
-import React, { useCallback, useRef, useState, useMemo } from "react";
+import React, {
+  useCallback,
+  useRef,
+  useState,
+  useMemo,
+  useEffect,
+} from "react";
 import { icons } from "@/utils/icons/";
 import Link from "next/link";
 
@@ -93,7 +99,7 @@ const AudioPlayer = ({ song }: Props) => {
 
       audioRef.current.volume = volLvl;
 
-      setVolLvl(percent);
+      setVolLvl(Math.round(percent / 10) * 10);
     }
   }, []);
 
@@ -103,8 +109,28 @@ const AudioPlayer = ({ song }: Props) => {
     }
   }, []);
 
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    audio.removeEventListener("loadedmetadata", onLoadedMetadata);
+    audio.addEventListener("loadedmetadata", onLoadedMetadata);
+
+    // Reset playback and force reload of metadata
+    audio.pause();
+    audio.currentTime = 0;
+
+    if (audio.src !== song.song_preview) audio.src = song.song_preview;
+
+    audio.load();
+
+    return () => {
+      audio.removeEventListener("loadedmetadata", onLoadedMetadata);
+    };
+  }, [song]); // re-run when src changes
+
   return (
-    <div className="p-5 border border-gray-500 w-[385px] rounded-[16px] h-[250px] flex flex-col justify-between">
+    <div className="p-5 border border-gray-300 w-[385px] rounded-[16px] h-[250px] flex flex-col justify-between">
       <div className="flex">
         <CTABtn
           onClick={songPlaying ? pauseAudio : playAudio}
@@ -179,9 +205,9 @@ const AudioPlayer = ({ song }: Props) => {
             </span>
 
             {volControl ? (
-              <div className="absolute top-[-70%] left-[50%] translate-x-[-50%] shadow-xl w-[220px] p-2  bg-white rounded-3xl">
+              <div className="absolute top-[-70%] left-[50%] translate-x-[-50%] shadow-xl w-[220px] bg-white rounded-3xl p-2">
                 <div
-                  className="bg-dark-200 h-[5px] overflow-hidden cursor-pointer rounded-3xl"
+                  className="bg-dark-200 h-[8px] overflow-hidden cursor-pointer rounded-3xl"
                   onClick={changeVol}
                 >
                   <div
