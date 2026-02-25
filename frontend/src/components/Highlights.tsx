@@ -10,13 +10,17 @@ const AudioPlayer = dynamic(() => import("@/components/AudioPlayer"), {
 
 interface Props {
   content: Book | Painting | Song;
+  customHeading?: string;
 }
 
-const Highlights = ({ content }: Props) => {
+const Highlights = ({
+  content,
+  customHeading = "Today's Highlight",
+}: Props) => {
   return (
     <section>
       <h1 className={headingFont.className + " big-heading"}>
-        Today's Highlight
+        {customHeading}
       </h1>
       <div className="flex mb-12 pb-12 pt-6 px-12">
         {"cover_image" in content || "thumbnail" in content ? (

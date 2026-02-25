@@ -111,3 +111,27 @@ export async function getContentData<T>(filePath: string): Promise<T | null> {
     }
   }
 }
+
+export function getTheLatestContent() {
+  const dir = contentDirectory("");
+
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  let files: string[] = [];
+
+  for (const entry of entries) {
+    const subdir = contentDirectory(entry.name);
+
+    const subentries = fs.readdirSync(subdir, { withFileTypes: true });
+
+    for (const subentry of subentries) {
+      const filePath = entry.name + "/" + subentry.name;
+      files.push(filePath.split(".md")[0]);
+    }
+  }
+
+  if (files.length > 1) {
+    return files[Math.floor(Math.random() * files.length - 1)];
+  } else {
+    return "books/our-chores";
+  }
+}

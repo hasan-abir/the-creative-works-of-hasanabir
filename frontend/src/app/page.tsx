@@ -2,7 +2,14 @@ import Highlights from "@/components/Highlights";
 import BookList from "@/components/BookList";
 import PaintingList from "@/components/PaintingList";
 import SongList from "@/components/SongList";
-import { getContentData, Book, Painting, Song } from "@/lib/remark/getContent";
+import {
+  getTheLatestContent,
+  getContentData,
+  Book,
+  Painting,
+  Song,
+} from "@/lib/remark/getContent";
+import { notFound } from "next/navigation";
 
 const Home = async ({
   searchParams,
@@ -12,12 +19,19 @@ const Home = async ({
   const contentFolder = searchParams["highlight"];
 
   const content = await getContentData<Book | Painting | Song>(
-    contentFolder || "books/our-chores",
+    contentFolder || getTheLatestContent(),
   );
+
+  if (!content) {
+    notFound();
+  }
 
   return (
     <div className="page-container">
-      {content ? <Highlights content={content} /> : <p>Project not found</p>}
+      <Highlights
+        content={content}
+        customHeading={contentFolder ? "Project Detail" : undefined}
+      />
       <BookList />
       <PaintingList />
       <SongList />
