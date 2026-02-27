@@ -63,6 +63,14 @@ body {
   @apply font-black;
 }
 
+.bg-to-nothing-left {
+  background: linear-gradient(to left, transparent, #fff3ee);
+}
+
+.bg-to-nothing-right {
+  background: linear-gradient(to right, transparent, #fff3ee);
+}
+
 /* @media (prefers-color-scheme: dark) {
   body {
     @apply text-light-50 bg-dark-100;
