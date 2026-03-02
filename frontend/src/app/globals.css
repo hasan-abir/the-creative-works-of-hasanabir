@@ -71,6 +71,25 @@ body {
   background: linear-gradient(to right, transparent, #fff3ee);
 }
 
+.carousel-track::-webkit-scrollbar {
+  @apply hidden;
+}
+
+.carousel-track {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.carousel-track > * {
+  user-select: none;
+  -webkit-user-drag: none;
+  @apply pointer-events-auto;
+}
+
+.carousel-track.cursor-grabbing > * {
+  @apply pointer-events-none;
+}
+
 /* @media (prefers-color-scheme: dark) {
   body {
     @apply text-light-50 bg-dark-100;
