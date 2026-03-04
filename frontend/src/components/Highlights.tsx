@@ -48,7 +48,7 @@ const Highlights = ({
           <p className="mb-16">
             {"content" in content ? content.content : null}
           </p>
-          <CTABtn primary={false}>
+          <CTABtn primary={false} extraClasses="min-w-[200px]">
             <span className="flex items-center justify-center">
               <span>Discover</span>
               <svg

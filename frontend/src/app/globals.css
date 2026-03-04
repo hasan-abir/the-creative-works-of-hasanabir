@@ -49,7 +49,7 @@ body {
   box-shadow:
     inset 0 8px 16px 0 rgba(255, 255, 255, 0.8),
     0 8px 32px 0 rgba(0, 0, 0, 0.1);
-  @apply min-w-[200px] px-3 py-4 font-semibold transition-shadow ease-in-out border border-white;
+  @apply px-3 py-4 font-semibold transition-shadow ease-in-out border border-white;
 }
 
 .secondary-btn:hover {
@@ -64,11 +64,11 @@ body {
 }
 
 .bg-to-nothing-left {
-  background: linear-gradient(to left, transparent, #fff3ee);
+  background: linear-gradient(to left, transparent, #fff3ee 100%);
 }
 
 .bg-to-nothing-right {
-  background: linear-gradient(to right, transparent, #fff3ee);
+  background: linear-gradient(to right, transparent, #fff3ee 100%);
 }
 
 .carousel-track::-webkit-scrollbar {
