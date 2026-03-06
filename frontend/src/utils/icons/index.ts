@@ -5,13 +5,17 @@ import RewindIcon from "./RewindIcon";
 import ForwardIcon from "./ForwardIcon";
 import VolIcon from "./VolIcon";
 import VolMuteIcon from "./VolMuteIcon";
+import NextIcon from "./NextIcon";
+import PreviousIcon from "./PreviousIcon";
 
 export const icons = {
-  ResetIcon: ResetIcon,
-  PauseIcon: PauseIcon,
-  PlayIcon: PlayIcon,
-  RewindIcon: RewindIcon,
-  ForwardIcon: ForwardIcon,
-  VolIcon: VolIcon,
-  VolMuteIcon: VolMuteIcon,
+  ResetIcon,
+  PauseIcon,
+  PlayIcon,
+  RewindIcon,
+  ForwardIcon,
+  VolIcon,
+  VolMuteIcon,
+  NextIcon,
+  PreviousIcon,
 };

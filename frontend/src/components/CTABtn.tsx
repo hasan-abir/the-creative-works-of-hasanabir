@@ -3,7 +3,7 @@ interface Props {
   children: React.ReactNode | string;
   block?: boolean;
   extraClasses?: string;
-  onClick?: () => void;
+  onClick?: (arg?: any) => void;
 }
 
 const CTABtn = ({
