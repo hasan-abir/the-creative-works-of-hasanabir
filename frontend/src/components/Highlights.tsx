@@ -2,11 +2,8 @@ import { headingFont } from "@/utils/fonts";
 import ImgEl from "@/components/ImgEl";
 import Card from "@/components/Card";
 import CTABtn from "@/components/CTABtn";
+import AudioPlayer from "@/components/AudioPlayer";
 import { Book, Painting, Song } from "@/lib/remark/getContent";
-import dynamic from "next/dynamic";
-const AudioPlayer = dynamic(() => import("@/components/AudioPlayer"), {
-  ssr: false,
-});
 
 interface Props {
   content: Book | Painting | Song;
