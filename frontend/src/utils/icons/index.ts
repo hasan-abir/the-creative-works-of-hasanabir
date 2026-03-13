@@ -7,6 +7,7 @@ import VolIcon from "./VolIcon";
 import VolMuteIcon from "./VolMuteIcon";
 import NextIcon from "./NextIcon";
 import PreviousIcon from "./PreviousIcon";
+import SendIcon from "./SendIcon";
 
 export const icons = {
   ResetIcon,
@@ -18,4 +19,5 @@ export const icons = {
   VolMuteIcon,
   NextIcon,
   PreviousIcon,
+  SendIcon,
 };
