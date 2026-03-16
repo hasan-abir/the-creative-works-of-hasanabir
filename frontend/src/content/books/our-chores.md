@@ -1,8 +1,8 @@
 ---
 title: "Our Chores"
-published_date: 2025-12-20
+published_date: 2026-01-01
 cover_image: "/covers/our-chores-cover.jpg"
-amazon_link: "https://www.amazon.com/dp/B0G9BGZ54Z"
+amazon_link: "https://mybook.to/OurChores/"
 category: "Literary Fiction"
 format: "Novelette / Story Collection"
 genre: ["Contemporary Fiction", "Novelette", "Long-form Prose"]

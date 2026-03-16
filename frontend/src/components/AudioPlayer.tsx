@@ -145,7 +145,7 @@ const AudioPlayer = ({ song }: Props) => {
           )}
         </CTABtn>
         {song.path ? (
-          <Link href={`?highlight=${song.path}`}>
+          <Link href={`?highlight=${song.path}#highlights`}>
             <h3 className="pl-5">{song.title}</h3>
           </Link>
         ) : (

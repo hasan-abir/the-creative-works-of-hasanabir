@@ -1,9 +1,13 @@
+import Link from "next/link";
+
 interface Props {
   primary?: boolean;
   children: React.ReactNode | string;
   block?: boolean;
   extraClasses?: string;
   onClick?: (arg?: any) => void;
+  href?: string;
+  newTab?: boolean;
 }
 
 const CTABtn = ({
@@ -12,6 +16,8 @@ const CTABtn = ({
   block = false,
   extraClasses,
   onClick,
+  href,
+  newTab = true,
 }: Props) => {
   let classList = primary ? "primary-btn" : "secondary-btn";
 
@@ -21,6 +27,18 @@ const CTABtn = ({
 
   if (extraClasses) {
     classList += " " + extraClasses;
+  }
+
+  if (href) {
+    return (
+      <Link
+        href={href}
+        className={classList}
+        target={newTab ? "_blank" : undefined}
+      >
+        {children}
+      </Link>
+    );
   }
 
   return (

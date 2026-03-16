@@ -1,8 +1,8 @@
 ---
 title: "Our Digs"
-published_date: 2025-12-20
+published_date: 2026-01-01
 cover_image: "/covers/our-digs-cover.jpg"
-amazon_link: "https://www.amazon.com/dp/B0GBY2D8HY"
+amazon_link: "https://mybook.to/OurDigs/"
 category: "Poetry"
 format: "Poetry Collection / Hardcover"
 genre: ["Contemporary Poetry", "Verse", "Modern Classics"]

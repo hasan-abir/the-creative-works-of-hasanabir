@@ -34,14 +34,28 @@ const Home = async ({
           <span className="text-base">Art & Literature of</span>
           <span className="uppercase block font-black">hasan abir</span>
         </h1>
-        <p className="mb-2">Home for all my work as an Artist</p>
-        <CTABtn primary={false} extraClasses="min-w-[200px]">
-          <span className="flex items-center justify-between px-6">
-            <span>Contact</span>
-            <span className="h-px flex-1 bg-gray-300 ml-4 mr-2"></span>
-            <icons.SendIcon />
-          </span>
-        </CTABtn>
+        <p className="mb-8">Home for all my work as an Artist</p>
+        <div className="flex">
+          <CTABtn
+            primary={false}
+            extraClasses="min-w-[200px] mr-4"
+            href="mailto:contact.hasanabir@gmail.com"
+          >
+            <span className="flex items-center justify-between px-6">
+              <span>Contact</span>
+              <icons.SendIcon />
+            </span>
+          </CTABtn>
+          <CTABtn
+            extraClasses="min-w-[200px]"
+            href="/#highlights"
+            newTab={false}
+          >
+            <span className="flex items-center justify-between px-6">
+              <span>Today's Highlights</span>
+            </span>
+          </CTABtn>
+        </div>
       </section>
 
       <Highlights

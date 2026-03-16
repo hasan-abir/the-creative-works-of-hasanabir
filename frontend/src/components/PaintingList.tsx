@@ -20,7 +20,7 @@ const PaintingList = async () => {
             <ImgEl
               src={painting.thumbnail}
               alt={painting.title}
-              href={`?highlight=${painting.path}`}
+              href={`?highlight=${painting.path}#highlights`}
             />
           </Card>
         );
