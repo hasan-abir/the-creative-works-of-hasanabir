@@ -134,7 +134,8 @@ const AudioPlayer = ({ song }: Props) => {
       <div className="flex">
         <CTABtn
           onClick={songPlaying ? pauseAudio : playAudio}
-          extraClasses="flex-shrink-0 w-[100px] h-[100px] flex justify-center items-center rounded-[20px]"
+          extraClasses="flex-shrink-0 w-[100px] h-[100px] flex justify-center items-center"
+          rounded="xl"
         >
           {calculateProgress >= 100 ? (
             <icons.ResetIcon />

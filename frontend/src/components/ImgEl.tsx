@@ -37,7 +37,7 @@ const ImgEl = ({
     : {};
 
   return (
-    <Link href={href}>
+    <Link href={href} className="block">
       <figure className={classList}>
         <Image
           className={`absolute w-auto h-auto${actual ? " object-contain bg-white" : " object-cover"}`}
