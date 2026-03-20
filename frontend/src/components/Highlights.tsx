@@ -16,7 +16,7 @@ const Highlights = ({
   customHeading = "Today's Highlight",
 }: Props) => {
   return (
-    <section id="highlights">
+    <section id="highlights" className="mt-48">
       <h1 className={headingFont.className + " big-heading"}>
         {customHeading}
       </h1>

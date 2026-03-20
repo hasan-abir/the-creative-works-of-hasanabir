@@ -62,6 +62,15 @@ body {
     0 8px 32px 0 rgba(0, 0, 0, 0.15);
 }
 
+.hero-heading {
+  background-image: url("/profilepicture.jpg");
+  -webkit-background-clip: text;
+  color: transparent;
+  background-size: cover;
+  background-position: 50% 45%;
+  @apply text-7xl uppercase block font-black;
+}
+
 .big-heading {
   text-shadow: 0px 12px 0 #fde6d2;
   @apply font-black;
@@ -129,7 +138,7 @@ body {
 }
 
 .page-container {
-  @apply min-h-screen max-w-7xl mx-auto py-12 sm:py-24 px-6 flex flex-col sm:px-8 overflow-x-hidden;
+  @apply min-h-screen max-w-7xl mx-auto py-12 sm:py-24 px-6  sm:px-8 overflow-x-hidden;
 }
 
 .rich-text-container > div > p:last-child {
