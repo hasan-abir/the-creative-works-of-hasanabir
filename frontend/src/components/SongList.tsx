@@ -13,7 +13,7 @@ const SongList = async () => {
   });
 
   return (
-    <CardList heading="Music">
+    <CardList heading="Song Previews">
       {songs.map((song) => {
         return (
           <Card key={song.id}>

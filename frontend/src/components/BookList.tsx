@@ -10,7 +10,7 @@ const BookList = async () => {
   const books = await getAllContentData<Book>("books");
 
   return (
-    <CardList heading="Books">
+    <CardList heading="Published Books">
       {books.map((book) => {
         return (
           <Card key={book.id}>

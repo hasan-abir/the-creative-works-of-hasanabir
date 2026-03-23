@@ -115,17 +115,21 @@ export async function getContentData<T>(filePath: string): Promise<T | null> {
 export function getTheLatestContent() {
   const dir = contentDirectory("");
 
+  if (!fs.existsSync(dir)) return "books/our-chores";
+
   const entries = fs.readdirSync(dir, { withFileTypes: true });
   let files: string[] = [];
 
   for (const entry of entries) {
-    const subdir = contentDirectory(entry.name);
+    if (entry.isDirectory()) {
+      const subdir = contentDirectory(entry.name);
 
-    const subentries = fs.readdirSync(subdir, { withFileTypes: true });
+      const subentries = fs.readdirSync(subdir, { withFileTypes: true });
 
-    for (const subentry of subentries) {
-      const filePath = entry.name + "/" + subentry.name;
-      files.push(filePath.split(".md")[0]);
+      for (const subentry of subentries) {
+        const filePath = entry.name + "/" + subentry.name;
+        files.push(filePath.split(".md")[0]);
+      }
     }
   }
 

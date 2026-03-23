@@ -50,7 +50,7 @@ const CardList = ({ children, heading }: Props) => {
 
   useEffect(() => {
     scrollRef.current && onScroll(scrollRef.current);
-  }, []);
+  }, [onScroll]);
 
   return (
     <section>

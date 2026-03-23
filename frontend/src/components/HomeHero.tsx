@@ -24,7 +24,7 @@ const HomeHero = ({ highlights = false }: Props) => {
     setTimeout(() => {
       setIsMailCopied(false);
     }, 1000);
-  }, [isMailCopied]);
+  }, []);
 
   const onImageLoad = contextSafe(
     useCallback(() => {
@@ -77,7 +77,7 @@ const HomeHero = ({ highlights = false }: Props) => {
               newTab={false}
             >
               <span className="flex items-center justify-between px-6">
-                <span>Today's Highlights</span>
+                <span>Today&apos;s Highlights</span>
               </span>
             </CTABtn>
           ) : null}

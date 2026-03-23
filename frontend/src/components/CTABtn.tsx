@@ -8,7 +8,7 @@ interface Props {
   onClick?: (arg?: any) => void;
   href?: string;
   newTab?: boolean;
-  rounded?: "lg" | "xl";
+  rounded?: "xl" | "3xl";
 }
 
 const CTABtn = ({
@@ -19,9 +19,16 @@ const CTABtn = ({
   onClick,
   href,
   newTab = true,
-  rounded = "lg",
+  rounded = "xl",
 }: Props) => {
   let classList = primary ? "primary-btn" : "secondary-btn";
+
+  const roundedClasses = {
+    xl: "rounded-xl",
+    "3xl": "rounded-3xl",
+  };
+
+  classList += ` ${roundedClasses[rounded]}`;
 
   classList += ` rounded-${rounded}`;
 

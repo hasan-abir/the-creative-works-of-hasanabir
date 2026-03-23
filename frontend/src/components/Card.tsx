@@ -1,7 +1,6 @@
 "use client";
 
 import React, { ReactNode } from "react";
-import Thumbnail from "@/components/Thumbnail";
 
 interface Props {
   children: React.ReactNode;

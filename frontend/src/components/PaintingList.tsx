@@ -13,7 +13,7 @@ const PaintingList = async () => {
   });
 
   return (
-    <CardList heading="Paintings">
+    <CardList heading="Paintings & Sketches">
       {paintings.map((painting) => {
         return (
           <Card key={painting.id}>

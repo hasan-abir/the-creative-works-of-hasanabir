@@ -22,22 +22,25 @@ const AudioPlayer = ({ song }: Props) => {
   const [duration, setDuration] = useState<string>("00:00");
   const [volControl, setVolControl] = useState<boolean>(false);
   const [volLvl, setVolLvl] = useState<number>(100);
+  const [currentTime, setCurrentTime] = useState<number>(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const onLoadedMetadata = useCallback(() => {
     if (audioRef.current) {
       const audio: HTMLAudioElement = getAudioWithRoundedTime(audioRef.current);
 
+      setCurrentTime(audio.currentTime);
+
       setDuration(convertSecondsIntoTime(audio.currentTime));
       setTotalDuration(convertSecondsIntoTime(audio.duration));
     }
-  }, [audioRef.current]);
+  }, []);
 
   const calculateProgress = useMemo(() => {
     if (audioRef.current) {
       const audio: HTMLAudioElement = getAudioWithRoundedTime(audioRef.current);
 
-      const progress = (audio.currentTime / audio.duration) * 100;
+      const progress = (currentTime / audio.duration) * 100;
       if (progress >= 100) {
         setSongPlaying(false);
         audioRef.current.pause();
@@ -47,7 +50,7 @@ const AudioPlayer = ({ song }: Props) => {
     } else {
       return 0;
     }
-  }, [audioRef.current?.currentTime]);
+  }, [currentTime]);
 
   const playAudio = useCallback((customTime?: number) => {
     if (audioRef.current) {
@@ -73,20 +76,23 @@ const AudioPlayer = ({ song }: Props) => {
     }
   }, []);
 
-  const playAudioFromPosition = useCallback((e: React.MouseEvent) => {
-    if (audioRef.current) {
-      const audio = getAudioWithRoundedTime(audioRef.current);
+  const playAudioFromPosition = useCallback(
+    (e: React.MouseEvent) => {
+      if (audioRef.current) {
+        const audio = getAudioWithRoundedTime(audioRef.current);
 
-      const clientX = e.clientX ?? (e.nativeEvent && e.nativeEvent.clientX);
-      const rect = e.currentTarget.getBoundingClientRect();
-      const x = clientX - rect.left;
-      const percent = (x / rect.width) * 100;
+        const clientX = e.clientX ?? (e.nativeEvent && e.nativeEvent.clientX);
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = clientX - rect.left;
+        const percent = (x / rect.width) * 100;
 
-      const audioPosition = (audio.duration * percent) / 100;
+        const audioPosition = (audio.duration * percent) / 100;
 
-      playAudio(audioPosition);
-    }
-  }, []);
+        playAudio(audioPosition);
+      }
+    },
+    [playAudio],
+  );
 
   const changeVol = useCallback((e: React.MouseEvent) => {
     if (audioRef.current) {
@@ -127,7 +133,7 @@ const AudioPlayer = ({ song }: Props) => {
     return () => {
       audio.removeEventListener("loadedmetadata", onLoadedMetadata);
     };
-  }, [song]); // re-run when src changes
+  }, [song, onLoadedMetadata]); // re-run when src changes
 
   return (
     <div className="p-5 border border-gray-300 w-[385px] rounded-[16px] h-[250px] flex flex-col justify-between">
@@ -135,7 +141,7 @@ const AudioPlayer = ({ song }: Props) => {
         <CTABtn
           onClick={songPlaying ? pauseAudio : playAudio}
           extraClasses="flex-shrink-0 w-[100px] h-[100px] flex justify-center items-center"
-          rounded="xl"
+          rounded="3xl"
         >
           {calculateProgress >= 100 ? (
             <icons.ResetIcon />
