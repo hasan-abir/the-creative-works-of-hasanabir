@@ -21,12 +21,14 @@ const ImgEl = ({
   let classList = "relative overflow-hidden";
 
   if (book_cover) {
-    classList += " w-[156px] rounded-l-[16px] h-[250px] border border-gray-300";
+    classList +=
+      " w-[156px] aspect-[10/16] rounded-l-[16px] border border-gray-300";
   } else if (actual) {
     classList +=
-      " w-[400px] h-[400px] shadow-[0_16px_32px_rgba(0,0,0,0.10)] rounded-[12px]";
+      " w-full aspect-square sm:w-[400px] shadow-[0_16px_32px_rgba(0,0,0,0.10)] rounded-[12px]";
   } else {
-    classList += " w-[385px] rounded-[16px] h-[250px] border border-gray-300";
+    classList +=
+      " w-[385px] rounded-[16px] aspect-video border border-gray-300";
   }
 
   const optimizedAttributes = optimized

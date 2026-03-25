@@ -136,7 +136,7 @@ const AudioPlayer = ({ song }: Props) => {
   }, [song, onLoadedMetadata]); // re-run when src changes
 
   return (
-    <div className="p-5 border border-gray-300 w-[385px] rounded-[16px] h-[250px] flex flex-col justify-between">
+    <div className="p-5 border border-gray-300 min-w-[385px] rounded-[16px] h-[250px] flex flex-col justify-between">
       <div className="flex">
         <CTABtn
           onClick={songPlaying ? pauseAudio : playAudio}

@@ -9,7 +9,7 @@ interface Props {
 
 const Card = ({ children, extraClasses }: Props) => {
   let classList =
-    "mr-4 size-fit bg-white rounded-3xl p-2 min-h-[250px] shadow-[0_16px_32px_rgba(0,0,0,0.10)]";
+    "mr-4 size-fit bg-white rounded-3xl p-2 aspect-video shadow-[0_16px_32px_rgba(0,0,0,0.10)]";
 
   if (extraClasses) {
     classList += " " + extraClasses;

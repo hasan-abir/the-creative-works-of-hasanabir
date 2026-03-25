@@ -28,7 +28,7 @@ const Home = async ({
   }
 
   return (
-    <div className="page-container">
+    <div className="page-container min-h-screen px-6">
       <HomeHero highlights={contentFolder ? true : false} />
 
       <Highlights

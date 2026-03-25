@@ -8,7 +8,7 @@ body {
 
 @layer components {
   h1 {
-    @apply text-5xl mb-8;
+    @apply text-3xl sm:text-5xl mb-8;
   }
 
   h2 {
@@ -64,7 +64,7 @@ body {
   color: transparent;
   background-size: cover;
   background-position: 50% 45%;
-  @apply text-7xl uppercase block font-black;
+  @apply text-7xl uppercase block font-black leading-[80%];
 }
 
 .big-heading {
@@ -134,7 +134,7 @@ body {
 }
 
 .page-container {
-  @apply min-h-screen max-w-7xl mx-auto py-12 sm:py-24 px-6  sm:px-8 overflow-x-hidden;
+  @apply max-w-7xl mx-auto py-12 sm:py-24  sm:px-8 overflow-x-hidden;
 }
 
 .rich-text-container > div > p:last-child {
