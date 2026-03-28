@@ -136,11 +136,11 @@ const AudioPlayer = ({ song }: Props) => {
   }, [song, onLoadedMetadata]); // re-run when src changes
 
   return (
-    <div className="p-5 border border-gray-300 min-w-[385px] rounded-[16px] h-[250px] flex flex-col justify-between">
-      <div className="flex">
+    <div className="p-5 border border-gray-300 sm:min-w-[385px] rounded-[16px] h-[250px] flex flex-col justify-between">
+      <div className="flex items-center sm:items-start flex-col sm:flex-row">
         <CTABtn
           onClick={songPlaying ? pauseAudio : playAudio}
-          extraClasses="flex-shrink-0 w-[100px] h-[100px] flex justify-center items-center"
+          extraClasses="flex-shrink-0 w-[50px] h-[50px] sm:w-[100px] sm:h-[100px] flex justify-center items-center"
           rounded="3xl"
         >
           {calculateProgress >= 100 ? (
@@ -153,10 +153,14 @@ const AudioPlayer = ({ song }: Props) => {
         </CTABtn>
         {song.path ? (
           <Link href={`?highlight=${song.path}#highlights`}>
-            <h3 className="pl-5">{song.title}</h3>
+            <h3 className="pt-5 sm:pt-0 sm:pl-5 text-base leading-tight sm:text-2xl text-center sm:text-right">
+              {song.title}
+            </h3>
           </Link>
         ) : (
-          <h3 className="pl-5">{song.title}</h3>
+          <h3 className="pt-5 sm:pt-0 sm:pl-5 text-center sm:text-right">
+            {song.title}
+          </h3>
         )}
       </div>
       <div>
@@ -169,9 +173,12 @@ const AudioPlayer = ({ song }: Props) => {
           <source src={song.song_preview} type="audio/mpeg" />
         </audio>
         <p className="text-center">
-          <span className="text-left inline-block w-[50px]">{duration}</span>/
+          <span className="text-xs sm:text-base text-left inline-block w-[40px]">
+            {duration}
+          </span>
+          /
           <span
-            className="text-right inline-block w-[50px]"
+            className="text-xs sm:text-base text-right inline-block w-[40px]"
             onClick={pauseAudio}
           >
             {totalDuration}
@@ -190,6 +197,7 @@ const AudioPlayer = ({ song }: Props) => {
         </div>
         <div className="flex justify-center items-center relative">
           <button
+            className="h-3"
             onClick={() =>
               audioRef &&
               audioRef.current &&
@@ -199,11 +207,11 @@ const AudioPlayer = ({ song }: Props) => {
             <icons.RewindIcon />
           </button>
           <button
-            className="mx-5"
+            className="mx-3 sm:mx-5"
             onMouseEnter={() => setVolControl(true)}
             onMouseLeave={() => setVolControl(false)}
           >
-            <span onClick={muteUnmuteVol}>
+            <span onClick={muteUnmuteVol} className="w-5 sm:w-6 inline-block">
               {audioRef.current?.muted ? (
                 <icons.VolMuteIcon />
               ) : (
@@ -228,6 +236,7 @@ const AudioPlayer = ({ song }: Props) => {
             ) : null}
           </button>
           <button
+            className="h-3"
             onClick={() =>
               audioRef &&
               audioRef.current &&
