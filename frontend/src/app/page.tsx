@@ -17,11 +17,13 @@ const Home = async ({
 }: {
   searchParams: { [key: string]: string | undefined };
 }) => {
-  const contentFolder = searchParams["highlight"];
+  let contentFolder = searchParams["highlight"];
 
-  const content = await getContentData<Book | Painting | Song>(
-    contentFolder || getTheLatestContent(),
-  );
+  if (!contentFolder) {
+    contentFolder = getTheLatestContent();
+  }
+
+  const content = await getContentData<Book | Painting | Song>(contentFolder);
 
   if (!content) {
     notFound();

@@ -134,7 +134,7 @@ export function getTheLatestContent() {
   }
 
   if (files.length > 1) {
-    return files[Math.floor(Math.random() * files.length - 1)];
+    return files[Math.floor(Math.random() * files.length)];
   } else {
     return "books/our-chores";
   }

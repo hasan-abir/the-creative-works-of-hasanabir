@@ -1,10 +1,9 @@
 const ForwardIcon = () => {
   return (
     <svg
-      className="h-full"
-      width="22"
-      height="16"
-      viewBox="0 0 22 16"
+      className="w-full h-auto"
+      preserveAspectRatio="xMidYMid meet"
+      viewBox="0 0 21.59864616394043 15.131545066833496"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >

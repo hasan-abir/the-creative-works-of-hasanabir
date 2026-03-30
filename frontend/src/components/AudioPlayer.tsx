@@ -197,7 +197,7 @@ const AudioPlayer = ({ song }: Props) => {
         </div>
         <div className="flex justify-center items-center relative">
           <button
-            className="h-3"
+            className="w-3 sm:w-4"
             onClick={() =>
               audioRef &&
               audioRef.current &&
@@ -211,7 +211,7 @@ const AudioPlayer = ({ song }: Props) => {
             onMouseEnter={() => setVolControl(true)}
             onMouseLeave={() => setVolControl(false)}
           >
-            <span onClick={muteUnmuteVol} className="w-5 sm:w-6 inline-block">
+            <span onClick={muteUnmuteVol} className="w-3 sm:w-4 block">
               {audioRef.current?.muted ? (
                 <icons.VolMuteIcon />
               ) : (
@@ -236,7 +236,7 @@ const AudioPlayer = ({ song }: Props) => {
             ) : null}
           </button>
           <button
-            className="h-3"
+            className="w-3 sm:w-4"
             onClick={() =>
               audioRef &&
               audioRef.current &&
