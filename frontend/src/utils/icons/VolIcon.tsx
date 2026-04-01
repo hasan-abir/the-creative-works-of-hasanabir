@@ -1,7 +1,7 @@
 const VolIcon = () => {
   return (
     <svg
-      className="w-full h-auto block"
+      className="h-full w-auto block"
       preserveAspectRatio="xMidYMid meet"
       viewBox="4 3.555176019668579 17 16.889724731445312"
       fill="none"

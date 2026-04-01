@@ -1,10 +1,9 @@
 const VolMuteIcon = () => {
   return (
     <svg
-      className="w-full"
-      width="24"
-      height="24"
-      viewBox="0 0 26 24"
+      className="h-full w-auto block"
+      preserveAspectRatio="xMidYMid meet"
+      viewBox="1 3.555176019668579 22.94969940185547 16.889724731445312"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >

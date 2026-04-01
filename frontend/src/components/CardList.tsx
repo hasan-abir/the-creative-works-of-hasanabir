@@ -57,7 +57,7 @@ const CardList = ({ children, heading }: Props) => {
       <h1 className={headingFont.className + " big-heading"}>{heading}</h1>
       <div className="relative carousel-container">
         <div
-          className="carousel-track flex overflow-x-auto mb-12 pb-12 pt-6 px-12"
+          className="carousel-track flex overflow-x-auto mb-12 pb-12 pt-6 px-8 sm:px-12"
           ref={scrollRef}
           onScroll={(e) => onScroll(e.target as HTMLDivElement)}
         >

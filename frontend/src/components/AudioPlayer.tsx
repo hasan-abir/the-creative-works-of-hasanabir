@@ -115,6 +115,15 @@ const AudioPlayer = ({ song }: Props) => {
     }
   }, []);
 
+  const openVolControl = useCallback(() => {
+    console.log(volControl);
+    if (volControl) {
+      muteUnmuteVol();
+    } else {
+      setVolControl(true);
+    }
+  }, [volControl]);
+
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -136,118 +145,125 @@ const AudioPlayer = ({ song }: Props) => {
   }, [song, onLoadedMetadata]); // re-run when src changes
 
   return (
-    <div className="p-5 border border-gray-300 sm:min-w-[385px] rounded-[16px] h-[250px] flex flex-col justify-between">
-      <div className="flex items-center sm:items-start flex-col sm:flex-row">
-        <CTABtn
-          onClick={songPlaying ? pauseAudio : playAudio}
-          extraClasses="flex-shrink-0 w-[50px] h-[50px] sm:w-[100px] sm:h-[100px] flex justify-center items-center"
-          rounded="3xl"
-        >
-          {calculateProgress >= 100 ? (
-            <icons.ResetIcon />
-          ) : songPlaying ? (
-            <icons.PauseIcon />
+    <>
+      <div className="p-3 sm:p-5 border border-gray-300 w-[150px] sm:w-[385px] rounded-[16px] h-[250px] flex flex-col justify-between">
+        <div className="flex items-center sm:items-start flex-col sm:flex-row">
+          <CTABtn
+            onClick={songPlaying ? pauseAudio : playAudio}
+            extraClasses="flex-shrink-0 w-[50px] h-[50px] sm:w-[100px] sm:h-[100px] flex justify-center items-center"
+            rounded="3xl"
+          >
+            {calculateProgress >= 100 ? (
+              <icons.ResetIcon />
+            ) : songPlaying ? (
+              <icons.PauseIcon />
+            ) : (
+              <icons.PlayIcon />
+            )}
+          </CTABtn>
+          {song.path ? (
+            <Link href={`?highlight=${song.path}#highlights`}>
+              <h3 className="pt-5 sm:pt-0 sm:pl-5 text-base leading-tight sm:text-2xl text-center sm:text-left">
+                {song.title}
+              </h3>
+            </Link>
           ) : (
-            <icons.PlayIcon />
-          )}
-        </CTABtn>
-        {song.path ? (
-          <Link href={`?highlight=${song.path}#highlights`}>
-            <h3 className="pt-5 sm:pt-0 sm:pl-5 text-base leading-tight sm:text-2xl text-center sm:text-right">
+            <h3 className="pt-5 sm:pt-0 sm:pl-5 text-center sm:text-right">
               {song.title}
             </h3>
-          </Link>
-        ) : (
-          <h3 className="pt-5 sm:pt-0 sm:pl-5 text-center sm:text-right">
-            {song.title}
-          </h3>
-        )}
-      </div>
-      <div>
-        <audio
-          preload="metadata"
-          onLoadedMetadata={onLoadedMetadata}
-          onTimeUpdate={() => onLoadedMetadata()}
-          ref={audioRef}
-        >
-          <source src={song.song_preview} type="audio/mpeg" />
-        </audio>
-        <p className="text-center">
-          <span className="text-xs sm:text-base text-left inline-block w-[40px]">
-            {duration}
-          </span>
-          /
-          <span
-            className="text-xs sm:text-base text-right inline-block w-[40px]"
-            onClick={pauseAudio}
-          >
-            {totalDuration}
-          </span>
-        </p>
-        <div
-          className="bg-dark-200 h-[5px] overflow-hidden my-6 cursor-pointer rounded-3xl"
-          onClick={playAudioFromPosition}
-        >
-          <div
-            className="bg-primary-100 h-24 transition-transform origin-left"
-            style={{
-              transform: `translateX(calc(-100% + ${calculateProgress}%))`,
-            }}
-          ></div>
+          )}
         </div>
-        <div className="flex justify-center items-center relative">
-          <button
-            className="w-3 sm:w-4"
-            onClick={() =>
-              audioRef &&
-              audioRef.current &&
-              playAudio(audioRef.current.currentTime - 5)
-            }
+        <div>
+          <audio
+            preload="metadata"
+            onLoadedMetadata={onLoadedMetadata}
+            onTimeUpdate={() => onLoadedMetadata()}
+            ref={audioRef}
           >
-            <icons.RewindIcon />
-          </button>
-          <button
-            className="mx-3 sm:mx-5"
-            onMouseEnter={() => setVolControl(true)}
-            onMouseLeave={() => setVolControl(false)}
-          >
-            <span onClick={muteUnmuteVol} className="w-3 sm:w-4 block">
-              {audioRef.current?.muted ? (
-                <icons.VolMuteIcon />
-              ) : (
-                <icons.VolIcon />
-              )}
+            <source src={song.song_preview} type="audio/mpeg" />
+          </audio>
+          <p className="text-center flex flex-col justify-center items-center sm:flex-row">
+            <span className="text-xs sm:text-base sm:text-left inline-block w-[50px] sm:w-[60px]">
+              {duration}
             </span>
-
-            {volControl ? (
-              <div className="absolute top-[-70%] left-[50%] translate-x-[-50%] shadow-xl w-[220px] bg-white rounded-3xl p-2">
-                <div
-                  className="bg-dark-200 h-[8px] overflow-hidden cursor-pointer rounded-3xl"
-                  onClick={changeVol}
-                >
-                  <div
-                    className="bg-primary-100 h-24 transition-transform origin-left"
-                    style={{
-                      transform: `translateX(calc(-100% + ${volLvl}%))`,
-                    }}
-                  ></div>
-                </div>
-              </div>
-            ) : null}
-          </button>
-          <button
-            className="w-3 sm:w-4"
-            onClick={() =>
-              audioRef &&
-              audioRef.current &&
-              playAudio(audioRef.current.currentTime + 5)
-            }
+            <span className="sm:inline-block hidden">/</span>
+            <span
+              className="text-xs sm:text-base sm:text-right inline-block w-[50px] sm:w-[60px]"
+              onClick={pauseAudio}
+            >
+              {totalDuration}
+            </span>
+          </p>
+          <div
+            className="bg-dark-200 h-[5px] overflow-hidden my-6 cursor-pointer rounded-3xl"
+            onClick={playAudioFromPosition}
           >
-            <icons.ForwardIcon />
-          </button>
+            <div
+              className="bg-primary-100 h-24 transition-transform origin-left"
+              style={{
+                transform: `translateX(calc(-100% + ${calculateProgress}%))`,
+              }}
+            ></div>
+          </div>
+          <div className="flex justify-center items-center relative">
+            <button
+              className="w-3 sm:w-4"
+              onClick={() =>
+                audioRef &&
+                audioRef.current &&
+                playAudio(audioRef.current.currentTime - 5)
+              }
+            >
+              <icons.RewindIcon />
+            </button>
+            <button className="mx-3 sm:mx-5">
+              <span
+                onClick={() => openVolControl()}
+                className={`h-3 sm:h-4 block${volControl ? " z-50 sticky" : ""}`}
+              >
+                {audioRef.current?.muted ? (
+                  <icons.VolMuteIcon />
+                ) : (
+                  <icons.VolIcon />
+                )}
+              </span>
+
+              {volControl ? (
+                <div className="absolute top-[-250%] sm:top-[-200%] left-[50%] translate-x-[-50%] shadow-xl w-[100px] sm:w-[220px] bg-white rounded-3xl p-2 z-50">
+                  <div
+                    className="bg-dark-200 h-[8px] overflow-hidden cursor-pointer rounded-3xl"
+                    onClick={changeVol}
+                  >
+                    <div
+                      className="bg-primary-100 h-24 transition-transform origin-left"
+                      style={{
+                        transform: `translateX(calc(-100% + ${volLvl}%))`,
+                      }}
+                    ></div>
+                  </div>
+                </div>
+              ) : null}
+            </button>
+            <button
+              className="w-3 sm:w-4"
+              onClick={() =>
+                audioRef &&
+                audioRef.current &&
+                playAudio(audioRef.current.currentTime + 5)
+              }
+            >
+              <icons.ForwardIcon />
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+      {volControl ? (
+        <div
+          className="fixed top-0 left-0 w-full h-screen z-40"
+          onClick={() => setVolControl(false)}
+        ></div>
+      ) : null}
+    </>
   );
 };
 
