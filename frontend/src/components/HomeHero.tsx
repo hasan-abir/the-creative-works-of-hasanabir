@@ -68,11 +68,13 @@ const HomeHero = ({ highlights = false }: Props) => {
             </span>
           </span>
         </h1>
-        <p className="mb-8">Home for all my work as an Artist</p>
+        <p className="mb-8 text-sm sm:text-base">
+          Home for all my work as an Artist
+        </p>
         <div className="flex flex-col sm:flex-row sm:justify-end">
           {highlights ? (
             <CTABtn
-              extraClasses="w-[240px] mb-4 sm:mb-0 sm:mr-4 px-6 text-center"
+              extraClasses="w-[180px] sm:w-[240px] mb-4 sm:mb-0 sm:mr-4 px-6 text-center"
               href="/#highlights"
               newTab={false}
             >
@@ -81,7 +83,7 @@ const HomeHero = ({ highlights = false }: Props) => {
           ) : null}
           <CTABtn
             primary={false}
-            extraClasses="w-[240px]"
+            extraClasses="w-[180px] sm:w-[240px]"
             href="mailto:contact.hasanabir@gmail.com"
           >
             <span className="flex items-center justify-between px-6">

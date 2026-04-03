@@ -22,13 +22,13 @@ const ImgEl = ({
 
   if (book_cover) {
     classList +=
-      " w-[156px] aspect-[10/16] rounded-l-[16px] border border-gray-300";
+      " w-[156px] aspect-[10/16] rounded-2xl sm:rounded-l-2xl border border-gray-300";
   } else if (actual) {
     classList +=
       " w-full aspect-square sm:w-[400px] shadow-[0_16px_32px_rgba(0,0,0,0.10)] rounded-[12px]";
   } else {
     classList +=
-      " w-[150px] sm:w-[385px] rounded-[16px] aspect-[10/16] sm:aspect-[3/2] border border-gray-300";
+      " w-[150px] sm:w-[385px] rounded-2xl aspect-[10/16] sm:aspect-[3/2] border border-gray-300";
   }
 
   const optimizedAttributes = optimized

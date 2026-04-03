@@ -30,8 +30,8 @@ const Highlights = ({
             actual
           />
         ) : (
-          <Card>
-            <AudioPlayer song={content} />
+          <Card fullWidth>
+            <AudioPlayer fullWidth song={content} />
           </Card>
         )}
 
@@ -45,7 +45,7 @@ const Highlights = ({
               : "Finished in " + new Date(content.date_created).getFullYear()}
           </p>
           {"content" in content && content.content.length > 0 ? (
-            <p className="mb-8 sm:mb-16 line-clamp-5 max-w-[500px] leading-relaxed">
+            <p className="mb-8 sm:mb-16 line-clamp-5 max-w-[500px] leading-relaxed text-sm sm:text-base">
               {content.content}
             </p>
           ) : null}
@@ -53,7 +53,7 @@ const Highlights = ({
           {"amazon_link" in content ? (
             <CTABtn
               primary={false}
-              extraClasses="min-w-[200px]"
+              extraClasses="w-[160px] sm:w-[200px]"
               href={content.amazon_link}
             >
               <span className="flex items-center justify-center">

@@ -14,9 +14,10 @@ import Link from "next/link";
 
 interface Props {
   song: Song;
+  fullWidth?: boolean;
 }
 
-const AudioPlayer = ({ song }: Props) => {
+const AudioPlayer = ({ song, fullWidth = false }: Props) => {
   const [songPlaying, setSongPlaying] = useState<boolean>(false);
   const [totalDuration, setTotalDuration] = useState<string>("00:00");
   const [duration, setDuration] = useState<string>("00:00");
@@ -144,9 +145,14 @@ const AudioPlayer = ({ song }: Props) => {
     };
   }, [song, onLoadedMetadata]); // re-run when src changes
 
+  let classList =
+    "p-3 sm:p-5 border border-gray-300  rounded-[16px] h-[250px] flex flex-col justify-between";
+
+  classList += fullWidth ? " w-full" : " w-[150px] sm:w-[385px]";
+
   return (
     <>
-      <div className="p-3 sm:p-5 border border-gray-300 w-[150px] sm:w-[385px] rounded-[16px] h-[250px] flex flex-col justify-between">
+      <div className={classList}>
         <div className="flex items-center sm:items-start flex-col sm:flex-row">
           <CTABtn
             onClick={songPlaying ? pauseAudio : playAudio}
@@ -168,7 +174,7 @@ const AudioPlayer = ({ song }: Props) => {
               </h3>
             </Link>
           ) : (
-            <h3 className="pt-5 sm:pt-0 sm:pl-5 text-center sm:text-right">
+            <h3 className="pt-5 sm:pt-0 sm:pl-5 text-base leading-tight sm:text-2xl text-center sm:text-left">
               {song.title}
             </h3>
           )}

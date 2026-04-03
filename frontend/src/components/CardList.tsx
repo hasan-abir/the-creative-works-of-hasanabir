@@ -67,7 +67,7 @@ const CardList = ({ children, heading }: Props) => {
           <CTABtn
             primary={false}
             extraClasses={
-              "h-[75px] ml-2 bg-light-100 shadow-lg transition-opacity" +
+              "h-[75px] ml-px sm:ml-2 bg-light-100 shadow-lg transition-opacity" +
               (startOfCarousel
                 ? " opacity-0 cursor-default"
                 : " opacity-100 cursor-pointer")
@@ -85,7 +85,7 @@ const CardList = ({ children, heading }: Props) => {
           <CTABtn
             primary={false}
             extraClasses={
-              "h-[75px] mr-2 bg-light-100 transition-opacity" +
+              "h-[75px] mr-px sm:mr-2 bg-light-100 transition-opacity" +
               (endOfCarousel
                 ? " opacity-0 cursor-default"
                 : "opacity-100 cursor-pointer")
