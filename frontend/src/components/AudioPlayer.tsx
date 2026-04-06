@@ -148,7 +148,7 @@ const AudioPlayer = ({ song, fullWidth = false }: Props) => {
   let classList =
     "p-3 sm:p-5 border border-gray-300  rounded-[16px] h-[250px] flex flex-col justify-between";
 
-  classList += fullWidth ? " w-full" : " w-[150px] sm:w-[385px]";
+  classList += fullWidth ? " w-full sm:w-[385px]" : " w-[150px] sm:w-[385px]";
 
   return (
     <>
