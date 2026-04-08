@@ -10,6 +10,9 @@ import React, {
 import { headingFont } from "@/utils/fonts";
 import { icons } from "@/utils/icons";
 import CTABtn from "@/components/CTABtn";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 
 interface Props {
   children: ReactNode;
@@ -21,6 +24,7 @@ const CardList = ({ children, heading }: Props) => {
   const [endOfCarousel, setEndOfCarousel] = useState(true);
 
   const scrollRef = useRef<HTMLDivElement | null>(null);
+  const container = useRef<HTMLDivElement>(null);
 
   const scrollCarousel = useCallback((left: boolean = true) => {
     if (!scrollRef.current) return;
@@ -52,8 +56,23 @@ const CardList = ({ children, heading }: Props) => {
     scrollRef.current && onScroll(scrollRef.current);
   }, [onScroll]);
 
+  useGSAP(
+    () => {
+      gsap.registerPlugin(ScrollTrigger);
+
+      gsap.to(container.current, {
+        scrollTrigger: container.current,
+        opacity: 1,
+        translateY: 0,
+        duration: 0.5,
+        delay: 0.5,
+      });
+    },
+    { scope: container },
+  );
+
   return (
-    <section>
+    <section ref={container} className="opacity-0 translate-y-[16px] card-list">
       <h1 className={headingFont.className + " big-heading"}>{heading}</h1>
       <div className="relative carousel-container">
         <div
