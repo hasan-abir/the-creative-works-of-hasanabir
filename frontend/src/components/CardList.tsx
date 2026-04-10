@@ -52,12 +52,10 @@ const CardList = ({ children, heading }: Props) => {
     setEndOfCarousel(percentScrolled > 95);
   }, []);
 
-  useEffect(() => {
-    scrollRef.current && onScroll(scrollRef.current);
-  }, [onScroll]);
-
   useGSAP(
     () => {
+      scrollRef.current && onScroll(scrollRef.current);
+
       gsap.registerPlugin(ScrollTrigger);
 
       gsap.to(container.current, {
@@ -68,7 +66,7 @@ const CardList = ({ children, heading }: Props) => {
         delay: 0.5,
       });
     },
-    { scope: container },
+    { scope: container, dependencies: [onScroll] },
   );
 
   return (

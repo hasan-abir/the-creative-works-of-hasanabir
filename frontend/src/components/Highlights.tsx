@@ -1,3 +1,5 @@
+"use client";
+
 import { headingFont } from "@/utils/fonts";
 import ImgEl from "@/components/ImgEl";
 import Card from "@/components/Card";
@@ -5,6 +7,10 @@ import CTABtn from "@/components/CTABtn";
 import AudioPlayer from "@/components/AudioPlayer";
 import { Book, Painting, Song } from "@/lib/remark/getContent";
 import { icons } from "@/utils/icons";
+import { useRef } from "react";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 
 interface Props {
   content: Book | Painting | Song;
@@ -15,8 +21,28 @@ const Highlights = ({
   content,
   customHeading = "Today's Highlight",
 }: Props) => {
+  const container = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      gsap.registerPlugin(ScrollTrigger);
+
+      gsap.to(container.current, {
+        opacity: 1,
+        translateY: 0,
+        duration: 0.5,
+        delay: 0.7,
+      });
+    },
+    { scope: container },
+  );
+
   return (
-    <section id="highlights" className="sm:mt-48">
+    <section
+      id="highlights"
+      className="sm:mt-48 opacity-0 translate-y-[16px]"
+      ref={container}
+    >
       <h1 className={headingFont.className + " big-heading"}>
         {customHeading}
       </h1>
@@ -36,7 +62,7 @@ const Highlights = ({
         )}
 
         <div className="py-5 px-0 sm:px-7 flex-none sm:flex-1">
-          <h2 className="text-2xl sm:text-4xl font-semibold mb-2">
+          <h2 className="text-2xl sm:text-4xl font-semibold mb-2 max-w-[300px]">
             {content.title}
           </h2>
           <p className="opacity-75 text-sm sm:text-base mb-4 sm:mb-8">

@@ -13,6 +13,7 @@ interface Props {
 }
 
 const HomeHero = ({ highlights = false }: Props) => {
+  const [animOver, setAnimOver] = useState(false);
   const container = useRef<HTMLDivElement>(null);
 
   useGSAP(
@@ -24,7 +25,14 @@ const HomeHero = ({ highlights = false }: Props) => {
           scaleX: "100%",
           duration: 0.5,
         })
-        .to(".hero-txt", { opacity: 1, duration: 1, stagger: 0.2 });
+        .to(".hero-txt", {
+          opacity: 1,
+          duration: 1,
+          stagger: 0.2,
+          onComplete: () => {
+            setAnimOver(true);
+          },
+        });
     },
     { scope: container },
   );
@@ -56,7 +64,7 @@ const HomeHero = ({ highlights = false }: Props) => {
         <div className="flex flex-col sm:flex-row sm:justify-end">
           {highlights ? (
             <CTABtn
-              extraClasses="w-[180px] sm:w-[240px] mb-4 sm:mb-0 sm:mr-4 px-6 text-center hero-txt opacity-0"
+              extraClasses={`w-[180px] sm:w-[240px] mb-4 sm:mb-0 sm:mr-4 px-6 text-center hero-txt${animOver ? "" : " opacity-0"}`}
               href="/#highlights"
               newTab={false}
             >

@@ -117,7 +117,6 @@ const AudioPlayer = ({ song, fullWidth = false }: Props) => {
   }, []);
 
   const openVolControl = useCallback(() => {
-    console.log(volControl);
     if (volControl) {
       muteUnmuteVol();
     } else {
