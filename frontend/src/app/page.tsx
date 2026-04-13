@@ -29,13 +29,15 @@ const Home = async ({
     notFound();
   }
 
+  // Practice beautiful animations here
+
   return (
     <div className="page-container min-h-screen px-6">
       <HomeHero highlights={searchParams["highlight"] ? true : false} />
 
       <Highlights
         content={content}
-        customHeading={contentFolder ? "Project Detail" : undefined}
+        customHeading={contentFolder ? "In Focus" : undefined}
       />
       <BookList />
       <PaintingList />
