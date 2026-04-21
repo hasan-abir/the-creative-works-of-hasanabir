@@ -7,7 +7,9 @@ const NotFoundPage = () => {
         <h1 className="font-bold text-3xl sm:text-6xl text-center mb-4 sm:mb-8">
           Nah, nothing here
         </h1>
-        <CTABtn href="/">Back to Home</CTABtn>
+        <CTABtn href="/" newTab={false}>
+          Back to Home
+        </CTABtn>
       </div>
     </div>
   );

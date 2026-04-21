@@ -42,7 +42,7 @@ const HomeHero = ({ highlights = false }: Props) => {
       className="page-container w-full sm:absolute sm:top-0 sm:left-[50%] sm:translate-x-[-50%] sm:pointer-events-none"
       ref={container}
     >
-      <div className="sm:pointer-events-auto sm:text-right">
+      <div className="sm:pointer-events-auto sm:text-right z-[1000]">
         <h1 className="mb-4">
           <span className="text-base font-bold hero-txt opacity-0">
             Art & Literature of
