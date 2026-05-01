@@ -7,6 +7,11 @@ import { useCallback, useRef, useState } from "react";
 import gsap from "gsap";
 import { icons } from "@/utils/icons/";
 import { headingFont } from "@/utils/fonts";
+import localFont from "next/font/local";
+
+const GambarinoFont = localFont({
+  src: "../../public/fonts/Gambarino-Regular.otf",
+});
 
 interface Props {
   highlights?: boolean;
@@ -42,6 +47,7 @@ const HomeHero = ({ highlights = false }: Props) => {
       className="page-container w-full sm:absolute sm:top-0 sm:left-[50%] sm:translate-x-[-50%] sm:pointer-events-none"
       ref={container}
     >
+      <h1 className={GambarinoFont.className}>HELLO, IT'S ME</h1>
       <div className="sm:pointer-events-auto sm:text-right z-[1000]">
         <h1 className="mb-4">
           <span className="text-base font-bold hero-txt opacity-0">
