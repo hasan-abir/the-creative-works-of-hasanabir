@@ -12,13 +12,13 @@ const config: Config = {
     extend: {
       colors: {
         light: {
-          50: "#FFFFFF",
-          100: "#FFF3EE",
+          50: "#F5F5F5",
+          100: "#CFCFCF",
           200: "#FFE180",
         },
         dark: {
-          50: "#1B1B1B",
-          100: "#1E1D1D",
+          50: "#3F3F3F",
+          100: "#5D5A5A",
           200: "#505151",
           300: "#272626",
         },
