@@ -152,6 +152,10 @@ body {
   @apply mb-0;
 }
 
+.square-icon {
+  @apply w-1 h-1 inline-block bg-dark-50;
+}
+
 @supports (height: 100dvh) {
   .h-screen {
     height: 100dvh;

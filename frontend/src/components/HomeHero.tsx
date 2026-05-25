@@ -12,8 +12,16 @@ interface Props {
   highlights?: boolean;
 }
 
+enum Categories {
+  Highlight = "highlight",
+  Books = "books",
+  Paintings = "paintings",
+  Songs = "songs",
+}
+
 const HomeHero = ({ highlights = false }: Props) => {
   const [animOver, setAnimOver] = useState(false);
+  const [selectedCat, setCategory] = useState<Categories>(Categories.Highlight);
   const container = useRef<HTMLDivElement>(null);
 
   useGSAP(
@@ -57,16 +65,36 @@ const HomeHero = ({ highlights = false }: Props) => {
         <span className="mx-2">literature</span>
       </p>
 
-      <div>
-        <button className="capitalize">today&#39;s highlight</button>
-        <span>&#9632;</span>
+      <div className="flex flex-col items-center">
+        <button
+          className={`${selectedCat === Categories.Highlight ? "bg-dark-50 text-light-50 " : ""}capitalize px-1 py-pxs`}
+          onClick={() => setCategory(Categories.Highlight)}
+        >
+          today&#39;s highlight
+        </button>
+        <span className="square-icon my-2"></span>
 
-        <div>
-          <button className="capitalize">books</button>
-          <span>&#9632;</span>
-          <button className="capitalize">paintings</button>
-          <span>&#9632;</span>
-          <button className="capitalize">songs</button>
+        <div className="flex items-center">
+          <button
+            className={`${selectedCat === Categories.Books ? "bg-dark-50 text-light-50 " : ""}capitalize px-1 py-px`}
+            onClick={() => setCategory(Categories.Books)}
+          >
+            books
+          </button>
+          <span className="square-icon mx-4"></span>
+          <button
+            className={`${selectedCat === Categories.Paintings ? "bg-dark-50 text-light-50 " : ""}capitalize px-1 py-px`}
+            onClick={() => setCategory(Categories.Paintings)}
+          >
+            paintings
+          </button>
+          <span className="square-icon mx-4"></span>
+          <button
+            className={`${selectedCat === Categories.Songs ? "bg-dark-50 text-light-50 " : ""}capitalize px-1 py-px`}
+            onClick={() => setCategory(Categories.Songs)}
+          >
+            songs
+          </button>
         </div>
       </div>
 
