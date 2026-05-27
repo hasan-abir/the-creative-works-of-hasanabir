@@ -3,7 +3,7 @@
 import CTABtn from "@/components/CTABtn";
 import Image from "next/image";
 import { useGSAP } from "@gsap/react";
-import { useCallback, useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import gsap from "gsap";
 import { icons } from "@/utils/icons/";
 import { headingFont } from "@/utils/fonts";
@@ -65,37 +65,38 @@ const HomeHero = ({ highlights = false }: Props) => {
         <span className="mx-2">literature</span>
       </p>
 
-      <div className="flex flex-col items-center">
-        <button
-          className={`${selectedCat === Categories.Highlight ? "bg-dark-50 text-light-50 " : ""}capitalize px-1 py-pxs`}
-          onClick={() => setCategory(Categories.Highlight)}
-        >
-          today&#39;s highlight
-        </button>
-        <span className="square-icon my-2"></span>
+      <div className="flex flex-wrap justify-center">
+        {Object.values(Categories).map((cat, index, arr) => {
+          const isHighlight = cat === Categories.Highlight;
+          const isActive = selectedCat === cat;
+          const lastCat = index === arr.length - 1;
 
-        <div className="flex items-center">
-          <button
-            className={`${selectedCat === Categories.Books ? "bg-dark-50 text-light-50 " : ""}capitalize px-1 py-px`}
-            onClick={() => setCategory(Categories.Books)}
-          >
-            books
-          </button>
-          <span className="square-icon mx-4"></span>
-          <button
-            className={`${selectedCat === Categories.Paintings ? "bg-dark-50 text-light-50 " : ""}capitalize px-1 py-px`}
-            onClick={() => setCategory(Categories.Paintings)}
-          >
-            paintings
-          </button>
-          <span className="square-icon mx-4"></span>
-          <button
-            className={`${selectedCat === Categories.Songs ? "bg-dark-50 text-light-50 " : ""}capitalize px-1 py-px`}
-            onClick={() => setCategory(Categories.Songs)}
-          >
-            songs
-          </button>
-        </div>
+          return (
+            <React.Fragment key={cat}>
+              <div
+                className={
+                  isHighlight
+                    ? "w-full flex-shrink-0 flex justify-center"
+                    : undefined
+                }
+              >
+                <button
+                  className={`${isActive ? "bg-dark-50 text-light-50 " : ""}capitalize px-1 py-pxs`}
+                  onClick={() => setCategory(cat)}
+                >
+                  {isHighlight ? "today's highlight" : cat}
+                </button>
+              </div>
+              {!lastCat ? (
+                isHighlight ? (
+                  <span className="square-icon my-2"></span>
+                ) : (
+                  <span className="square-icon mx-4"></span>
+                )
+              ) : null}
+            </React.Fragment>
+          );
+        })}
       </div>
 
       <div className="sm:pointer-events-auto sm:text-right z-[1000]">
