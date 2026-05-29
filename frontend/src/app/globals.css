@@ -134,7 +134,7 @@ body {
 }
 
 .page-container {
-  @apply max-w-7xl mx-auto py-12 sm:py-24  sm:px-8 overflow-x-hidden;
+  @apply max-w-7xl mx-auto py-5 sm:py-24  sm:px-8 overflow-x-hidden;
 }
 
 .rich-text-container > div > p:last-child {

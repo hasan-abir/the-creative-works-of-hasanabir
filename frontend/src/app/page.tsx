@@ -33,7 +33,7 @@ const Home = async ({
 
   return (
     <div className="page-container min-h-screen px-6">
-      <HomeHero highlights={searchParams["highlight"] ? true : false} />
+      <HomeHero />
 
       <Highlights
         content={content}
