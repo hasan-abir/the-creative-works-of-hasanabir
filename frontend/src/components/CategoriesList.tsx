@@ -24,7 +24,7 @@ const CategoriesList = ({ onSelectCat }: Props) => {
   }, []);
 
   return (
-    <div className="flex flex-wrap justify-center items-center">
+    <div className="flex flex-wrap justify-center items-center pb-6">
       {Object.values(Categories).map((cat, index, arr) => {
         const isHighlight = cat === Categories.Highlight;
         const isActive = selectedCat === cat;

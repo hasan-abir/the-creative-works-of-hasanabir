@@ -8,7 +8,7 @@ body {
 
 @layer components {
   h1 {
-    @apply text-3xl sm:text-5xl mb-8;
+    @apply text-3xl sm:text-5xl mb-14;
   }
 
   h2 {
