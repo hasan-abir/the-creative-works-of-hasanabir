@@ -1,34 +1,73 @@
 "use client";
 
 import Slide from "@/components/Slide";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 interface Props {}
 
 const ArtSlider = ({}: Props) => {
-  const [active, setActive] = useState<number>(0);
-  const [viewportWidth, setViewportWidth] = useState(
-    typeof window !== "undefined" ? window.innerWidth : 1200,
-  );
-
-  const SLIDE_WIDTH = 270; // Match your actual Slide component width
-  const GAP = 8; // Match your gap-4 spacing
+  const [active, setActive] = useState<number>(5);
+  const [isDragging, setIsDragging] = useState<boolean>(false);
+  const sliderWrapper = useRef<HTMLDivElement>(null);
+  const [startPageX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
 
   useEffect(() => {
-    const handleResize = () => setViewportWidth(window.innerWidth);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    console.log(sliderWrapper.current);
   }, []);
 
-  const targetTranslateX =
-    viewportWidth / 2 - SLIDE_WIDTH / 2 - active * (SLIDE_WIDTH + GAP);
+  const startDrag = useCallback((e: React.MouseEvent) => {
+    setIsDragging(true);
+    console.log("started drag");
+    if (sliderWrapper.current) {
+      setStartX(e.pageX - sliderWrapper.current.offsetLeft);
+      setScrollLeft(sliderWrapper.current.scrollLeft);
+    }
+  }, []);
+
+  const stopDrag = useCallback(() => {
+    if (isDragging) {
+      setIsDragging(false);
+      console.log("stopped drag");
+    }
+  }, [isDragging]);
+
+  const moveDrag = useCallback(
+    (e: React.MouseEvent) => {
+      e.preventDefault();
+
+      if (isDragging && sliderWrapper.current) {
+        // console.log("dragging - pageX: ", e.pageX);
+        // console.log("wrapper scrollLeft: ", sliderWrapper.current.scrollLeft);
+
+        const speed = 1.5;
+        // Drag from where clicked
+        const scrollDragged =
+          (startPageX - (e.pageX - sliderWrapper.current.offsetLeft)) * speed;
+
+        sliderWrapper.current.scrollLeft = scrollLeft - scrollDragged;
+        // sliderWrapper.current.scrollBy({
+        //   left: scrollPixels,
+        //   behavior: "smooth",
+        // });
+      }
+    },
+    [isDragging, scrollLeft, startPageX],
+  );
 
   return (
-    <section>
+    <section
+      ref={sliderWrapper}
+      className="overflow-x-scroll cursor-grab"
+      onMouseDown={startDrag}
+      onMouseUp={stopDrag}
+      onMouseLeave={stopDrag}
+      onMouseMove={moveDrag}
+    >
       {/* Sllider */}
       <div
-        className={`flex justify-center items-end`}
-        style={{ transform: `translateX(${targetTranslateX}px)` }}
+        className="flex justify-center items-end w-max"
+        // style={{ transform: `translateX(${targetTranslateX}px)` }}
       >
         {/* Slide Element */}
         {Array.from({ length: 10 }).map((_, i) => (
