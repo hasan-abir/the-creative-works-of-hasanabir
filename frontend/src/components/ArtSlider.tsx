@@ -6,7 +6,6 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 import Draggable from "gsap/Draggable";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { NullLiteral } from "typescript";
 
 interface Props {}
 
@@ -22,14 +21,16 @@ const ArtSlider = ({}: Props) => {
   >(null);
   const scroll = useRef<number | undefined | null>(null);
 
+  gsap.registerPlugin(useGSAP);
+
   const { contextSafe } = useGSAP(
     () => {
-      gsap.registerPlugin(useGSAP, ScrollTrigger, Draggable);
+      gsap.registerPlugin(ScrollTrigger, Draggable);
 
       iteration.current = 0;
       const stagger = 0.1;
       snapTime.current = gsap.utils.snap(stagger);
-      const slides = gsap.utils.toArray(".sliders .slide");
+      const slides = gsap.utils.toArray(".slider .slide");
       const playhead = { offset: 0 };
       seamlessLoop.current = buildSeamlessLoop(slides, stagger, animFunc);
 
@@ -81,6 +82,21 @@ const ArtSlider = ({}: Props) => {
       );
 
       gsap.set(".slider .slide", { xPercent: 400, opacity: 0, scale: 0 });
+
+      Draggable.create(".drag-proxy", {
+        type: "x",
+        trigger: ".slider",
+        onPress() {
+          this.startOffset = scrub.vars.offset;
+        },
+        onDrag() {
+          scrub.vars.offset = this.startOffset + (this.startX - this.x) * 0.001;
+          scrub.invalidate().restart(); // same thing as we do in the ScrollTrigger's onUpdate
+        },
+        onDragEnd() {
+          scrollToOffset(scrub.vars.offset);
+        },
+      });
     },
     { scope: container },
   );
@@ -147,72 +163,81 @@ const ArtSlider = ({}: Props) => {
     }, []),
   );
 
-  const buildSeamlessLoop = useCallback(
-    (
-      items: unknown[],
-      stagger: number,
-      animateFunc: (element: gsap.TweenTarget) => gsap.core.Timeline,
-    ) => {
-      let overlap = Math.ceil(1 / stagger);
-      const startTime = items.length * stagger + 0.5;
-      const loopTime = (items.length + overlap) * stagger + 1;
-      const rawSequence = gsap.timeline({ paused: true });
-      const seamlessLoop = gsap.timeline({
-        paused: true,
-        repeat: -1,
-        onRepeat() {
-          this._time === this._dur && (this._tTime += this._dur - 0.01);
-        },
-      });
-      const l = items.length + overlap * 2;
-      let timeToAnim = null;
-      let i = null;
-      let index = null;
+  const buildSeamlessLoop = contextSafe(
+    useCallback(
+      (
+        items: unknown[],
+        stagger: number,
+        animateFunc: (element: gsap.TweenTarget) => gsap.core.Timeline,
+      ) => {
+        let overlap = Math.ceil(1 / stagger);
+        const startTime = items.length * stagger + 0.5;
+        const loopTime = (items.length + overlap) * stagger + 1;
+        const rawSequence = gsap.timeline({ paused: true });
+        const seamlessLoop = gsap.timeline({
+          paused: true,
+          repeat: -1,
+          onRepeat() {
+            this._time === this._dur && (this._tTime += this._dur - 0.01);
+          },
+        });
+        const l = items.length + overlap * 2;
+        let timeToAnim = null;
+        let i = null;
+        let index = null;
 
-      for (i = 0; i < l; i++) {
-        index = i % items.length;
-        timeToAnim = i * stagger;
-        rawSequence.add(
-          animateFunc(items[index] as gsap.TweenTarget),
-          timeToAnim,
-        );
-        i <= items.length && seamlessLoop.add("label" + i, timeToAnim);
-        rawSequence.time(startTime);
-        seamlessLoop
-          .to(rawSequence, {
-            time: loopTime,
-            duration: loopTime - startTime,
-            ease: "none",
-          })
-          .fromTo(
-            rawSequence,
-            { time: overlap * stagger + 1 },
-            {
-              time: startTime,
-              duration: startTime - (overlap * stagger + 1),
-              immediateRender: false,
-              ease: "none",
-            },
+        for (i = 0; i < l; i++) {
+          index = i % items.length;
+          timeToAnim = i * stagger;
+          rawSequence.add(
+            animateFunc(items[index] as gsap.TweenTarget),
+            timeToAnim,
           );
-        return seamlessLoop;
-      }
-    },
-    [],
+          i <= items.length && seamlessLoop.add("label" + i, timeToAnim);
+          rawSequence.time(startTime);
+          seamlessLoop
+            .to(rawSequence, {
+              time: loopTime,
+              duration: loopTime - startTime,
+              ease: "none",
+            })
+            .fromTo(
+              rawSequence,
+              { time: overlap * stagger + 1 },
+              {
+                time: startTime,
+                duration: startTime - (overlap * stagger + 1),
+                immediateRender: false,
+                ease: "none",
+              },
+            );
+          return seamlessLoop;
+        }
+      },
+      [],
+    ),
   );
   return (
-    <section
-      className="slider-container overflow-hidden h-[430px] relative"
-      ref={container}
-    >
-      <div
-        className="slider flex justify-center items-end w-max absolute top-0 left-1/2 translate-x-[-50%]"
-        onClick={animFunc}
+    <>
+      <section
+        className="slider-container overflow-hidden h-[430px] relative"
+        ref={container}
       >
-        {Array.from({ length: 10 }).map((_, i) => (
-          <Slide key={i} onClick={() => setActive(i)} isActive={active === i} />
-        ))}
-      </div>
-    </section>
+        <div
+          className="slider flex justify-center items-end w-max absolute top-0 left-1/2 translate-x-[-50%]"
+          onClick={animFunc}
+        >
+          {Array.from({ length: 10 }).map((_, i) => (
+            <Slide
+              key={i}
+              onClick={() => setActive(i)}
+              isActive={active === i}
+            />
+          ))}
+        </div>
+      </section>
+      <div className="drag-proxy absolute invisible"></div>
+    </>
   );
 };
 
