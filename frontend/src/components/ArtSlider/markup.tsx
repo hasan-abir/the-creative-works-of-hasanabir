@@ -5,14 +5,14 @@ import { RefObject } from "react";
 
 interface Props {
   refObj: RefObject<HTMLDivElement>;
-  artArray: unknown[];
+  itemArr: unknown[];
   moveSlider: (right?: boolean) => void;
   activeItem: number;
 }
 
 const ArtSliderMarkup = ({
   refObj,
-  artArray,
+  itemArr,
   moveSlider,
   activeItem,
 }: Props) => {
@@ -23,8 +23,8 @@ const ArtSliderMarkup = ({
         ref={refObj}
       >
         <div className="slider flex justify-center items-end w-max">
-          {artArray.map((_, i) => (
-            <Slide key={i} index={i} isActive={activeItem === i} />
+          {itemArr.map((item, i) => (
+            <Slide key={i} item={item} isActive={activeItem === i} />
           ))}
         </div>
       </section>

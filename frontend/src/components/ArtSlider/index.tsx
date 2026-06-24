@@ -1,23 +1,30 @@
 "use client";
 
-import { useCallback, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import ArtSliderMarkup from "@/components/ArtSlider/markup";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
 const ArtSlider = () => {
   const container = useRef<HTMLDivElement>(null);
-  const originalArtArray = Array.from({ length: 8 });
-  const artArray = useMemo(() => {
-    if (originalArtArray.length % 2 === 0) {
-      return originalArtArray.slice(0, -1);
-    } else {
-      return originalArtArray;
-    }
-  }, []);
+  const originalArtArray = Array.from("planet");
+  const [inQue, setQue] = useState<unknown | null>(null);
+  const [itemArr, setItemArr] = useState<unknown[]>([]);
+
   const activeItem = useMemo(() => {
-    return Math.ceil(artArray.length / 2 - 1);
-  }, [artArray]);
+    return Math.ceil(itemArr.length / 2 - 1);
+  }, [itemArr]);
+
+  useEffect(() => {
+    const ogArrDupe = [...originalArtArray];
+
+    if (ogArrDupe.length % 2 === 0) {
+      const lastItem = ogArrDupe.pop();
+      setQue(lastItem);
+      console.log(lastItem);
+    }
+    setItemArr(ogArrDupe);
+  }, []);
 
   gsap.registerPlugin(useGSAP);
 
@@ -30,23 +37,37 @@ const ArtSlider = () => {
   );
 
   const moveSlider = contextSafe(
-    useCallback((right?: boolean) => {
-      const val = 208;
+    useCallback(
+      (right?: boolean) => {
+        const val = 208;
+        let x = right ? `-=${val}` : `+=${val}`;
 
-      const x = right ? `-=${val}` : `+=${val}`;
+        gsap.to(".slider", {
+          x,
+          ease: "circ.inOut",
+          onComplete: () => {
+            if (right) {
+              setItemArr((arr) => {
+                const updatedArr = [...arr];
+                const firstItem = updatedArr.slice(1, updatedArr.length - 1);
 
-      gsap.to(".slider", {
-        x,
-        ease: "circ.inOut",
-      });
-    }, []),
+                setQue(firstItem);
+
+                return updatedArr;
+              });
+            }
+          },
+        });
+      },
+      [inQue],
+    ),
   );
 
   return (
     <ArtSliderMarkup
       activeItem={activeItem}
       refObj={container}
-      artArray={artArray}
+      itemArr={itemArr}
       moveSlider={moveSlider}
     />
   );

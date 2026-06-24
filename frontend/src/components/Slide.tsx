@@ -3,16 +3,16 @@
 interface Props {
   onClick?: () => void;
   isActive?: boolean;
-  index: number;
+  item: unknown;
 }
 
-const Slide = ({ onClick, isActive, index }: Props) => {
+const Slide = ({ onClick, isActive, item }: Props) => {
   return (
     <div
-      className={`${isActive ? "bg-red-500" : "bg-dark-50"} slide w-[200px] h-[350px] text-light-50 mx-1 flex-shrink-0 pointer-events-none`}
+      className={`${isActive ? "bg-red-500" : "bg-dark-50"} slide w-[200px] h-[350px] text-light-50 mx-1 flex-shrink-0 pointer-events-none flex justify-center uppercase`}
       onClick={onClick}
     >
-      Slide: {index}
+      {item as string}
     </div>
   );
 };
