@@ -9,11 +9,12 @@ const ArtSlider = () => {
   const container = useRef<HTMLDivElement>(null);
   const originalArtArray = Array.from("planet");
   const [inQue, setQue] = useState<unknown | null>(null);
+  const [activeItem, setActiveItem] = useState<number>(0);
   const [itemArr, setItemArr] = useState<unknown[]>([]);
 
-  const activeItem = useMemo(() => {
-    return Math.ceil(itemArr.length / 2 - 1);
-  }, [itemArr]);
+  const calActiveItem = useCallback(() => {
+    setActiveItem(Math.ceil(itemArr.length / 2 - 1));
+  }, [itemArr.length]);
 
   useEffect(() => {
     const ogArrDupe = [...originalArtArray];
@@ -24,6 +25,7 @@ const ArtSlider = () => {
       console.log(lastItem);
     }
     setItemArr(ogArrDupe);
+    calActiveItem();
   }, []);
 
   gsap.registerPlugin(useGSAP);
@@ -42,22 +44,42 @@ const ArtSlider = () => {
         const val = 208;
         let x = right ? `-=${val}` : `+=${val}`;
 
-        gsap.to(".slider", {
+        const tl = gsap.timeline();
+
+        tl.to(".slider", {
           x,
-          ease: "circ.inOut",
+          ease: "circ.in",
           onComplete: () => {
             if (right) {
               setItemArr((arr) => {
                 const updatedArr = [...arr];
-                const firstItem = updatedArr.slice(1, updatedArr.length - 1);
+                const firstItem = updatedArr.shift();
 
                 setQue(firstItem);
+
+                if (inQue) {
+                  updatedArr.push(inQue);
+                }
+
+                return updatedArr;
+              });
+            } else {
+              setItemArr((arr) => {
+                const updatedArr = [...arr];
+                const lastItem = updatedArr.pop();
+
+                setQue(lastItem);
+
+                if (inQue) {
+                  updatedArr.unshift(inQue);
+                }
 
                 return updatedArr;
               });
             }
+            calActiveItem();
           },
-        });
+        }).to(".slider", { x: -x, ease: "circ.out" });
       },
       [inQue],
     ),
