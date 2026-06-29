@@ -19,12 +19,7 @@ const ArtSlider = () => {
   useEffect(() => {
     const ogArrDupe = [...originalArtArray];
 
-    if (ogArrDupe.length % 2 === 0) {
-      const lastItem = ogArrDupe.pop();
-      setQue(lastItem);
-      console.log(lastItem);
-    }
-    setItemArr(ogArrDupe);
+    setItemArr(ogArrDupe.concat(ogArrDupe.slice(0, -1)));
     calActiveItem();
   }, []);
 
@@ -44,42 +39,42 @@ const ArtSlider = () => {
         const val = 208;
         let x = right ? `-=${val}` : `+=${val}`;
 
-        const tl = gsap.timeline();
-
-        tl.to(".slider", {
+        gsap.to(".slider", {
           x,
-          ease: "circ.in",
-          onComplete: () => {
-            if (right) {
-              setItemArr((arr) => {
-                const updatedArr = [...arr];
-                const firstItem = updatedArr.shift();
+          ease: "circ.inOut",
+          // NOTE: KEEP TRACK OF WHICH ELEMENT IS FOCUSED and where it is on the track. If it is near the end of the track, add copies of the item. Also keep track of which copies
 
-                setQue(firstItem);
+          // onComplete: () => {
+          //   if (right) {
+          //     setItemArr((arr) => {
+          //       const updatedArr = [...arr, ...arr.slice(0, -1)];
+          //       const firstItem = updatedArr.shift();
 
-                if (inQue) {
-                  updatedArr.push(inQue);
-                }
+          //       setQue(firstItem);
 
-                return updatedArr;
-              });
-            } else {
-              setItemArr((arr) => {
-                const updatedArr = [...arr];
-                const lastItem = updatedArr.pop();
+          //       if (inQue) {
+          //         updatedArr.push(inQue);
+          //       }
 
-                setQue(lastItem);
+          //       return updatedArr;
+          //     });
+          //   } else {
+          //     setItemArr((arr) => {
+          //       const updatedArr = [...arr];
+          //       const lastItem = updatedArr.pop();
 
-                if (inQue) {
-                  updatedArr.unshift(inQue);
-                }
+          //       setQue(lastItem);
 
-                return updatedArr;
-              });
-            }
-            calActiveItem();
-          },
-        }).to(".slider", { x: -x, ease: "circ.out" });
+          //       if (inQue) {
+          //         updatedArr.unshift(inQue);
+          //       }
+
+          //       return updatedArr;
+          //     });
+          //   }
+          //   calActiveItem();
+          // },
+        });
       },
       [inQue],
     ),
