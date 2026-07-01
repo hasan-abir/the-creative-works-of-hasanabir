@@ -7,20 +7,19 @@ import gsap from "gsap";
 
 const ArtSlider = () => {
   const container = useRef<HTMLDivElement>(null);
-  const originalArtArray = Array.from("planet");
+  const originalArtArray = Array.from("pay");
   const [inQue, setQue] = useState<unknown | null>(null);
   const [activeItem, setActiveItem] = useState<number>(0);
   const [itemArr, setItemArr] = useState<unknown[]>([]);
 
-  const calActiveItem = useCallback(() => {
-    setActiveItem(Math.ceil(itemArr.length / 2 - 1));
-  }, [itemArr.length]);
-
   useEffect(() => {
     const ogArrDupe = [...originalArtArray];
+    const newArr = [...ogArrDupe.slice(1), ...ogArrDupe];
 
-    setItemArr(ogArrDupe.concat(ogArrDupe.slice(0, -1)));
-    calActiveItem();
+    setItemArr(newArr);
+    const middlePoint = newArr.length / 2;
+
+    setActiveItem(Math.ceil(middlePoint - 1));
   }, []);
 
   gsap.registerPlugin(useGSAP);
@@ -44,36 +43,22 @@ const ArtSlider = () => {
           ease: "circ.inOut",
           // NOTE: KEEP TRACK OF WHICH ELEMENT IS FOCUSED and where it is on the track. If it is near the end of the track, add copies of the item. Also keep track of which copies
 
-          // onComplete: () => {
-          //   if (right) {
-          //     setItemArr((arr) => {
-          //       const updatedArr = [...arr, ...arr.slice(0, -1)];
-          //       const firstItem = updatedArr.shift();
-
-          //       setQue(firstItem);
-
-          //       if (inQue) {
-          //         updatedArr.push(inQue);
-          //       }
-
-          //       return updatedArr;
-          //     });
-          //   } else {
-          //     setItemArr((arr) => {
-          //       const updatedArr = [...arr];
-          //       const lastItem = updatedArr.pop();
-
-          //       setQue(lastItem);
-
-          //       if (inQue) {
-          //         updatedArr.unshift(inQue);
-          //       }
-
-          //       return updatedArr;
-          //     });
-          //   }
-          //   calActiveItem();
-          // },
+          onComplete: () => {
+            if (right) {
+              setActiveItem((val) => val + 1);
+            } else {
+              setActiveItem((val) => val - 1);
+              // setItemArr((arr) => {
+              //   const updatedArr = [...arr];
+              //   const lastItem = updatedArr.pop();
+              //   setQue(lastItem);
+              //   if (inQue) {
+              //     updatedArr.unshift(inQue);
+              //   }
+              //   return updatedArr;
+              // });
+            }
+          },
         });
       },
       [inQue],
