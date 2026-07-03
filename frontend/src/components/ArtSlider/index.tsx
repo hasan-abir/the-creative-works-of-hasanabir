@@ -20,6 +20,7 @@ const ArtSlider = () => {
     const middlePoint = newArr.length / 2;
 
     setActiveItem(Math.ceil(middlePoint - 1));
+    setQue(ogArrDupe[0]);
   }, []);
 
   gsap.registerPlugin(useGSAP);
@@ -46,6 +47,13 @@ const ArtSlider = () => {
           onComplete: () => {
             if (right) {
               setActiveItem((val) => val + 1);
+              // DUPLICATE ARRAY AND LOOP
+
+              // setItemArr((arr) => {
+              //   arr = [...arr, inQue];
+
+              //   return arr.slice(1);
+              // });
             } else {
               setActiveItem((val) => val - 1);
               // setItemArr((arr) => {
