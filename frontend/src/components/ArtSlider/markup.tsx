@@ -7,7 +7,7 @@ interface Props {
   refObj: RefObject<HTMLDivElement>;
   itemArr: unknown[];
   moveSlider: (right?: boolean) => void;
-  activeItem: number;
+  activeItem: string;
 }
 
 const ArtSliderMarkup = ({
@@ -19,12 +19,12 @@ const ArtSliderMarkup = ({
   return (
     <>
       <section
-        className="slider-container overflow-hidden flex justify-center"
+        className="slider-container overflow-hidden relative h-[350px]"
         ref={refObj}
       >
         <div className="slider flex justify-center items-end w-max">
           {itemArr.map((item, i) => (
-            <Slide key={i} item={item} isActive={activeItem === i} />
+            <Slide key={i} item={item} isActive={activeItem === item} />
           ))}
         </div>
       </section>
