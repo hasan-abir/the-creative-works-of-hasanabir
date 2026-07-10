@@ -9,12 +9,12 @@ const ArtSlider = () => {
   const container = useRef<HTMLDivElement>(null);
   const originalArtArray = Array.from("planet");
   const [inQue, setQue] = useState<unknown | null>(null);
-  const [activeItem, setActiveItem] = useState<string>("l");
+  const [activeItem, setActiveItem] = useState<string>("p");
   const [itemArr, setItemArr] = useState<unknown[]>([]);
 
   useEffect(() => {
     const ogArrDupe = [...originalArtArray];
-    const newArr = [...ogArrDupe.slice(1), ...ogArrDupe];
+    const newArr = [...ogArrDupe, ...ogArrDupe];
 
     setItemArr(newArr);
     // const middlePoint = newArr.length / 2;
@@ -27,11 +27,6 @@ const ArtSlider = () => {
 
   const { contextSafe } = useGSAP(
     () => {
-      gsap.set(".slider", {
-        position: "absolute",
-        left: "50%",
-        xPercent: -50,
-      });
       // Move the whole slider by a slide's width + horizontal margins
       // Put the spliced item to a que. And append or prepend to whichever direction we are going. Splice after every move
     },
@@ -41,6 +36,12 @@ const ArtSlider = () => {
   const moveSlider = contextSafe(
     useCallback(
       (right?: boolean) => {
+        const activeSlide = gsap.utils.toArray<HTMLDivElement>(
+          `.slide-${activeItem}`,
+        )[1];
+        const slider = gsap.utils.selector(".slider");
+        gsap.to(slider, { x: -activeSlide.offsetLeft });
+
         const val = 208;
         let x = right ? `-=${val}` : `+=${val}`;
 
@@ -49,27 +50,12 @@ const ArtSlider = () => {
           ease: "circ.inOut",
           onComplete: () => {
             if (right) {
-              // setActiveItem((val) => val + 1);
-              // setItemArr((arr) => {
-              //   arr = [...arr, inQue];
-              //   return arr.slice(1);
-              // });
             } else {
-              // setActiveItem((val) => val - 1);
-              // setItemArr((arr) => {
-              //   const updatedArr = [...arr];
-              //   const lastItem = updatedArr.pop();
-              //   setQue(lastItem);
-              //   if (inQue) {
-              //     updatedArr.unshift(inQue);
-              //   }
-              //   return updatedArr;
-              // });
             }
           },
         });
       },
-      [inQue],
+      [inQue, activeItem],
     ),
   );
 

@@ -29,9 +29,7 @@ const Slide = ({ onClick, isActive, item }: Props) => {
 
   return (
     <div
-      className={
-        "slide w-[200px] h-[350px] text-light-50 mx-1 flex-shrink-0 pointer-events-none flex justify-center uppercase"
-      }
+      className={`slide-${item as string} w-[200px] h-[350px] text-light-50 mx-1 flex-shrink-0 pointer-events-none flex justify-center uppercase`}
       style={{ backgroundColor: "#333333" }}
       onClick={onClick}
       ref={container}
