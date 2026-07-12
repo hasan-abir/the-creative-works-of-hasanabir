@@ -17,6 +17,7 @@ const ArtSlider = () => {
     const newArr = [...ogArrDupe, ...ogArrDupe];
 
     setItemArr(newArr);
+
     // const middlePoint = newArr.length / 2;
 
     // setActiveItem(newArr[Math.ceil(middlePoint - 1)]);
@@ -39,21 +40,29 @@ const ArtSlider = () => {
         const activeSlide = gsap.utils.toArray<HTMLDivElement>(
           `.slide-${activeItem}`,
         )[1];
-        const slider = gsap.utils.selector(".slider");
-        gsap.to(slider, { x: -activeSlide.offsetLeft });
+
+        const q = gsap.utils.selector(container);
+        const slider = q<HTMLDivElement>(".slider")[0];
+        let centerSliderWidth = container.current?.offsetWidth || 0;
+        centerSliderWidth = centerSliderWidth / 2;
+        const activeSlideOffset = activeSlide.offsetLeft;
+
+        console.log(activeSlideOffset, centerSliderWidth);
+
+        gsap.to(slider, { x: -activeSlideOffset + centerSliderWidth - 100 });
 
         const val = 208;
         let x = right ? `-=${val}` : `+=${val}`;
 
-        gsap.to(".slider", {
-          x,
-          ease: "circ.inOut",
-          onComplete: () => {
-            if (right) {
-            } else {
-            }
-          },
-        });
+        // gsap.to(".slider", {
+        //   x,
+        //   ease: "circ.inOut",
+        //   onComplete: () => {
+        //     if (right) {
+        //     } else {
+        //     }
+        //   },
+        // });
       },
       [inQue, activeItem],
     ),
