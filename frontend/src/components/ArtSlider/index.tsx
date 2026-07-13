@@ -47,12 +47,16 @@ const ArtSlider = () => {
         centerSliderWidth = centerSliderWidth / 2;
         const activeSlideOffset = activeSlide.offsetLeft;
 
-        console.log(activeSlideOffset, centerSliderWidth);
-
-        gsap.to(slider, { x: -activeSlideOffset + centerSliderWidth - 100 });
-
-        const val = 208;
-        let x = right ? `-=${val}` : `+=${val}`;
+        gsap.to(slider, {
+          x: -activeSlideOffset + centerSliderWidth - 100,
+          ease: "circ.inOut",
+          onComplete: () => {
+            const currentIndex = itemArr.findIndex(
+              (item) => item === activeItem,
+            );
+            setActiveItem(itemArr[currentIndex + 1] as string);
+          },
+        });
 
         // gsap.to(".slider", {
         //   x,
@@ -64,7 +68,7 @@ const ArtSlider = () => {
         //   },
         // });
       },
-      [inQue, activeItem],
+      [inQue, activeItem, itemArr],
     ),
   );
 
