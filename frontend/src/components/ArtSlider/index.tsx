@@ -13,16 +13,15 @@ const ArtSlider = () => {
   const [itemArr, setItemArr] = useState<unknown[]>([]);
 
   useEffect(() => {
-    const ogArrDupe = [...originalArtArray];
-    const newArr = [...ogArrDupe, ...ogArrDupe];
+    if (itemArr.length > 0) {
+      moveSlider(true, true);
+    } else {
+      const ogArrDupe = [...originalArtArray];
+      const newArr = [...ogArrDupe, ...ogArrDupe];
 
-    setItemArr(newArr);
-
-    // const middlePoint = newArr.length / 2;
-
-    // setActiveItem(newArr[Math.ceil(middlePoint - 1)]);
-    // setQue(ogArrDupe[0]);
-  }, []);
+      setItemArr(newArr);
+    }
+  }, [itemArr]);
 
   gsap.registerPlugin(useGSAP);
 
@@ -36,37 +35,34 @@ const ArtSlider = () => {
 
   const moveSlider = contextSafe(
     useCallback(
-      (right?: boolean) => {
-        const activeSlide = gsap.utils.toArray<HTMLDivElement>(
-          `.slide-${activeItem}`,
+      (right?: boolean, instant?: boolean) => {
+        const indexChange = instant ? 0 : right ? 1 : -1;
+        const halfOfSlide = 100;
+
+        const currentItem = itemArr[
+          itemArr.findIndex((item) => item === activeItem) + indexChange
+        ] as string;
+        setActiveItem(currentItem);
+
+        const newActiveSlide = gsap.utils.toArray<HTMLDivElement>(
+          `.slide-${currentItem}`,
         )[1];
 
         const q = gsap.utils.selector(container);
         const slider = q<HTMLDivElement>(".slider")[0];
-        let centerSliderWidth = container.current?.offsetWidth || 0;
-        centerSliderWidth = centerSliderWidth / 2;
-        const activeSlideOffset = activeSlide.offsetLeft;
+        let halfSliderContWidth = container.current?.offsetWidth || 0;
+        halfSliderContWidth = halfSliderContWidth / 2;
+        const moveX =
+          -newActiveSlide.offsetLeft + halfSliderContWidth - halfOfSlide;
 
-        gsap.to(slider, {
-          x: -activeSlideOffset + centerSliderWidth - 100,
-          ease: "circ.inOut",
-          onComplete: () => {
-            const currentIndex = itemArr.findIndex(
-              (item) => item === activeItem,
-            );
-            setActiveItem(itemArr[currentIndex + 1] as string);
-          },
-        });
-
-        // gsap.to(".slider", {
-        //   x,
-        //   ease: "circ.inOut",
-        //   onComplete: () => {
-        //     if (right) {
-        //     } else {
-        //     }
-        //   },
-        // });
+        if (instant) {
+          gsap.set(slider, { x: moveX });
+        } else {
+          gsap.to(slider, {
+            x: moveX,
+            ease: "circ.inOut",
+          });
+        }
       },
       [inQue, activeItem, itemArr],
     ),
