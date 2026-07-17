@@ -13,20 +13,38 @@ const ArtSlider = () => {
   const [itemArr, setItemArr] = useState<unknown[]>([]);
 
   useEffect(() => {
-    if (itemArr.length > 0) {
+    const calculateDim = () => {
       moveSlider(true, true);
+    };
+
+    if (itemArr.length > 0) {
+      calculateDim();
     } else {
       const ogArrDupe = [...originalArtArray];
       const newArr = [...ogArrDupe, ...ogArrDupe];
 
       setItemArr(newArr);
     }
+
+    window.addEventListener("resize", calculateDim);
+
+    // 5. CRITICAL: Clean up the listener when the component unmounts
+    return () => {
+      window.removeEventListener("resize", calculateDim);
+    };
   }, [itemArr]);
 
   gsap.registerPlugin(useGSAP);
 
   const { contextSafe } = useGSAP(
     () => {
+      // const tl = gsap.timeline();
+      // tl.to(".slider", {
+      //   xPercent: -50,
+      //   ease: "none",
+      //   duration: 10,
+      //   repeat: -1,
+      // });
       // Move the whole slider by a slide's width + horizontal margins
       // Put the spliced item to a que. And append or prepend to whichever direction we are going. Splice after every move
     },
