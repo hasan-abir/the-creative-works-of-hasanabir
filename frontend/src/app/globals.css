@@ -156,6 +156,10 @@ body {
   @apply w-1 h-1 inline-block bg-dark-50;
 }
 
+.swiper-slide.swiper-slide-active {
+  background-color: #fd3737;
+}
+
 @supports (height: 100dvh) {
   .h-screen {
     height: 100dvh;
