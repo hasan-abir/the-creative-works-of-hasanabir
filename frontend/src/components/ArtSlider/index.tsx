@@ -14,11 +14,15 @@ const ArtSlider = () => {
   useEffect(() => {
     if (container.current) {
       new Swiper(".swiper", {
-        slidesPerView: 5,
+        slidesPerView: "auto",
         loop: true,
         centeredSlides: true,
-        initialSlide: 0,
+        initialSlide: 3,
         spaceBetween: 8,
+        slidesOffsetAfter: 64,
+        slidesOffsetBefore: 64,
+        shortSwipes: false,
+        longSwipesMs: 200,
       });
     }
   }, []);
