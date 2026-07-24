@@ -2,6 +2,7 @@
 
 import ArtSliderMarkup from "@/components/ArtSlider/markup";
 import { useEffect, useRef, useState } from "react";
+import { FreeMode } from "swiper/modules";
 import Swiper from "swiper";
 import "swiper/css";
 
@@ -14,15 +15,22 @@ const ArtSlider = () => {
   useEffect(() => {
     if (container.current) {
       new Swiper(".swiper", {
-        slidesPerView: "auto",
+        slidesPerView: 5,
         loop: true,
+        loopAddBlankSlides: true,
         centeredSlides: true,
         initialSlide: 3,
         spaceBetween: 8,
         slidesOffsetAfter: 64,
         slidesOffsetBefore: 64,
-        shortSwipes: false,
-        longSwipesMs: 200,
+        touchRatio: 0.3,
+        freeMode: {
+          enabled: true,
+          momentumVelocityRatio: 0.2,
+          momentumRatio: 0.2,
+          sticky: true,
+        },
+        modules: [FreeMode],
       });
     }
   }, []);

@@ -20,7 +20,7 @@ const Slide = ({ onClick, isActive, item }: Props) => {
       onClick={onClick}
       ref={container}
     >
-      <p className="w-[200px] h-[350px] text-center p-8 text-3xl font-bold">
+      <p className="h-[50vh] text-center p-8 text-3xl font-bold">
         {item as string}
       </p>
     </div>
