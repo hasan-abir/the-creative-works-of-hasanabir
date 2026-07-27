@@ -17,12 +17,12 @@ const ArtSlider = () => {
       new Swiper(".swiper", {
         slidesPerView: 5,
         loop: true,
-        loopAddBlankSlides: true,
-        centeredSlides: true,
-        initialSlide: 3,
+        // loopAddBlankSlides: true,
+        // centeredSlides: true,
+        // initialSlide: 3,
         spaceBetween: 8,
-        slidesOffsetAfter: 64,
-        slidesOffsetBefore: 64,
+        // slidesOffsetAfter: 64,
+        // slidesOffsetBefore: 64,
         touchRatio: 0.3,
         freeMode: {
           enabled: true,
