@@ -156,7 +156,11 @@ body {
   @apply w-1 h-1 inline-block bg-dark-50;
 }
 
-.swiper-slide.swiper-slide-active {
+.swiper-slide > * {
+  transition: background-color 0.2s;
+}
+
+.swiper-slide.swiper-slide-active > * {
   background-color: #fd3737;
 }
 

@@ -15,12 +15,8 @@ const Slide = ({ onClick, isActive, item }: Props) => {
   useGSAP(() => {}, { scope: container, dependencies: [isActive] });
 
   return (
-    <div
-      className="swiper-slide bg-gray-700 text-light-50 flex-shrink-0 flex justify-center uppercase"
-      onClick={onClick}
-      ref={container}
-    >
-      <p className="h-[50vh] text-center p-8 text-3xl font-bold">
+    <div className="swiper-slide" onClick={onClick} ref={container}>
+      <p className="h-[50vh] text-center p-8 text-3xl font-bold  bg-gray-700 text-light-50 uppercase">
         {item as string}
       </p>
     </div>

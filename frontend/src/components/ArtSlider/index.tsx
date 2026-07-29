@@ -2,7 +2,7 @@
 
 import ArtSliderMarkup from "@/components/ArtSlider/markup";
 import { useEffect, useRef, useState } from "react";
-import { FreeMode } from "swiper/modules";
+import { FreeMode, Scrollbar } from "swiper/modules";
 import Swiper from "swiper";
 import "swiper/css";
 
@@ -18,19 +18,19 @@ const ArtSlider = () => {
         slidesPerView: 5,
         loop: true,
         // loopAddBlankSlides: true,
-        // centeredSlides: true,
+        centeredSlides: true,
         // initialSlide: 3,
-        spaceBetween: 8,
+        spaceBetween: 4,
         // slidesOffsetAfter: 64,
         // slidesOffsetBefore: 64,
-        touchRatio: 0.3,
-        freeMode: {
-          enabled: true,
-          momentumVelocityRatio: 0.2,
-          momentumRatio: 0.2,
-          sticky: true,
-        },
-        modules: [FreeMode],
+        // touchRatio: 0.3,
+        // freeMode: {
+        //   enabled: true,
+        //   momentumVelocityRatio: 0.2,
+        //   momentumRatio: 0.2,
+        //   sticky: true,
+        // },
+        modules: [Scrollbar],
       });
     }
   }, []);

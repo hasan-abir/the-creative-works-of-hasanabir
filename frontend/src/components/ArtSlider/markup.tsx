@@ -11,18 +11,14 @@ interface Props {
 const ArtSliderMarkup = ({ refObj, itemArr }: Props) => {
   return (
     <>
-      <section
-        className="slider-container overflow-hidden relative h-[350px]"
-        ref={refObj}
-      >
-        <div className="swiper">
-          <div className="swiper-wrapper">
-            {itemArr.map((item, i) => (
-              <Slide item={item} key={i} />
-            ))}
-          </div>
+      <div className="swiper" ref={refObj}>
+        <div className="swiper-wrapper">
+          {itemArr.map((item, i) => (
+            <Slide item={item} key={i} />
+          ))}
         </div>
-      </section>
+        <div className="swiper-scrollbar"></div>
+      </div>
     </>
   );
 };
