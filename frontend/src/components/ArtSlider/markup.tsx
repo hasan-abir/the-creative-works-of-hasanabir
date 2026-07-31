@@ -17,7 +17,6 @@ const ArtSliderMarkup = ({ refObj, itemArr }: Props) => {
             <Slide item={item} key={i} />
           ))}
         </div>
-        <div className="swiper-scrollbar"></div>
       </div>
     </>
   );
