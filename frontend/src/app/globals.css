@@ -156,12 +156,15 @@ body {
   @apply w-1 h-1 inline-block bg-dark-50;
 }
 
-.swiper-slide > * {
-  transition: background-color 0.2s;
+.swiper-slide > * > * {
+  transition:
+    background-color 0.2s,
+    height 0.2s;
 }
 
-.swiper-slide.swiper-slide-active > * {
+.swiper-slide-active > * > * {
   background-color: #fd3737;
+  height: 100%;
 }
 
 @supports (height: 100dvh) {
