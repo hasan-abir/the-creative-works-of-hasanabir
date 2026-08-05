@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 
 interface Props {
   item: unknown;
@@ -7,9 +8,20 @@ interface Props {
 const Slide = ({ item }: Props) => {
   return (
     <div className="h-[50vh] flex items-end">
-      <p className="h-80 w-full text-center p-8 text-3xl font-bold  bg-gray-700 text-light-50 uppercase">
-        {item as string}
-      </p>
+      <div className="h-80 w-full overflow-hidden">
+        <Image
+          className="h-full w-auto object-cover"
+          width="0"
+          height="0"
+          sizes="100vw"
+          src={`https://picsum.photos/seed/${item as string}/200/300?grayscale`}
+          alt="random"
+        />
+      </div>
+
+      {/* <p className="h-80 w-full text-center p-8 text-3xl font-bold  bg-gray-700 text-light-50 uppercase"> */}
+      {/* {item as string} */}
+      {/* </p> */}
     </div>
   );
 };

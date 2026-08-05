@@ -157,13 +157,10 @@ body {
 }
 
 .swiper-slide > * > * {
-  transition:
-    background-color 0.2s,
-    height 0.2s;
+  transition: height 0.5s;
 }
 
 .swiper-slide-active > * > * {
-  background-color: #fd3737;
   height: 100%;
 }
 

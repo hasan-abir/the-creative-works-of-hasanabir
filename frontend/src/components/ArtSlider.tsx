@@ -13,6 +13,11 @@ const ArtSlider = () => {
       slidesPerView={5}
       loop={true}
       centeredSlides={true}
+      slidesOffsetAfter={64}
+      slidesOffsetBefore={64}
+      speed={1000}
+      grabCursor={true}
+      touchRatio={0.2}
     >
       {originalArtArray.map((item, i) => (
         <SwiperSlide key={i}>
