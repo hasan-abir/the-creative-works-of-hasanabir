@@ -7,10 +7,10 @@ interface Props {
 
 const Slide = ({ item }: Props) => {
   return (
-    <div className="h-[50vh] flex items-end">
+    <div className="h-[400px] flex items-end justify-center">
       <div className="h-80 w-full overflow-hidden">
         <Image
-          className="h-full w-auto object-cover"
+          className="h-full w-full object-cover"
           width="0"
           height="0"
           sizes="100vw"

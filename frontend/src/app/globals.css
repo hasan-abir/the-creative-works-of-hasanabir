@@ -156,12 +156,17 @@ body {
   @apply w-1 h-1 inline-block bg-dark-50;
 }
 
+.swiper-wrapper {
+  transition-timing-function: cubic-bezier(0.5, 0.24, 0.2, 1.03) !important;
+}
+
 .swiper-slide > * > * {
-  transition: height 0.5s;
+  transition: height 0.5s cubic-bezier(0.66, 0.22, 0.34, 0.93);
 }
 
 .swiper-slide-active > * > * {
   height: 100%;
+  width: 600px;
 }
 
 @supports (height: 100dvh) {
