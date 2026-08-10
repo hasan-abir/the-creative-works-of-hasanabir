@@ -161,12 +161,23 @@ body {
 }
 
 .swiper-slide > * > * {
-  transition: height 0.5s cubic-bezier(0.66, 0.22, 0.34, 0.93);
+  transition: height 1s cubic-bezier(0.66, 0.22, 0.34, 0.93);
+}
+
+.swiper-slide img {
+  transition:
+    width 0.5s cubic-bezier(0.66, 0.22, 0.34, 0.93),
+    height 0.5s cubic-bezier(0.66, 0.22, 0.34, 0.93);
 }
 
 .swiper-slide-active > * > * {
   height: 100%;
   width: 600px;
+}
+
+.swiper-slide-active img {
+  height: 100%;
+  width: 100%;
 }
 
 @supports (height: 100dvh) {

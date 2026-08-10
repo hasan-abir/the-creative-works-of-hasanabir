@@ -26,12 +26,10 @@ const Home = async ({
     notFound();
   }
 
-  // Practice beautiful animations here
-
   return (
     <div className="page-container min-h-screen px-6">
       <HomeHero />
-
+      <pre>{JSON.stringify(content)}</pre>
       <ArtSlider />
     </div>
   );

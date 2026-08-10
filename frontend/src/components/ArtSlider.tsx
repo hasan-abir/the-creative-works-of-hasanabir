@@ -10,7 +10,7 @@ const ArtSlider = () => {
   return (
     <Swiper
       spaceBetween={8}
-      slidesPerView={5}
+      slidesPerView={3}
       loop={true}
       centeredSlides={true}
       slidesOffsetAfter={64}
