@@ -3,10 +3,13 @@
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Slide from "@/components/Slide";
+import { Painting } from "@/lib/remark/getContent";
 
-const ArtSlider = () => {
-  const originalArtArray = "1,2,3,4,5,6,7,8,9,10".split(",");
+interface Props {
+  content: Painting[];
+}
 
+const ArtSlider = ({ content }: Props) => {
   return (
     <Swiper
       spaceBetween={8}
@@ -19,7 +22,7 @@ const ArtSlider = () => {
       grabCursor={true}
       touchRatio={0.2}
     >
-      {originalArtArray.map((item, i) => (
+      {content.map((item, i) => (
         <SwiperSlide key={i}>
           <Slide item={item} />
         </SwiperSlide>

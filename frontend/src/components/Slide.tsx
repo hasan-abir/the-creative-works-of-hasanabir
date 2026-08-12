@@ -1,8 +1,9 @@
 "use client";
+import { Painting } from "@/lib/remark/getContent";
 import Image from "next/image";
 
 interface Props {
-  item: unknown;
+  item: Painting;
 }
 
 const Slide = ({ item }: Props) => {
@@ -14,7 +15,7 @@ const Slide = ({ item }: Props) => {
           width="0"
           height="0"
           sizes="100vw"
-          src={`https://picsum.photos/seed/${item as string}/200/300?grayscale`}
+          src={item.thumbnail}
           alt="random"
         />
       </div>

@@ -2,6 +2,7 @@ import ArtSlider from "@/components/ArtSlider";
 import HomeHero from "@/components/HomeHero";
 import {
   Book,
+  getAllContentData,
   getContentData,
   getTheLatestContent,
   Painting,
@@ -14,23 +15,29 @@ const Home = async ({
 }: {
   searchParams: { [key: string]: string | undefined };
 }) => {
-  let contentFolder = searchParams["highlight"];
+  // let contentFolder = searchParams["highlight"];
+  let paintings = await getAllContentData<Painting>("paintings");
+  paintings.sort((a, b) => {
+    const aDate = new Date(b.date_created).getTime();
+    const bDate = new Date(a.date_created).getTime();
 
-  if (!contentFolder) {
-    contentFolder = getTheLatestContent();
-  }
+    return aDate - bDate;
+  });
 
-  const content = await getContentData<Book | Painting | Song>(contentFolder);
+  // if (!contentFolder) {
+  //   contentFolder = getTheLatestContent();
+  // }
 
-  if (!content) {
-    notFound();
-  }
+  // const content = await getContentData<Book | Painting | Song>(contentFolder);
+
+  // if (!content) {
+  //   notFound();
+  // }
 
   return (
     <div className="page-container min-h-screen px-6">
       <HomeHero />
-      <pre>{JSON.stringify(content)}</pre>
-      <ArtSlider />
+      <ArtSlider content={[...paintings]} />
     </div>
   );
 };
