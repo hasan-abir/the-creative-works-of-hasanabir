@@ -3,10 +3,10 @@
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Slide from "@/components/Slide";
-import { Painting } from "@/lib/remark/getContent";
+import { Book, Painting, Song } from "@/lib/remark/getContent";
 
 interface Props {
-  content: Painting[];
+  content: (Painting | Book | Song)[];
 }
 
 const ArtSlider = ({ content }: Props) => {

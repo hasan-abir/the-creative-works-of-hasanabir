@@ -11,7 +11,7 @@ export interface Book {
   content: string;
   content_short: string;
   published_date: string;
-  cover_image: string;
+  thumbnail: string;
   amazon_link: string;
   category: string;
   format: string;

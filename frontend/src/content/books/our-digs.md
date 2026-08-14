@@ -1,7 +1,7 @@
 ---
 title: "Our Digs"
 published_date: 2026-01-01
-cover_image: "/covers/our-digs-cover.jpg"
+thumbnail: "/covers/our-digs-cover.jpg"
 amazon_link: "https://mybook.to/OurDigs/"
 category: "Poetry"
 format: "Poetry Collection / Hardcover"
