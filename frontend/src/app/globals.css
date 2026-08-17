@@ -172,7 +172,6 @@ body {
 
 .swiper-slide-active > * > * {
   height: 100%;
-  width: 600px;
 }
 
 .swiper-slide-active img {

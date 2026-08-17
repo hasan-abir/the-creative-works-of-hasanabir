@@ -8,11 +8,11 @@ interface Props {
 
 const Slide = ({ item }: Props) => {
   return (
-    <div className="h-[400px] flex items-end justify-center">
+    <div className="h-[400px] flex items-end justify-center bg-gray-200">
       <div className="h-80 w-full overflow-hidden flex items-center">
         {Object.keys(item).includes("thumbnail") ? (
           <Image
-            className="h-[300%] w-[300%] object-cover"
+            className="h-full w-full object-contain"
             width="0"
             height="0"
             sizes="100vw"
