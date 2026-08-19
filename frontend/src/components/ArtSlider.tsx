@@ -13,7 +13,7 @@ const ArtSlider = ({ content }: Props) => {
   return (
     <Swiper
       spaceBetween={8}
-      slidesPerView={3}
+      slidesPerView="auto"
       loop={true}
       centeredSlides={true}
       slidesOffsetAfter={64}
