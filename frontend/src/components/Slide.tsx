@@ -8,8 +8,8 @@ interface Props {
 
 const Slide = ({ item }: Props) => {
   return (
-    <div className="h-[400px] flex items-end justify-center bg-gray-200">
-      <div className="h-full overflow-hidden flex items-center">
+    <div className="h-[400px] flex items-end justify-center">
+      <div className="h-full overflow-hidden flex items-center opacity-50">
         {Object.keys(item).includes("thumbnail") ? (
           <Image
             className="h-full w-auto object-contain"
@@ -19,7 +19,11 @@ const Slide = ({ item }: Props) => {
             src={(item as Book | Painting).thumbnail}
             alt="random"
           />
-        ) : null}
+        ) : (
+          <div className="bg-gray-700 h-full w-[200px] text-light-50">
+            {item.title}
+          </div>
+        )}
       </div>
 
       {/* <p className="h-80 w-full text-center p-8 text-3xl font-bold  bg-gray-700 text-light-50 uppercase"> */}

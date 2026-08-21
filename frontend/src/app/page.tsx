@@ -31,6 +31,14 @@ const Home = async ({
     return aDate - bDate;
   });
 
+  let songs = await getAllContentData<Song>("music");
+  songs.sort((a, b) => {
+    const aDate = new Date(b.date_created).getTime();
+    const bDate = new Date(a.date_created).getTime();
+
+    return aDate - bDate;
+  });
+
   // if (!contentFolder) {
   //   contentFolder = getTheLatestContent();
   // }
@@ -42,9 +50,9 @@ const Home = async ({
   // }
 
   return (
-    <div className="page-container min-h-screen px-6">
+    <div className="page-container min-h-screen">
       <HomeHero />
-      <ArtSlider content={[...books, ...paintings]} />
+      <ArtSlider content={[...paintings, ...songs, ...books]} />
     </div>
   );
 };

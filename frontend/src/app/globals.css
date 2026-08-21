@@ -133,8 +133,12 @@ body {
   }
 }
 
+.centered-container {
+  @apply max-w-7xl mx-auto px-6 sm:px-8;
+}
+
 .page-container {
-  @apply max-w-7xl mx-auto py-5 sm:py-24  sm:px-8 overflow-x-hidden;
+  @apply py-5 sm:py-24;
 }
 
 .rich-text-container > div > p:last-child {
@@ -165,7 +169,7 @@ body {
 }
 
 .swiper-slide > * > * {
-  transition: height 1s cubic-bezier(0.66, 0.22, 0.34, 0.93);
+  transition: opacity 1s cubic-bezier(0.66, 0.22, 0.34, 0.93);
 }
 
 .swiper-slide img {
@@ -174,9 +178,9 @@ body {
     height 0.5s cubic-bezier(0.66, 0.22, 0.34, 0.93);
 }
 
-/* .swiper-slide-active > * > * {
-  height: 100%;
-} */
+.swiper-slide-active > * > * {
+  opacity: 100%;
+}
 /* 
 .swiper-slide-active img {
   height: 100%;
