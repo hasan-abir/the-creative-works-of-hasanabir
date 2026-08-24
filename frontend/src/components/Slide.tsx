@@ -1,5 +1,6 @@
 "use client";
 import { Book, Painting, Song } from "@/lib/remark/getContent";
+import AudioPlayer from "@/components/AudioPlayer";
 import Image from "next/image";
 
 interface Props {
@@ -8,8 +9,8 @@ interface Props {
 
 const Slide = ({ item }: Props) => {
   return (
-    <div className="h-[400px] flex items-end justify-center">
-      <div className="h-full overflow-hidden flex items-center opacity-50">
+    <div className="h-[400px] flex items-end justify-center bg-dark-50">
+      <div className="h-full overflow-hidden flex items-center opacity-30">
         {Object.keys(item).includes("thumbnail") ? (
           <Image
             className="h-full w-auto object-contain"
@@ -20,15 +21,11 @@ const Slide = ({ item }: Props) => {
             alt="random"
           />
         ) : (
-          <div className="bg-gray-700 h-full w-[200px] text-light-50">
-            {item.title}
+          <div className="bg-dark-50 h-full w-[400px] text-light-50">
+            <AudioPlayer song={item as Song} />
           </div>
         )}
       </div>
-
-      {/* <p className="h-80 w-full text-center p-8 text-3xl font-bold  bg-gray-700 text-light-50 uppercase"> */}
-      {/* {item as string} */}
-      {/* </p> */}
     </div>
   );
 };

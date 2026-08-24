@@ -145,14 +145,14 @@ const AudioPlayer = ({ song, fullWidth = false }: Props) => {
   }, [song, onLoadedMetadata]); // re-run when src changes
 
   let classList =
-    "p-3 sm:p-5 border border-gray-300  rounded-[16px] h-[250px] flex flex-col justify-between";
+    "p-3 sm:p-5 border border-gray-300  rounded-[16px] flex flex-col justify-between";
 
   classList += fullWidth ? " w-full sm:w-[385px]" : " w-[150px] sm:w-[385px]";
 
   return (
     <>
       <div className={classList}>
-        <div className="flex items-center sm:items-start flex-col sm:flex-row">
+        <div className="flex flex-col sm:flex-row">
           <CTABtn
             onClick={songPlaying ? pauseAudio : playAudio}
             extraClasses="flex-shrink-0 w-[50px] h-[50px] sm:w-[100px] sm:h-[100px] flex justify-center items-center"
