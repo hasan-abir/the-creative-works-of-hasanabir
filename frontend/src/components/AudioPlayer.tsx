@@ -151,7 +151,63 @@ const AudioPlayer = ({ song, fullWidth = false }: Props) => {
 
   return (
     <>
-      <div className={classList}>
+      <div>
+        <audio
+          preload="metadata"
+          onLoadedMetadata={onLoadedMetadata}
+          onTimeUpdate={() => onLoadedMetadata()}
+          ref={audioRef}
+        >
+          <source src={song.song_preview} type="audio/mpeg" />
+        </audio>
+        <CTABtn
+          onClick={songPlaying ? pauseAudio : playAudio}
+          extraClasses="flex-shrink-0 w-[50px] h-[50px] sm:w-[100px] sm:h-[100px] flex justify-center items-center"
+          rounded="3xl"
+        >
+          {calculateProgress >= 100 ? (
+            <icons.ResetIcon />
+          ) : songPlaying ? (
+            <icons.PauseIcon />
+          ) : (
+            <icons.PlayIcon />
+          )}
+        </CTABtn>
+        <button
+          className="w-3 sm:w-4 bg-light-50"
+          onClick={() =>
+            audioRef &&
+            audioRef.current &&
+            playAudio(audioRef.current.currentTime - 5)
+          }
+        >
+          <icons.RewindIcon />
+        </button>
+        <div
+          className="bg-dark-200 h-[5px] overflow-hidden my-6 cursor-pointer rounded-3xl"
+          onClick={playAudioFromPosition}
+        >
+          <div
+            className="bg-primary-100 h-24 transition-transform origin-left"
+            style={{
+              transform: `translateX(calc(-100% + ${calculateProgress}%))`,
+            }}
+          ></div>
+        </div>
+        <p className="text-center flex flex-col justify-center items-center sm:flex-row">
+          <span className="text-xs sm:text-base sm:text-left inline-block w-[50px] sm:w-[60px]">
+            {duration}
+          </span>
+          <span className="sm:inline-block hidden">/</span>
+          <span
+            className="text-xs sm:text-base sm:text-right inline-block w-[50px] sm:w-[60px]"
+            onClick={pauseAudio}
+          >
+            {totalDuration}
+          </span>
+        </p>
+      </div>
+      {/* <div className={classList}>
         <div className="flex flex-col sm:flex-row">
           <CTABtn
             onClick={songPlaying ? pauseAudio : playAudio}
@@ -267,7 +323,7 @@ const AudioPlayer = ({ song, fullWidth = false }: Props) => {
           className="fixed top-0 left-0 w-full h-screen z-40"
           onClick={() => setVolControl(false)}
         ></div>
-      ) : null}
+      ) : null} */}
     </>
   );
 };
