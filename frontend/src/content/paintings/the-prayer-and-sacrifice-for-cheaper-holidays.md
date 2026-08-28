@@ -1,5 +1,6 @@
 ---
 title: "The Prayer & Sacrifice for Cheaper Holidays"
+landscape: false
 date_created: 2025-03-01
 thumbnail: "/paintings/theprayerandsacrificeforcheaperholidays.jpg"
 category: "Visual Art"

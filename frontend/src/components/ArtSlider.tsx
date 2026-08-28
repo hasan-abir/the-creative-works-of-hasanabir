@@ -12,7 +12,7 @@ interface Props {
 const ArtSlider = ({ content }: Props) => {
   return (
     <Swiper
-      spaceBetween={8}
+      spaceBetween={0}
       slidesPerView="auto"
       loop={true}
       centeredSlides={true}

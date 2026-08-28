@@ -1,6 +1,7 @@
 ---
 title: "The Most Upsetting Memorial"
 date_created: 2025-09-01
+landscape: true
 thumbnail: "/paintings/themostupsettingmemorial.jpg"
 category: "Visual Art"
 medium: "Acrylic on Watercolor Paper"

@@ -1,6 +1,7 @@
 ---
 title: "Our Chores"
 published_date: 2026-01-01
+landscape: false
 thumbnail: "/covers/our-chores-cover.jpg"
 amazon_link: "https://mybook.to/OurChores/"
 category: "Literary Fiction"

@@ -1,6 +1,7 @@
 ---
 title: "Sudden Divorce"
 date_created: 2025-11-01
+landscape: false
 thumbnail: "/paintings/suddendivorce.jpg"
 category: "Visual Art"
 medium: "Acrylic on Watercolor Paper"

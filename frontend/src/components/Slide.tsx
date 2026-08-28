@@ -8,8 +8,13 @@ interface Props {
 }
 
 const Slide = ({ item }: Props) => {
+  const landscape = Object.keys(item).includes("landscape")
+    ? (item as Book | Painting).landscape
+    : false;
+
   return (
     <div className="h-[400px] flex items-end justify-center bg-dark-50">
+      <p>{landscape ? "Yes" : "No"}</p>
       <div className="h-full overflow-hidden flex items-center opacity-30">
         {Object.keys(item).includes("thumbnail") ? (
           <Image
@@ -18,7 +23,7 @@ const Slide = ({ item }: Props) => {
             height="0"
             sizes="100vw"
             src={(item as Book | Painting).thumbnail}
-            alt="random"
+            alt={item.title}
           />
         ) : (
           <div className="bg-dark-50 h-full w-[400px] text-light-50">

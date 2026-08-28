@@ -1,6 +1,7 @@
 ---
 title: "Primary"
 date_created: 2026-01-01
+landscape: true
 thumbnail: "/paintings/primary.jpg"
 category: "Visual Art"
 medium: "Canvas"

@@ -1,6 +1,7 @@
 ---
 title: "A Sovereign Sunset"
 date_created: 2026-07-26
+landscape: false
 thumbnail: "/paintings/asovereignsunset.jpg"
 category: "Visual Art"
 medium: "Canvas"

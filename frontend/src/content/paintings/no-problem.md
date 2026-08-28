@@ -1,6 +1,7 @@
 ---
 title: "No Problem"
 date_created: 2025-01-01
+landscape: true
 thumbnail: "/paintings/noproblem.jpg"
 category: "Visual Art"
 medium: "Sketch Paper"

@@ -1,6 +1,7 @@
 ---
 title: "A Juggler's Left Spectrum"
 date_created: 2025-06-01
+landscape: true
 thumbnail: "/paintings/ajugglersleftspectrum.jpg"
 category: "Visual Art"
 medium: "Acrylic on Watercolor Paper"

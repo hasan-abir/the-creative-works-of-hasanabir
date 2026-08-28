@@ -1,6 +1,7 @@
 ---
 title: "Framed and Mirrored"
 date_created: 2026-04-21
+landscape: true
 thumbnail: "/paintings/framed&mirrored.jpg"
 category: "Visual Art"
 medium: "Canvas"

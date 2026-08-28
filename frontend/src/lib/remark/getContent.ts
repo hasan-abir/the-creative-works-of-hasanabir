@@ -8,6 +8,7 @@ const contentDirectory = (folder: string) =>
 export interface Book {
   id: string;
   title: string;
+  landscape: boolean;
   content: string;
   content_short: string;
   published_date: string;
@@ -29,6 +30,7 @@ export interface Painting {
   id: string;
   title: string;
   date_created: string;
+  landscape: boolean;
   thumbnail: string;
   category: string;
   medium: string;

@@ -1,6 +1,7 @@
 ---
 title: "Hair"
 date_created: 2024-12-01
+landscape: true
 thumbnail: "/paintings/hair.jpg"
 category: "Visual Art"
 medium: "Sketch Paper"
