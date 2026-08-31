@@ -13,14 +13,17 @@ const Slide = ({ item }: Props) => {
     : false;
 
   return (
-    <div className="h-[400px] flex items-end justify-center bg-dark-50">
-      <p>{landscape ? "Yes" : "No"}</p>
-      <div className="h-full overflow-hidden flex items-center opacity-30">
+    <div className="h-[500px] flex items-end justify-center">
+      <div
+        className="h-full overflow-hidden flex items-center"
+        style={landscape ? { width: 450 } : { width: 300 }}
+      >
         {Object.keys(item).includes("thumbnail") ? (
           <Image
-            className="h-full w-auto object-contain"
-            width="0"
-            height="0"
+            className="object-contain"
+            layout="fill"
+            // width={500}
+            // height={500}
             sizes="100vw"
             src={(item as Book | Painting).thumbnail}
             alt={item.title}
