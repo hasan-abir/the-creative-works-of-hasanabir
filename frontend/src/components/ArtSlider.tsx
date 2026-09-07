@@ -4,30 +4,37 @@ import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Slide from "@/components/Slide";
 import { Book, Painting, Song } from "@/lib/remark/getContent";
+import { useState } from "react";
 
 interface Props {
   content: (Painting | Book | Song)[];
 }
 
 const ArtSlider = ({ content }: Props) => {
+  const [activeEl, setActiveEl] = useState<Painting | Book | Song>(content[0]);
   return (
-    <Swiper
-      spaceBetween={0}
-      slidesPerView="auto"
-      loop={true}
-      centeredSlides={true}
-      slidesOffsetAfter={64}
-      slidesOffsetBefore={64}
-      speed={1000}
-      grabCursor={true}
-      touchRatio={0.2}
-    >
-      {content.map((item, i) => (
-        <SwiperSlide key={i}>
-          <Slide item={item} />
-        </SwiperSlide>
-      ))}
-    </Swiper>
+    <>
+      <Swiper
+        spaceBetween={0}
+        slidesPerView="auto"
+        loop={true}
+        centeredSlides={true}
+        slidesOffsetAfter={64}
+        slidesOffsetBefore={64}
+        speed={1000}
+        grabCursor={true}
+        touchRatio={0.2}
+        onSlideChange={(swiper) => setActiveEl(content[swiper.realIndex])}
+      >
+        {content.map((item, i) => (
+          <SwiperSlide key={i}>
+            <Slide item={item} />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+
+      <h1>{activeEl.title}</h1>
+    </>
   );
 };
 
