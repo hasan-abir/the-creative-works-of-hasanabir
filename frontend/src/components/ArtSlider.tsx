@@ -5,6 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import Slide from "@/components/Slide";
 import { Book, Painting, Song } from "@/lib/remark/getContent";
 import { useState } from "react";
+import ArtDetail from "@/components/ArtDetail";
 
 interface Props {
   content: (Painting | Book | Song)[];
@@ -33,7 +34,7 @@ const ArtSlider = ({ content }: Props) => {
         ))}
       </Swiper>
 
-      <h1>{activeEl.title}</h1>
+      <ArtDetail item={activeEl} />
     </>
   );
 };
