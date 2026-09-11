@@ -11,7 +11,7 @@ export interface Book {
   landscape: boolean;
   content: string;
   content_short: string;
-  published_date: string;
+  published_date: Date;
   thumbnail: string;
   amazon_link: string;
   category: string;
@@ -29,7 +29,7 @@ export interface Book {
 export interface Painting {
   id: string;
   title: string;
-  date_created: string;
+  date_created: Date;
   landscape: boolean;
   thumbnail: string;
   category: string;
@@ -44,7 +44,7 @@ export interface Painting {
 export interface Song {
   id: string;
   title: string;
-  date_created: string;
+  date_created: Date;
   song_preview: string;
   category: string;
   style: string[];

@@ -2,6 +2,7 @@
 import { Book, Painting, Song } from "@/lib/remark/getContent";
 import AudioPlayer from "@/components/AudioPlayer";
 import Image from "next/image";
+import checkProp from "@/utils/checkProp";
 
 interface Props {
   item: Painting | Book | Song;
@@ -18,7 +19,7 @@ const Slide = ({ item }: Props) => {
         className="h-full overflow-hidden flex items-center relative"
         style={landscape ? { width: 500 } : { width: 300 }}
       >
-        {Object.keys(item).includes("thumbnail") ? (
+        {checkProp(item, "thumbnail") ? (
           <Image
             className="object-contain border-y-2 border-r-2 border-neutral-500 w-full h-auto shadow-lg"
             width={0}
