@@ -36,7 +36,7 @@ const Home = async ({
     const aDate = new Date(b.date_created).getTime();
     const bDate = new Date(a.date_created).getTime();
 
-    return aDate - bDate;
+    return bDate - aDate;
   });
 
   // if (!contentFolder) {
