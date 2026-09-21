@@ -2,7 +2,7 @@
 
 import React, { useCallback, useState } from "react";
 
-enum Categories {
+export enum Categories {
   Highlight = "highlight",
   Books = "books",
   Paintings = "paintings",

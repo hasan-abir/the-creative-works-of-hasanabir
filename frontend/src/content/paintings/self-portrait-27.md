@@ -1,5 +1,5 @@
 ---
-title: "Self Portrait '25"
+title: "Self Portrait 27"
 date_created: 2026-09-13
 landscape: false
 thumbnail: "/paintings/selfportrait25.jpg"

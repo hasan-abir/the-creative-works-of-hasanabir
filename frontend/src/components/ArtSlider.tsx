@@ -4,17 +4,53 @@ import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Slide from "@/components/Slide";
 import { Book, Painting, Song } from "@/lib/remark/getContent";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import ArtDetail from "@/components/ArtDetail";
+import CategoriesList, { Categories } from "@/components/CategoriesList";
 
 interface Props {
-  content: (Painting | Book | Song)[];
+  paintings: Painting[];
+  books: Book[];
+  songs: Song[];
 }
 
-const ArtSlider = ({ content }: Props) => {
+const ArtSlider = ({ paintings, books, songs }: Props) => {
+  let [content, setContent] = useState<(Book | Painting | Song)[]>([
+    ...paintings,
+    ...songs,
+    ...books,
+  ]);
+
   const [activeEl, setActiveEl] = useState<Painting | Book | Song>(content[0]);
+
+  const onSelectCat = useCallback((cat: Categories) => {
+    let categorizedContent = [];
+
+    switch (cat) {
+      case Categories.Highlight:
+        categorizedContent = [...paintings, ...songs, ...books];
+        break;
+      case Categories.Books:
+        categorizedContent = [...books];
+        break;
+      case Categories.Paintings:
+        categorizedContent = [...paintings];
+        break;
+      case Categories.Songs:
+        categorizedContent = [...songs];
+        break;
+      default:
+        categorizedContent = [...paintings, ...songs, ...books];
+    }
+
+    setContent(categorizedContent);
+
+    setActiveEl(categorizedContent[0]);
+  }, []);
+
   return (
     <>
+      <CategoriesList onSelectCat={onSelectCat} />
       <Swiper
         spaceBetween={0}
         slidesPerView="auto"

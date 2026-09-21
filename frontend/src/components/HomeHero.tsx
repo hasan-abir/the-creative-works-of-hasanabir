@@ -1,6 +1,5 @@
 "use client";
 
-import CategoriesList from "@/components/CategoriesList";
 import { headingFont } from "@/utils/fonts";
 
 interface Props {}
@@ -22,8 +21,6 @@ const HomeHero = ({}: Props) => {
         <span className="text-light-100">&</span>
         <span className="mx-2">literature</span>
       </p>
-
-      <CategoriesList />
     </section>
   );
 };

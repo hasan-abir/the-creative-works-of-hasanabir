@@ -52,7 +52,7 @@ const Home = async ({
   return (
     <div className="page-container min-h-screen">
       <HomeHero />
-      <ArtSlider content={[...paintings, ...songs, ...books]} />
+      <ArtSlider paintings={paintings} songs={songs} books={books} />
     </div>
   );
 };
