@@ -8,7 +8,7 @@ interface Props {
   onClick?: (arg?: any) => void;
   href?: string;
   newTab?: boolean;
-  rounded?: "xl" | "3xl";
+  rounded?: "xl" | "2xl";
 }
 
 const CTABtn = ({
@@ -25,7 +25,7 @@ const CTABtn = ({
 
   const roundedClasses = {
     xl: "rounded-xl",
-    "3xl": "rounded-3xl",
+    "2xl": "rounded-2xl",
   };
 
   classList += ` ${roundedClasses[rounded]}`;

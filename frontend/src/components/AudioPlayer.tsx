@@ -145,13 +145,13 @@ const AudioPlayer = ({ song, fullWidth = false }: Props) => {
   }, [song, onLoadedMetadata]); // re-run when src changes
 
   let classList =
-    "p-3 sm:p-5 border border-gray-300  rounded-[16px] flex flex-col justify-between";
+    "p-3 sm:p-5 border border-gray-300 rounded-[16px] flex flex-col justify-between";
 
   classList += fullWidth ? " w-full sm:w-[385px]" : " w-[150px] sm:w-[385px]";
 
   return (
     <>
-      <div>
+      <div className="px-8 border-y-2 border-r-2 border-neutral h-full flex flex-col justify-center items-center">
         <audio
           preload="metadata"
           onLoadedMetadata={onLoadedMetadata}
@@ -163,7 +163,7 @@ const AudioPlayer = ({ song, fullWidth = false }: Props) => {
         <CTABtn
           onClick={songPlaying ? pauseAudio : playAudio}
           extraClasses="flex-shrink-0 w-[50px] h-[50px] sm:w-[100px] sm:h-[100px] flex justify-center items-center"
-          rounded="3xl"
+          rounded="2xl"
         >
           {calculateProgress >= 100 ? (
             <icons.ResetIcon />
@@ -184,11 +184,11 @@ const AudioPlayer = ({ song, fullWidth = false }: Props) => {
           <icons.RewindIcon />
         </button>
         <div
-          className="bg-dark-200 h-[5px] overflow-hidden my-6 cursor-pointer rounded-3xl"
+          className="bg-dark-100 w-full h-[5px] overflow-hidden my-6 cursor-pointer rounded-3xl"
           onClick={playAudioFromPosition}
         >
           <div
-            className="bg-primary-100 h-24 transition-transform origin-left"
+            className="bg-light-100 h-24 transition-transform origin-left"
             style={{
               transform: `translateX(calc(-100% + ${calculateProgress}%))`,
             }}

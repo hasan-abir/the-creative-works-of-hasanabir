@@ -21,7 +21,7 @@ const Slide = ({ item }: Props) => {
       >
         {checkProp(item, "thumbnail") ? (
           <Image
-            className="object-contain border-y-2 border-r-2 border-neutral-500 w-full h-auto shadow-lg"
+            className="object-contain border-y-2 border-r-2 border-neutral-500 w-full h-auto"
             width={0}
             height={0}
             sizes="100vw"

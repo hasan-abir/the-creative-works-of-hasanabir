@@ -16,9 +16,9 @@ interface Props {
 
 const ArtSlider = ({ paintings, books, songs }: Props) => {
   let [content, setContent] = useState<(Book | Painting | Song)[]>([
+    // ...books,
+    // ...songs,
     ...paintings,
-    ...songs,
-    ...books,
   ]);
 
   const [activeEl, setActiveEl] = useState<Painting | Book | Song>(content[0]);
