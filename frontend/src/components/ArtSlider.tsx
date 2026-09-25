@@ -20,8 +20,9 @@ const ArtSlider = ({ paintings, books, songs }: Props) => {
     // ...songs,
     ...paintings,
   ]);
-
   const [activeEl, setActiveEl] = useState<Painting | Book | Song>(content[0]);
+
+  let swiperKey = `${Categories.Highlight}-${content.length}`;
 
   const onSelectCat = useCallback((cat: Categories) => {
     let categorizedContent = [];
@@ -46,12 +47,15 @@ const ArtSlider = ({ paintings, books, songs }: Props) => {
     setContent(categorizedContent);
 
     setActiveEl(categorizedContent[0]);
+
+    swiperKey = `${cat}-${content.length}`;
   }, []);
 
   return (
     <>
       <CategoriesList onSelectCat={onSelectCat} />
       <Swiper
+        key={swiperKey}
         spaceBetween={0}
         slidesPerView="auto"
         loop={true}

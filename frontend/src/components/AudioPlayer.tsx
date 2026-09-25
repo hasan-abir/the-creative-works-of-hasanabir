@@ -173,16 +173,6 @@ const AudioPlayer = ({ song, fullWidth = false }: Props) => {
             <icons.PlayIcon />
           )}
         </CTABtn>
-        <button
-          className="w-3 sm:w-4 bg-light-50"
-          onClick={() =>
-            audioRef &&
-            audioRef.current &&
-            playAudio(audioRef.current.currentTime - 5)
-          }
-        >
-          <icons.RewindIcon />
-        </button>
         <div
           className="bg-dark-100 w-full h-[5px] overflow-hidden my-6 cursor-pointer rounded-3xl"
           onClick={playAudioFromPosition}
