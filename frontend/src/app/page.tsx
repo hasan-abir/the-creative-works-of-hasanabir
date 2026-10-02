@@ -9,6 +9,7 @@ import {
   Song,
 } from "@/lib/remark/getContent";
 import { notFound } from "next/navigation";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 const Home = async ({
   searchParams,
@@ -39,20 +40,21 @@ const Home = async ({
     return bDate - aDate;
   });
 
-  // if (!contentFolder) {
-  //   contentFolder = getTheLatestContent();
-  // }
-
-  // const content = await getContentData<Book | Painting | Song>(contentFolder);
-
-  // if (!content) {
-  //   notFound();
-  // }
-
   return (
     <div className="page-container min-h-screen">
-      <HomeHero />
-      <ArtSlider paintings={paintings} songs={songs} books={books} />
+      <div className="flex min-h-screen ml-8 text-xl font-bold text-white">
+        <div className="col-one w-[500px] bg-blue-600">
+          <div className="active">Active Item</div>
+        </div>
+        <div className="col-two flex flex-col flex-1">
+          <div className="slider h-[320px] bg-yellow-400 text-black">
+            Slider
+          </div>
+          <div className="detail bg-red-500 flex-1">Product detail</div>
+        </div>
+      </div>
+      {/* <HomeHero /> */}
+      {/* <ArtSlider paintings={paintings} songs={songs} books={books} /> */}
     </div>
   );
 };
