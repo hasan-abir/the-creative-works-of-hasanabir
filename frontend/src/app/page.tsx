@@ -42,19 +42,8 @@ const Home = async ({
 
   return (
     <div className="page-container min-h-screen">
-      <div className="flex min-h-screen ml-8 text-xl font-bold text-white">
-        <div className="col-one w-[500px] bg-blue-600">
-          <div className="active">Active Item</div>
-        </div>
-        <div className="col-two flex flex-col flex-1">
-          <div className="slider h-[320px] bg-yellow-400 text-black">
-            Slider
-          </div>
-          <div className="detail bg-red-500 flex-1">Product detail</div>
-        </div>
-      </div>
       {/* <HomeHero /> */}
-      {/* <ArtSlider paintings={paintings} songs={songs} books={books} /> */}
+      <ArtSlider paintings={paintings} songs={songs} books={books} />
     </div>
   );
 };

@@ -53,28 +53,56 @@ const ArtSlider = ({ paintings, books, songs }: Props) => {
 
   return (
     <>
-      <CategoriesList onSelectCat={onSelectCat} />
+      {/* <CategoriesList onSelectCat={onSelectCat} /> */}
       <Swiper
-        key={swiperKey}
         spaceBetween={0}
         slidesPerView="auto"
         loop={true}
-        centeredSlides={true}
-        slidesOffsetAfter={64}
-        slidesOffsetBefore={64}
         speed={1000}
         grabCursor={true}
         touchRatio={0.2}
-        onSlideChange={(swiper) => setActiveEl(content[swiper.realIndex])}
       >
         {content.map((item, i) => (
           <SwiperSlide key={i}>
-            <Slide item={item} />
+            <p className="w-[500px] h-[320px] bg-orange-500 border-r-2 border-black">
+              Item {i + 1}
+            </p>
+            {/* <Slide item={item} /> */}
           </SwiperSlide>
         ))}
       </Swiper>
-
-      <ArtDetail item={activeEl} />
+      <div className="flex min-h-screen ml-8 text-xl font-bold text-white overflow-x-hidden">
+        <div className="col-one min-w-[500px] bg-blue-600">
+          <div className="active">Active Item</div>
+        </div>
+        <div className="col-two flex flex-col">
+          <div className="h-[320px] overflow-y-hidden">
+            <div className="slider bg-yellow-400 text-black">
+              <Swiper
+                spaceBetween={0}
+                slidesPerView="auto"
+                loop={true}
+                speed={1000}
+                grabCursor={true}
+                touchRatio={0.2}
+                // onSlideChange={(swiper) => setActiveEl(content[swiper.realIndex])}
+              >
+                {content.map((item, i) => (
+                  <SwiperSlide key={i}>
+                    <p className="w-[500px] h-[320px] bg-orange-500 border-r-2 border-black">
+                      Item {i + 1}
+                    </p>
+                    {/* <Slide item={item} /> */}
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
+          </div>
+          <div className="detail bg-red-500 flex-1">
+            <ArtDetail item={activeEl} />
+          </div>
+        </div>
+      </div>
     </>
   );
 };
