@@ -54,51 +54,32 @@ const ArtSlider = ({ paintings, books, songs }: Props) => {
   return (
     <>
       {/* <CategoriesList onSelectCat={onSelectCat} /> */}
-      <Swiper
-        spaceBetween={0}
-        slidesPerView="auto"
-        loop={true}
-        speed={1000}
-        grabCursor={true}
-        touchRatio={0.2}
-      >
-        {content.map((item, i) => (
-          <SwiperSlide key={i}>
-            <p className="w-[500px] h-[320px] bg-orange-500 border-r-2 border-black">
-              Item {i + 1}
-            </p>
-            {/* <Slide item={item} /> */}
-          </SwiperSlide>
-        ))}
-      </Swiper>
       <div className="flex min-h-screen ml-8 text-xl font-bold text-white overflow-x-hidden">
-        <div className="col-one min-w-[500px] bg-blue-600">
-          <div className="active">Active Item</div>
+        <div className="min-w-[500px] bg-blue-600">
+          <div className="active">{activeEl.title}</div>
         </div>
-        <div className="col-two flex flex-col">
-          <div className="h-[320px] overflow-y-hidden">
-            <div className="slider bg-yellow-400 text-black">
-              <Swiper
-                spaceBetween={0}
-                slidesPerView="auto"
-                loop={true}
-                speed={1000}
-                grabCursor={true}
-                touchRatio={0.2}
-                // onSlideChange={(swiper) => setActiveEl(content[swiper.realIndex])}
-              >
-                {content.map((item, i) => (
-                  <SwiperSlide key={i}>
-                    <p className="w-[500px] h-[320px] bg-orange-500 border-r-2 border-black">
-                      Item {i + 1}
-                    </p>
-                    {/* <Slide item={item} /> */}
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            </div>
+        <div className="flex-1 flex flex-col overflow-x-hidden">
+          <div className="h-[320px] max-w-[2000px] overflow-x-hidden">
+            <Swiper
+              spaceBetween={0}
+              slidesPerView="auto"
+              loop={true}
+              speed={1000}
+              grabCursor={true}
+              touchRatio={0.2}
+              onSlideChange={(swiper) => setActiveEl(content[swiper.realIndex])}
+            >
+              {content.map((item, i) => (
+                <SwiperSlide key={i}>
+                  <p className="w-[200px] h-[320px] bg-orange-500 border-r-2 border-black">
+                    {item.title}
+                  </p>
+                  {/* <Slide item={item} /> */}
+                </SwiperSlide>
+              ))}
+            </Swiper>
           </div>
-          <div className="detail bg-red-500 flex-1">
+          <div className="flex-1 bg-red-500">
             <ArtDetail item={activeEl} />
           </div>
         </div>
