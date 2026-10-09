@@ -7,6 +7,8 @@ import { Book, Painting, Song } from "@/lib/remark/getContent";
 import { useCallback, useState } from "react";
 import ArtDetail from "@/components/ArtDetail";
 import CategoriesList, { Categories } from "@/components/CategoriesList";
+import { Swiper as SwiperType } from "swiper/types";
+import Image from "next/image";
 
 interface Props {
   paintings: Painting[];
@@ -51,27 +53,47 @@ const ArtSlider = ({ paintings, books, songs }: Props) => {
     swiperKey = `${cat}-${content.length}`;
   }, []);
 
+  const onSlideChange = useCallback((swiper: SwiperType) => {
+    let index = swiper.realIndex - 1;
+
+    if (index < 0) {
+      index = content.length + index;
+    }
+
+    setActiveEl(content[index]);
+  }, []);
+
   return (
     <>
       {/* <CategoriesList onSelectCat={onSelectCat} /> */}
       <div className="flex min-h-screen ml-8 text-xl font-bold text-white overflow-x-hidden">
-        <div className="min-w-[500px] bg-blue-600">
-          <div className="active">{activeEl.title}</div>
+        <div
+          className={`${(activeEl as Book | Painting).landscape ? "w-[600px]" : "w-[450px]"} transition-all duration-5000 bg-blue-800`}
+        >
+          <Image
+            className="object-contain border-y-2 border-r-2 border-neutral-500 w-full h-auto"
+            width={0}
+            height={0}
+            sizes="100vw"
+            src={(activeEl as Book | Painting).thumbnail}
+            alt={activeEl.title}
+          />
         </div>
         <div className="flex-1 flex flex-col overflow-x-hidden">
           <div className="h-[320px] max-w-[2000px] overflow-x-hidden">
             <Swiper
               spaceBetween={0}
               slidesPerView="auto"
+              initialSlide={1}
               loop={true}
               speed={1000}
               grabCursor={true}
               touchRatio={0.2}
-              onSlideChange={(swiper) => setActiveEl(content[swiper.realIndex])}
+              onSlideChange={onSlideChange}
             >
               {content.map((item, i) => (
                 <SwiperSlide key={i}>
-                  <p className="w-[200px] h-[320px] bg-orange-500 border-r-2 border-black">
+                  <p className="w-[200px] h-[320px] bg-orange-800 border-r-2 border-black">
                     {item.title}
                   </p>
                   {/* <Slide item={item} /> */}
@@ -79,7 +101,7 @@ const ArtSlider = ({ paintings, books, songs }: Props) => {
               ))}
             </Swiper>
           </div>
-          <div className="flex-1 bg-red-500">
+          <div className="flex-1 bg-red-800">
             <ArtDetail item={activeEl} />
           </div>
         </div>
