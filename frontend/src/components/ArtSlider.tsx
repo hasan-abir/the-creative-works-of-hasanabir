@@ -22,7 +22,7 @@ const ArtSlider = ({ paintings, books, songs }: Props) => {
     // ...songs,
     ...paintings,
   ]);
-  const [activeEl, setActiveEl] = useState<Painting | Book | Song>(content[0]);
+  const [activeEl, setActiveEl] = useState<number>(0);
 
   let swiperKey = `${Categories.Highlight}-${content.length}`;
 
@@ -48,61 +48,51 @@ const ArtSlider = ({ paintings, books, songs }: Props) => {
 
     setContent(categorizedContent);
 
-    setActiveEl(categorizedContent[0]);
+    setActiveEl(0);
 
     swiperKey = `${cat}-${content.length}`;
   }, []);
 
   const onSlideChange = useCallback((swiper: SwiperType) => {
-    let index = swiper.realIndex - 1;
+    let index = swiper.realIndex;
 
-    if (index < 0) {
-      index = content.length + index;
-    }
-
-    setActiveEl(content[index]);
+    setActiveEl(index);
   }, []);
 
   return (
     <>
       {/* <CategoriesList onSelectCat={onSelectCat} /> */}
-      <div className="flex min-h-screen ml-8 text-xl font-bold text-white overflow-x-hidden">
-        <div
-          className={`${(activeEl as Book | Painting).landscape ? "w-[600px]" : "w-[450px]"} transition-all duration-5000 bg-blue-800`}
-        >
-          <Image
-            className="object-contain border-y-2 border-r-2 border-neutral-500 w-full h-auto"
-            width={0}
-            height={0}
-            sizes="100vw"
-            src={(activeEl as Book | Painting).thumbnail}
-            alt={activeEl.title}
-          />
-        </div>
+      <div className="ml-8 text-xl font-bold text-white overflow-x-hidden">
         <div className="flex-1 flex flex-col overflow-x-hidden">
           <div className="h-[320px] max-w-[2000px] overflow-x-hidden">
             <Swiper
               spaceBetween={0}
               slidesPerView="auto"
-              initialSlide={1}
+              initialSlide={0}
               loop={true}
               speed={1000}
               grabCursor={true}
               touchRatio={0.2}
               onSlideChange={onSlideChange}
             >
-              {content.map((item, i) => (
-                <SwiperSlide key={i}>
-                  <p className="w-[200px] h-[320px] bg-orange-800 border-r-2 border-black">
-                    {item.title}
-                  </p>
-                  {/* <Slide item={item} /> */}
-                </SwiperSlide>
-              ))}
+              {content.map((item, i) => {
+                const active = activeEl === i;
+                let className = "h-[320px] border-r-2 border-black ";
+                className += active
+                  ? "w-[500px] bg-blue-500"
+                  : "w-[200px] bg-orange-500";
+
+                return (
+                  <SwiperSlide key={i}>
+                    <p className={className}>{item.title}</p>
+                    {/* <Slide item={item} /> */}
+                  </SwiperSlide>
+                );
+              })}
             </Swiper>
           </div>
-          <div className="flex-1 bg-red-800">
-            <ArtDetail item={activeEl} />
+          <div className="flex-1 bg-red-500">
+            <ArtDetail item={content[activeEl]} />
           </div>
         </div>
       </div>
