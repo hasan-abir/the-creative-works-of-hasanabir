@@ -62,40 +62,22 @@ const ArtSlider = ({ paintings, books, songs }: Props) => {
   return (
     <>
       {/* <CategoriesList onSelectCat={onSelectCat} /> */}
-      <div className="ml-8 text-xl font-bold text-white overflow-x-hidden">
-        <div className="flex-1 flex flex-col overflow-x-hidden">
-          <div className="h-[320px] max-w-[2000px] overflow-x-hidden">
-            <Swiper
-              spaceBetween={0}
-              slidesPerView="auto"
-              initialSlide={0}
-              loop={true}
-              speed={1000}
-              grabCursor={true}
-              touchRatio={0.2}
-              onSlideChange={onSlideChange}
-            >
-              {content.map((item, i) => {
-                const active = activeEl === i;
-                let className = "h-[320px] border-r-2 border-black ";
-                className += active
-                  ? "w-[500px] bg-blue-500"
-                  : "w-[200px] bg-orange-500";
-
-                return (
-                  <SwiperSlide key={i}>
-                    <p className={className}>{item.title}</p>
-                    {/* <Slide item={item} /> */}
-                  </SwiperSlide>
-                );
-              })}
-            </Swiper>
-          </div>
-          <div className="flex-1 bg-red-500">
-            <ArtDetail item={content[activeEl]} />
-          </div>
-        </div>
-      </div>
+      <Swiper
+        slidesPerView="auto"
+        initialSlide={0}
+        centeredSlides={true}
+        loop={true}
+        grabCursor={true}
+        touchRatio={0.2}
+        speed={1000}
+        onSlideChange={onSlideChange}
+      >
+        {content.map((item, i) => (
+          <SwiperSlide key={i}>
+            <Slide item={item} active={activeEl === i} />
+          </SwiperSlide>
+        ))}
+      </Swiper>
     </>
   );
 };

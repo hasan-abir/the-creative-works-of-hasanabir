@@ -168,7 +168,7 @@ body {
   width: auto !important;
 }
 
-.swiper-slide > * > * {
+/* .swiper-slide > * > * {
   transition: opacity 1s cubic-bezier(0.66, 0.22, 0.34, 0.93);
 }
 
@@ -180,7 +180,7 @@ body {
 
 .swiper-slide-active > * > * {
   opacity: 100%;
-}
+} */
 /* 
 .swiper-slide-active img {
   height: 100%;
