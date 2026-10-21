@@ -29,34 +29,22 @@ const fromDateToStr = (date: Date) => {
 
 const ArtDetail = ({ item }: Props) => {
   return (
-    <div className="mt-16">
-      <h2
-        className={headingFont.className + " text-center uppercase text-[4rem]"}
-      >
-        <span>{item.title}</span>
-        <br />
-        <br />
-        <span className="text-neutral-200">{item.title}</span>
-      </h2>
-      <p className="text-center my-8">
-        <span>
-          {checkProp(item, "date_created") ? "Finished at " : "Published at "}
-        </span>
-        <span>
-          {fromDateToStr(
-            (item as Song | Painting).date_created ||
-              (item as Book).published_date,
-          )}
-        </span>
+    <div className="mb-16 centered-container">
+      <h2 className="uppercase text-4xl">{item.title}</h2>
+      <p>
+        {"date_created" in item
+          ? "Created in " +
+            fromDateToStr((item as Song | Painting).date_created)
+          : "Published in " + fromDateToStr((item as Book).published_date)}
       </p>
-      {checkProp(item, "content") ? (
+      {/* {checkProp(item, "content") ? (
         <p
           className="text-justify text-neutral-400 mx-auto"
           style={{ maxWidth: "600px" }}
         >
           {(item as Book).content}
         </p>
-      ) : null}
+      ) : null} */}
     </div>
   );
 };

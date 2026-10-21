@@ -62,6 +62,7 @@ const ArtSlider = ({ paintings, books, songs }: Props) => {
   return (
     <>
       {/* <CategoriesList onSelectCat={onSelectCat} /> */}
+      <ArtDetail item={content[activeEl]} />
       <Swiper
         slidesPerView="auto"
         initialSlide={0}
@@ -69,7 +70,7 @@ const ArtSlider = ({ paintings, books, songs }: Props) => {
         loop={true}
         grabCursor={true}
         touchRatio={0.2}
-        speed={1000}
+        speed={500}
         onSlideChange={onSlideChange}
       >
         {content.map((item, i) => (
