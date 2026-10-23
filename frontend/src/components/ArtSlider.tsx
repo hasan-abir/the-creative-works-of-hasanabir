@@ -24,8 +24,6 @@ const ArtSlider = ({ paintings, books, songs }: Props) => {
   ]);
   const [activeEl, setActiveEl] = useState<number>(0);
 
-  let swiperKey = `${Categories.Highlight}-${content.length}`;
-
   const onSelectCat = useCallback((cat: Categories) => {
     let categorizedContent = [];
 
@@ -49,8 +47,6 @@ const ArtSlider = ({ paintings, books, songs }: Props) => {
     setContent(categorizedContent);
 
     setActiveEl(0);
-
-    swiperKey = `${cat}-${content.length}`;
   }, []);
 
   const onSlideChange = useCallback((swiper: SwiperType) => {
@@ -71,6 +67,7 @@ const ArtSlider = ({ paintings, books, songs }: Props) => {
         grabCursor={true}
         touchRatio={0.2}
         speed={500}
+        parallax={true}
         onSlideChange={onSlideChange}
       >
         {content.map((item, i) => (
