@@ -2,7 +2,7 @@
 title: "Self Portrait 27"
 date_created: 2026-09-13
 landscape: false
-thumbnail: "/paintings/selfportrait25.jpg"
+thumbnail: "/paintings/selfportrait27.jpg"
 category: "Visual Art"
 medium: "Canvas"
 style: ["Minimalism", "Abstract Expressionism", "Monochrome"]
