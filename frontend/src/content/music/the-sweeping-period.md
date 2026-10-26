@@ -1,6 +1,6 @@
 ---
 title: "The Sweeping Period"
-date_created: 2024-11-01
+date_created: 2025-01-29
 song_preview: "/song-previews/the-sweeping-period.mp3"
 category: "Music"
 style: ["Minimalism", "Abstract Expressionism", "Monochrome"]

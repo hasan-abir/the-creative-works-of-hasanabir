@@ -1,6 +1,6 @@
 ---
 title: "Three Flies"
-date_created: 2024-11-02
+date_created: 2025-05-25
 song_preview: "/song-previews/three-flies.mp3"
 category: "Music"
 style: ["Minimalism", "Abstract Expressionism", "Monochrome"]

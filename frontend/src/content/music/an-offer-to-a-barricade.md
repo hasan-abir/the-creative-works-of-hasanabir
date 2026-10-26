@@ -1,6 +1,6 @@
 ---
 title: "An Offer to a Barricade"
-date_created: 2024-11-04
+date_created: 2025-10-15
 song_preview: "/song-previews/an-offer-to-a-barricade.mp3"
 category: "Music"
 style: ["Minimalism", "Abstract Expressionism", "Monochrome"]
