@@ -13,13 +13,13 @@ const config: Config = {
       colors: {
         light: {
           50: "#FFFFFF",
-          100: "#FFF3EE",
+          100: "#e5e5e5",
           200: "#FFE180",
         },
         dark: {
           50: "#1B1B1B",
-          100: "#1E1D1D",
-          200: "#505151",
+          100: "#0a0a0a",
+          200: "#171717",
           300: "#272626",
         },
         primary: {
