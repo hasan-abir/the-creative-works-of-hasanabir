@@ -2,7 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
+body,
+main {
   @apply text-dark-200 bg-light-100;
 }
 

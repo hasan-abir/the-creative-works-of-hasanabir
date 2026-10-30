@@ -1,10 +1,5 @@
 import Link from "next/link";
-
-export let content: { id: number; title: string; slug: string }[] = [
-  { id: 123, title: "Test 1", slug: "test-1" },
-  { id: 213, title: "Test 2", slug: "test-2" },
-  { id: 312, title: "Test 3", slug: "test-3" },
-];
+import content from "@/app/work/content";
 
 const Work = () => {
   return (

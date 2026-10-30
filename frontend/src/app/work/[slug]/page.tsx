@@ -1,4 +1,4 @@
-import { content } from "@/app/work/page";
+import content from "@/app/work/content";
 
 const Workpiece = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params;
