@@ -25,6 +25,9 @@ export default function RootLayout({
   const links: Link[] = [
     { url: "/", name: "Home" },
     { url: "/work", name: "Work" },
+    { url: "/work/books", name: "Books" },
+    { url: "/work/paintings", name: "Paintings" },
+    { url: "/work/music", name: "Songs" },
     { url: "/about", name: "About" },
     { url: "/contact", name: "Contact" },
   ];

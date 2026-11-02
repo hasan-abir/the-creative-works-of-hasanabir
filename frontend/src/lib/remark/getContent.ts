@@ -23,6 +23,7 @@ export interface Book {
   poem_count?: string;
   page_count?: string;
   path: string;
+  slug: string;
 }
 
 export interface Painting {
@@ -37,6 +38,7 @@ export interface Painting {
   dimensions: string;
   availability: string;
   path: string;
+  slug: string;
 }
 
 export interface Song {
@@ -48,6 +50,7 @@ export interface Song {
   style: string[];
   tags: string[];
   path: string;
+  slug: string;
 }
 
 export async function getAllContentData<T>(folder: string): Promise<T[]> {
@@ -69,6 +72,7 @@ export async function getAllContentData<T>(folder: string): Promise<T[]> {
         content: matterResult.content,
         ...matterResult.data,
         path: `${folder}/${id}`,
+        slug: `/work/${id}/`,
       };
 
       if (matterResult.content) {
@@ -76,6 +80,16 @@ export async function getAllContentData<T>(folder: string): Promise<T[]> {
       }
 
       return returnValue as T;
+    })
+    .sort((a, b) => {
+      const bDate = new Date(
+        (b as Book).published_date || (b as Song | Painting).date_created,
+      );
+      const aDate = new Date(
+        (a as Book).published_date || (a as Song | Painting).date_created,
+      );
+
+      return bDate.getTime() - aDate.getTime();
     });
 
   return allContentData;
