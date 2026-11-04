@@ -1,6 +1,10 @@
-import content from "@/app/work/content";
+import { getAllContentData, Painting } from "@/lib/remark/getContent";
 
-const Painting = async ({ params }: { params: Promise<{ slug: string }> }) => {
+const EachPainting = async ({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) => {
   const { slug } = await params;
 
   return (
@@ -10,10 +14,12 @@ const Painting = async ({ params }: { params: Promise<{ slug: string }> }) => {
   );
 };
 
-export default Painting;
+export default EachPainting;
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const content = await getAllContentData<Painting>("paintings");
+
   return content.map((item) => ({
-    slug: item.slug,
+    slug: item.id,
   }));
 }

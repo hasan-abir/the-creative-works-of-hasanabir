@@ -1,6 +1,6 @@
-import content from "@/app/work/content";
+import { Book, getAllContentData } from "@/lib/remark/getContent";
 
-const Book = async ({ params }: { params: Promise<{ slug: string }> }) => {
+const EachBook = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params;
 
   return (
@@ -10,10 +10,12 @@ const Book = async ({ params }: { params: Promise<{ slug: string }> }) => {
   );
 };
 
-export default Book;
+export default EachBook;
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const content = await getAllContentData<Book>("books");
+
   return content.map((item) => ({
-    slug: item.slug,
+    slug: item.id,
   }));
 }

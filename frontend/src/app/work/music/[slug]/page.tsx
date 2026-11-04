@@ -1,6 +1,6 @@
-import content from "@/app/work/content";
+import { Song, getAllContentData } from "@/lib/remark/getContent";
 
-const Song = async ({ params }: { params: Promise<{ slug: string }> }) => {
+const EachSong = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params;
 
   return (
@@ -10,10 +10,12 @@ const Song = async ({ params }: { params: Promise<{ slug: string }> }) => {
   );
 };
 
-export default Song;
+export default EachSong;
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const content = await getAllContentData<Song>("music");
+
   return content.map((item) => ({
-    slug: item.slug,
+    slug: item.id,
   }));
 }
