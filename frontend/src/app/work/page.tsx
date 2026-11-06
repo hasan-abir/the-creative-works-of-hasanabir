@@ -1,10 +1,11 @@
+import ItemSlider from "@/components/ItemSlider";
 import {
   Book,
   getAllContentData,
   Painting,
   Song,
 } from "@/lib/remark/getContent";
-import Link from "next/link";
+import "swiper/css";
 
 const Work = async () => {
   const songs = await getAllContentData<Song | Book | Painting>("music");
@@ -17,11 +18,7 @@ const Work = async () => {
 
   return (
     <div className="page-container min-h-screen px-6">
-      {content.map((item) => (
-        <div key={item.id}>
-          <Link href={`/work/${item.path}/`}>{item.title}</Link>
-        </div>
-      ))}
+      <ItemSlider items={content} />
     </div>
   );
 };
