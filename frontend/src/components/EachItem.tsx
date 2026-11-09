@@ -17,8 +17,14 @@ const EachItem = ({ item }: Props) => {
   return (
     <div className="bg-white w-[400px] h-[500px] text-center p-8">
       {imgSrc ? (
-        <div className="w-[300px] h-[300px] relative mx-auto border-2 border-black">
-          <Image src={imgSrc} alt={item.title} fill objectFit="cover" />
+        <div className="w-[300px] h-[300px] relative overflow-y-hidden mx-auto border-2 border-black">
+          <Image
+            src={imgSrc}
+            alt={item.title}
+            fill
+            className="object-cover"
+            sizes="(max-width: 430px) 80vw, (max-width: 768px) 60vw, (max-width: 1200px) 40vw, 30vw"
+          />
         </div>
       ) : null}
 
