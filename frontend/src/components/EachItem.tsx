@@ -1,8 +1,5 @@
-"use client";
-
 import { Book, Painting, Song } from "@/lib/remark/getContent";
 import "swiper/css";
-import { Swiper, SwiperSlide } from "swiper/react";
 import fs from "node:fs/promises";
 import Link from "next/link";
 import Image from "next/image";
@@ -13,16 +10,12 @@ interface Props {
 }
 
 const EachItem = async ({ item }: Props) => {
-  const imgSrc =
-    (item as Book).cover_image || (item as Painting).thumbnail || null;
-  let blurDataURL = "";
+  // Do this server side
+  const imgSrc = (item as Book).cover_image || (item as Painting).thumbnail;
 
-  if (imgSrc) {
-    const file = await fs.readFile(`../../public/${imgSrc}`);
+  const file = await fs.readFile(`./public${imgSrc}`);
 
-    const { base64 } = await getPlaiceholder(file);
-    blurDataURL = base64;
-  }
+  const { base64 } = await getPlaiceholder(file);
 
   return (
     <div className="bg-white w-[400px] h-[500px] text-center p-8">
@@ -35,9 +28,8 @@ const EachItem = async ({ item }: Props) => {
             className="object-cover"
             sizes="(max-width: 430px) 80vw, (max-width: 768px) 60vw, (max-width: 1200px) 40vw, 30vw"
             placeholder="blur"
-            blurDataURL={blurDataURL}
+            blurDataURL={base64}
           />
-          {/* Have loading image blur */}
         </div>
       ) : null}
 
