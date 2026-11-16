@@ -1,5 +1,7 @@
 import path from "path";
 import fs from "fs";
+import fsPromises from "node:fs/promises";
+import { getPlaiceholder } from "plaiceholder";
 import matter from "gray-matter";
 
 const contentDirectory = (folder: string) =>
@@ -12,6 +14,7 @@ export interface Book {
   content_short: string;
   published_date: string;
   cover_image: string;
+  blurUrl: string;
   amazon_link: string;
   category: string;
   format: string;
@@ -31,6 +34,7 @@ export interface Painting {
   title: string;
   date_created: string;
   thumbnail: string;
+  blurUrl: string;
   category: string;
   medium: string;
   style: string[];
@@ -53,44 +57,74 @@ export interface Song {
   slug: string;
 }
 
+interface ImgData {
+  src: string;
+  blurSrc: string;
+}
+
+async function getImgData(data: {
+  [key: string]: any;
+}): Promise<ImgData | null> {
+  const imgSrc = (data as Book).cover_image || (data as Painting).thumbnail;
+  let imgBlur = "";
+
+  if (imgSrc) {
+    const file = await fsPromises.readFile(`./public${imgSrc}`);
+
+    const { base64 } = await getPlaiceholder(file);
+    imgBlur = base64;
+
+    return { src: imgSrc, blurSrc: imgBlur };
+  }
+  return null;
+}
+
 export async function getAllContentData<T>(folder: string): Promise<T[]> {
   const directory = contentDirectory(folder);
   const fileNames = fs.readdirSync(directory);
 
-  const allContentData = fileNames
-    .filter((fileName) => fileName.endsWith(".md") || fileName.endsWith(".mdx"))
-    .map((fileName) => {
-      const id = fileName.replace(/\.mdx?$/, "");
+  const allContentData = await Promise.all(
+    fileNames
+      .filter(
+        (fileName) => fileName.endsWith(".md") || fileName.endsWith(".mdx"),
+      )
+      .map(async (fileName) => {
+        const id = fileName.replace(/\.mdx?$/, "");
 
-      const fullPath = path.join(directory, fileName);
-      const fileContents = fs.readFileSync(fullPath, "utf8");
+        const fullPath = path.join(directory, fileName);
+        const fileContents = fs.readFileSync(fullPath, "utf8");
 
-      const matterResult = matter(fileContents);
+        const matterResult = matter(fileContents);
 
-      const returnValue = {
-        id,
-        content: matterResult.content,
-        ...matterResult.data,
-        path: `${folder}/${id}`,
-        slug: `/work/${id}/`,
-      };
+        const imgData = await getImgData(matterResult.data);
 
-      if (matterResult.content) {
-        returnValue["content"] = matterResult.content;
-      }
+        const returnValue = {
+          id,
+          content: matterResult.content,
+          ...matterResult.data,
+          path: `${folder}/${id}`,
+          slug: `/work/${id}/`,
+          blurUrl: imgData ? imgData.blurSrc : undefined,
+        };
 
-      return returnValue as T;
-    })
-    .sort((a, b) => {
-      const bDate = new Date(
-        (b as Book).published_date || (b as Song | Painting).date_created,
-      );
-      const aDate = new Date(
-        (a as Book).published_date || (a as Song | Painting).date_created,
-      );
+        if (matterResult.content) {
+          returnValue["content"] = matterResult.content;
+        }
 
-      return bDate.getTime() - aDate.getTime();
-    });
+        return returnValue as T;
+      }),
+  );
+
+  allContentData.sort((a, b) => {
+    const bDate = new Date(
+      (b as Book).published_date || (b as Song | Painting).date_created,
+    );
+    const aDate = new Date(
+      (a as Book).published_date || (a as Song | Painting).date_created,
+    );
+
+    return bDate.getTime() - aDate.getTime();
+  });
 
   return allContentData;
 }
@@ -105,11 +139,13 @@ export async function getContentData<T>(filePath: string): Promise<T | null> {
     const id = fileContent.replace(/\.mdx?$/, "");
 
     const matterResult = matter(fileContent);
+    const imgData = await getImgData(matterResult.data);
 
     const returnValue = {
       id,
       content: matterResult.content,
       ...matterResult.data,
+      blurUrl: imgData ? imgData.blurSrc : undefined,
     };
 
     if (matterResult.content) {

@@ -1,21 +1,15 @@
 import { Book, Painting, Song } from "@/lib/remark/getContent";
-import "swiper/css";
-import fs from "node:fs/promises";
-import Link from "next/link";
 import Image from "next/image";
-import { getPlaiceholder } from "plaiceholder";
+import Link from "next/link";
+import "swiper/css";
 
 interface Props {
   item: Book | Painting | Song;
 }
 
 const EachItem = async ({ item }: Props) => {
-  // Do this server side
   const imgSrc = (item as Book).cover_image || (item as Painting).thumbnail;
-
-  const file = await fs.readFile(`./public${imgSrc}`);
-
-  const { base64 } = await getPlaiceholder(file);
+  const imgBlur = (item as Book).blurUrl || (item as Painting).blurUrl;
 
   return (
     <div className="bg-white w-[400px] h-[500px] text-center p-8">
@@ -28,7 +22,7 @@ const EachItem = async ({ item }: Props) => {
             className="object-cover"
             sizes="(max-width: 430px) 80vw, (max-width: 768px) 60vw, (max-width: 1200px) 40vw, 30vw"
             placeholder="blur"
-            blurDataURL={base64}
+            blurDataURL={imgBlur}
           />
         </div>
       ) : null}
