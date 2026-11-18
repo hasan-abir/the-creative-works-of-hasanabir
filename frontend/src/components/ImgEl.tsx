@@ -1,55 +1,26 @@
 import Image from "next/image";
-import Link from "next/link";
 
 interface Props {
   src: string;
   alt: string;
-  book_cover?: boolean;
-  optimized?: boolean;
-  actual?: boolean;
+  blur_url: string;
   href?: string;
 }
 
-const ImgEl = ({
-  src,
-  alt,
-  book_cover = false,
-  optimized = true,
-  actual = false,
-  href = "/",
-}: Props) => {
-  let classList = "relative overflow-hidden";
-
-  if (book_cover) {
-    classList +=
-      " w-[156px] aspect-[10/16] rounded-2xl sm:rounded-l-2xl border border-gray-300";
-  } else if (actual) {
-    classList +=
-      " w-full aspect-square sm:w-[400px] shadow-[0_16px_32px_rgba(0,0,0,0.10)] rounded-[12px]";
-  } else {
-    classList +=
-      " w-[150px] sm:w-[385px] rounded-2xl aspect-[10/16] sm:aspect-[3/2] border border-gray-300";
-  }
-
-  const optimizedAttributes = optimized
-    ? {
-        sizes: "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw",
-        quality: 30,
-      }
-    : {};
-
+const ImgEl = ({ src, alt, blur_url, href }: Props) => {
   return (
-    <Link href={href} className="block">
-      <figure className={classList}>
-        <Image
-          className={`absolute w-auto h-auto${actual ? " object-contain bg-white" : " object-cover"}`}
-          src={src}
-          alt={alt}
-          fill
-          {...optimizedAttributes}
-        />
-      </figure>
-    </Link>
+    <div className="w-[300px] h-[300px] relative overflow-y-hidden mx-auto border-2 border-black">
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        className="object-cover"
+        sizes="(max-width: 430px) 80vw, (max-width: 768px) 60vw, (max-width: 1200px) 40vw, 30vw"
+        loading="lazy"
+        placeholder="blur"
+        blurDataURL={blur_url}
+      />
+    </div>
   );
 };
 
