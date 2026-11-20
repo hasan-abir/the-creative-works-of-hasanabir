@@ -1,4 +1,10 @@
-import { getAllContentData, Painting } from "@/lib/remark/getContent";
+import {
+  Painting,
+  getAllContentData,
+  getContentData,
+} from "@/lib/remark/getContent";
+import ImgEl from "@/components/ImgEl";
+import { notFound } from "next/navigation";
 
 const EachPainting = async ({
   params,
@@ -7,9 +13,20 @@ const EachPainting = async ({
 }) => {
   const { slug } = await params;
 
+  const painting = await getContentData<Painting>(`paintings/${slug}`);
+
+  if (!painting) {
+    notFound();
+  }
+
   return (
     <div className="page-container min-h-screen px-6">
-      <h1>Painting: {slug}</h1>
+      <h1>Painting: {painting.title}</h1>
+      <ImgEl
+        src={painting.thumbnail}
+        alt={painting.title}
+        blurUrl={painting.blurUrl}
+      />
     </div>
   );
 };

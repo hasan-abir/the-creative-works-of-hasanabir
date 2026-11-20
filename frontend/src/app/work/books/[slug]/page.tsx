@@ -18,7 +18,7 @@ const EachBook = async ({ params }: { params: Promise<{ slug: string }> }) => {
   return (
     <div className="page-container min-h-screen px-6">
       <h1>Book: {book.title}</h1>
-      <ImgEl src={book.cover_image} alt={book.title} blur_url={book.blurUrl} />
+      <ImgEl src={book.cover_image} alt={book.title} blurUrl={book.blurUrl} />
       <p>{book.content}</p>
     </div>
   );

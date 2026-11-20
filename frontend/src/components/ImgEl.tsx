@@ -3,22 +3,29 @@ import Image from "next/image";
 interface Props {
   src: string;
   alt: string;
-  blur_url: string;
+  blurUrl: string;
   href?: string;
+  fixed?: boolean;
 }
 
-const ImgEl = ({ src, alt, blur_url, href }: Props) => {
+const ImgEl = ({ src, alt, blurUrl, href, fixed }: Props) => {
+  let containerClassList = "relative mx-auto overflow-hidden";
+
+  containerClassList += fixed
+    ? " w-[300px] h-[300px] border-2 border-black"
+    : " w-[500px] h-[500px]";
+
   return (
-    <div className="w-[300px] h-[300px] relative overflow-y-hidden mx-auto border-2 border-black">
+    <div className={containerClassList}>
       <Image
         src={src}
         alt={alt}
         fill
-        className="object-cover"
         sizes="(max-width: 430px) 80vw, (max-width: 768px) 60vw, (max-width: 1200px) 40vw, 30vw"
         loading="lazy"
         placeholder="blur"
-        blurDataURL={blur_url}
+        blurDataURL={blurUrl}
+        objectFit={fixed ? "cover" : "contain"}
       />
     </div>
   );

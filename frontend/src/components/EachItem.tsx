@@ -15,9 +15,7 @@ const EachItem = async ({ item }: Props) => {
   return (
     <div className="bg-white w-[400px] h-[500px] text-center p-8">
       {imgSrc ? (
-        <div className="w-[300px] h-[300px] relative overflow-y-hidden mx-auto border-2 border-black">
-          <ImgEl src={imgSrc} alt={item.title} blur_url={imgBlur} />
-        </div>
+        <ImgEl src={imgSrc} alt={item.title} blurUrl={imgBlur} fixed />
       ) : null}
 
       <Link href={`/work/${item.path}/`} className="mt-8">
