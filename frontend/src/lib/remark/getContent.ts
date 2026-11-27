@@ -3,6 +3,8 @@ import fs from "fs";
 import fsPromises from "node:fs/promises";
 import { getPlaiceholder } from "plaiceholder";
 import matter from "gray-matter";
+import sharp from "sharp";
+import Fraction from "fraction.js";
 
 const contentDirectory = (folder: string) =>
   path.join(process.cwd(), "src", "content", folder);
@@ -15,6 +17,7 @@ export interface Book {
   published_date: string;
   cover_image: string;
   blurUrl: string;
+  aspectRatio: string;
   amazon_link: string;
   category: string;
   format: string;
@@ -35,6 +38,7 @@ export interface Painting {
   date_created: string;
   thumbnail: string;
   blurUrl: string;
+  aspectRatio: string;
   category: string;
   medium: string;
   style: string[];
@@ -60,6 +64,7 @@ export interface Song {
 interface ImgData {
   src: string;
   blurSrc: string;
+  aspectRatio: string;
 }
 
 async function getImgData(data: {
@@ -74,7 +79,12 @@ async function getImgData(data: {
     const { base64 } = await getPlaiceholder(file);
     imgBlur = base64;
 
-    return { src: imgSrc, blurSrc: imgBlur };
+    const metadata = await sharp(file).metadata();
+    const aspectRatio = new Fraction(
+      metadata.width / metadata.height,
+    ).toFraction();
+
+    return { src: imgSrc, blurSrc: imgBlur, aspectRatio };
   }
   return null;
 }
@@ -146,6 +156,7 @@ export async function getContentData<T>(filePath: string): Promise<T | null> {
       content: matterResult.content,
       ...matterResult.data,
       blurUrl: imgData ? imgData.blurSrc : undefined,
+      aspectRatio: imgData ? imgData.aspectRatio : undefined,
     };
 
     if (matterResult.content) {

@@ -26,6 +26,7 @@ const EachPainting = async ({
         src={painting.thumbnail}
         alt={painting.title}
         blurUrl={painting.blurUrl}
+        aspectRatio={painting.aspectRatio}
       />
     </div>
   );

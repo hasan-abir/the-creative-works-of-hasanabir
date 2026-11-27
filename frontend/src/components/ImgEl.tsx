@@ -6,29 +6,22 @@ interface Props {
   blurUrl: string;
   href?: string;
   fixed?: boolean;
+  aspectRatio: string;
 }
 
-const ImgEl = ({ src, alt, blurUrl, href, fixed }: Props) => {
-  const landscape = true;
+const ImgEl = ({ src, alt, blurUrl, href, aspectRatio, fixed }: Props) => {
   let containerClassList = "relative mx-auto overflow-x-hidden";
 
   containerClassList += fixed
     ? " w-[300px] h-[300px] border-2 border-black"
-    : landscape
-      ? " w-full h-[90vh]"
-      : "";
-  let imgClass = "h-full";
-  imgClass += fixed ? " w-full" : " w-auto aspect-auto";
+    : " h-[90vh]";
 
   return (
-    <div className={containerClassList}>
+    <div className={containerClassList} style={{ aspectRatio: aspectRatio }}>
       <Image
-        className={imgClass}
         src={src}
         alt={alt}
-        width={fixed ? undefined : 500}
-        height={fixed ? undefined : 500}
-        fill={fixed}
+        fill
         sizes="(max-width: 430px) 80vw, (max-width: 768px) 60vw, (max-width: 1200px) 40vw, 30vw"
         loading="lazy"
         placeholder="blur"
